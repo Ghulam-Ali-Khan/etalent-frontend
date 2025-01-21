@@ -20,18 +20,21 @@ const theme = createTheme({
     // Define other typography styles as needed
   },
   components:{
-    MuiContainer: {
-      defaultProps: {
-        maxWidth: 'xl',
-      },
-
-      styleOverrides: {
-        root: {
-         minWidth:'100% !important',
-         padding:'0px 7rem !important'
-        },
-      },
-    },
+    // MuiContainer: {
+    //   styleOverrides: {
+    //     root: {
+    //       width: '100%', // Allow the container to expand fully
+    //       paddingLeft: '1rem',
+    //       paddingRight: '1rem',
+    //       '@media (min-width: 1280px)': {
+    //         maxWidth: '1350px', // Slightly increase the width for screens larger than `lg`
+    //       },
+    //       '@media (min-width: 1536px)': {
+    //         maxWidth: '1536px', // Keep default `xl` width for larger screens
+    //       },
+    //     },
+    //   },
+    // },
   }
   // Any other theme customization
 });

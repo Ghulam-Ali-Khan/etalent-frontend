@@ -1,4 +1,4 @@
-import { Box, Container, Divider, Grid2, Stack, Typography } from '@mui/material'
+import { Box, Divider, Grid2, Stack, Typography } from '@mui/material'
 
 // hooks
 import useGetPrimaryColor from '@/customHooks/useGetPrimaryColor';
@@ -7,10 +7,11 @@ import useGetPrimaryColor from '@/customHooks/useGetPrimaryColor';
 import { driveUsCardStylings } from '../styles/style';
 
 // types
-import { DriveUsCardProps } from '../types/DrivesUs.types';
+import { DriveUsCardProps } from '../types/LandingPage.types';
 
 // Utilis
 import { driveUsData } from '../utilis/data';
+import StyledContainer from './StyledContainer';
 
 const DriveUsCard = ({ title, description, icon }: DriveUsCardProps) => {
     const primaryColor = useGetPrimaryColor();
@@ -38,7 +39,7 @@ const DrivesUs = () => {
     const primaryColor = useGetPrimaryColor();
     return (
         <>
-            <Container className='my-[6rem]'>
+            <StyledContainer className='my-[6rem]'>
                 <Typography variant='h3' color='primary' textAlign={'center'} fontWeight={600}>
                     Drives Us
                 </Typography>
@@ -52,7 +53,7 @@ const DrivesUs = () => {
                         ))
                     }
                 </Grid2>
-            </Container>
+            </StyledContainer>
         </>
     )
 }
