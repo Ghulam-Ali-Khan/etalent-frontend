@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 // Custom SCSS styles
-body {
-    background-color: #f3f4f6; // Example
-  }
+
+button{
+  text-transform: capitalize !important;
+}

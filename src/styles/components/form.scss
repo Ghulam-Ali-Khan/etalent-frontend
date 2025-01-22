@@ -1,0 +1,12 @@
+.required::after {
+    content: "*";
+    color: red;
+    margin-left: 2px;
+}
+
+input {
+    font-size: 14px !important;
+    &::placeholder {
+        font-size: 14px !important;
+    }
+}
