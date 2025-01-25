@@ -1,6 +1,7 @@
 import { Container, Stack } from '@mui/material'
 import Logo from '@/assets/imgs/logo.png';
 import StyledButton from '@/components/common/StyledButton';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -9,8 +10,12 @@ const Header = () => {
         <img src={Logo} />
 
         <Stack direction={'row'} spacing={2}>
+          <Link to={'auth/login'}>
           <StyledButton variant='outlined' text='Login' />
+          </Link>
+          <Link to={'auth/register'}>
           <StyledButton variant='contained' text='Register' />
+          </Link>
         </Stack>
       </Stack>
     </Container>
