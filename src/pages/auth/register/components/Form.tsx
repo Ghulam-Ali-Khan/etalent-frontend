@@ -1,8 +1,7 @@
 import FormikField from '@/components/form/FormikField'
 import FormikWrapper from '@/components/form/FormikWrapper'
-import { Button, Checkbox, FormControlLabel, Stack, Tab, Tabs } from '@mui/material';
+import { Button, Stack, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const RegisterForm = () => {
     const [tabValue, setTabValue] = useState(0);

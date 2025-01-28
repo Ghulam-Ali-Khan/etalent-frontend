@@ -15,7 +15,7 @@ const HeroSection = () => {
                     spacing={2}
                     {...heroSeactionStackStyling}
                 >
-                    <Typography variant='h2' fontWeight={'bold'} color={'primary'} textAlign={'center'}>
+                    <Typography variant='h1' fontWeight={'bold'} color={'primary'} textAlign={'center'}>
                         Talent Hub - Unlock your Potential with one Profile
                     </Typography>
                     <Typography variant='body1' color='secondary' maxWidth={'500px'} textAlign={'center'}>

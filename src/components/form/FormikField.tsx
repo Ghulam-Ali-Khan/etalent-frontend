@@ -82,7 +82,7 @@ const FormikField: React.FC<FormikFieldProps> = ({
         <Grid2 className={classes} spacing={1} container>
             <Grid2
                 className="d-flex align-items-center"
-                size={{ xl: (isRow ? 3 : 12), lg: (isRow ? 3 : 12), md: (isRow ? 4 : 12), sm: 12 }}
+                size={{ xl: (isRow ? 3 : 12), lg: (isRow ? 3 : 12), md: (isRow ? 4 : 12), sm: 12, xs: 12 }}
             >
                 {label && (
                     <Typography
@@ -95,7 +95,7 @@ const FormikField: React.FC<FormikFieldProps> = ({
                 )}
             </Grid2>
             <Grid2
-                size={{ xl: (isRow ? 9 : 12), lg: (isRow ? 9 : 12), md: (isRow ? 8 : 12), sm: 12 }}
+                size={{ xl: (isRow ? 9 : 12), lg: (isRow ? 9 : 12), md: (isRow ? 8 : 12), sm: 12, xs: 12 }}
             >
                 {textArea ? (
                     <textarea

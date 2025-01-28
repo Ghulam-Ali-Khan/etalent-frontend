@@ -10,6 +10,7 @@ export const heroSeactionStackStyling = {
 
 export const driveUsCardStylings = (primary: string) => ({
     padding: 2,
+    width: '100%',
     border: `1px solid ${primary}`,
     cursor: 'pointer',
     transition: "all 0.3s ease",

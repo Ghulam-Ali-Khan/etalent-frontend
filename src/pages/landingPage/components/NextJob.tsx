@@ -11,7 +11,7 @@ const NextJob = () => {
     return (
         <>
             <StyledContainer className="my-[6rem]">
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ '@media(max-width:600px)': { flexDirection: 'column', gap: 3, alignItems: 'start' } }}>
                     <Typography variant="h3" color="primary" textAlign="left" fontWeight={600} maxWidth="500px">
                         The Fast Track to Your Next Job
                     </Typography>
@@ -19,11 +19,11 @@ const NextJob = () => {
                     <StyledButton text="Learn More" variant="contained" />
                 </Stack>
 
-                <Grid2 container spacing={15} className="mt-[5rem]">
-                    <Grid2 size={6}>
+                <Grid2 container  spacing={{ xs: 3, sm: 10, md: 15 }}  className="mt-[5rem]">
+                    <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                         <img src={NextJobImg} className="max-w-full" />
                     </Grid2>
-                    <Grid2 size={6}>
+                    <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                         <Stepper
                             orientation="vertical"
                             connector={null} // Remove default connector

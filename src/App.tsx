@@ -12,14 +12,14 @@ import { userLoaded } from './store/slices/authSlice';
 
 function App() {
 
-  const dispatch = useDispatch();
-  const { data: loadUserData } = useLoadUserQuery({}) as any; // Disable type checking here
+  // const dispatch = useDispatch();
+  // const { data: loadUserData } = useLoadUserQuery({}) as any; // Disable type checking here
 
-  useEffect(() => {
-    if (loadUserData) {
-      dispatch(userLoaded(loadUserData));
-    }
-  }, [loadUserData]);
+  // useEffect(() => {
+  //   if (loadUserData) {
+  //     dispatch(userLoaded(loadUserData));
+  //   }
+  // }, [loadUserData]);
 
   return (
     <ThemeProvider theme={theme}> {/* Theme context */}

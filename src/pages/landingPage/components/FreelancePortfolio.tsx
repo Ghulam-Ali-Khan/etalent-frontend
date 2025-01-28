@@ -31,7 +31,7 @@ const FreelancePortfolio = () => {
                 <Grid2 container spacing={5} className="mt-[5rem]">
                     {
                         freelancePortfolioImgs.map((item: FreelancePortfolioCards, index: number) => (
-                            <Grid2 size={3}>
+                            <Grid2 size={{ xl: 3, lg: 3, md: 6, sm: 12, xs: 12 }} sx={{ '@media(max-width: 600px)': { display: 'flex', justifyContent: 'center' } }} >
                                 <Box
                                     sx={{
                                         animation: `${scaleAnimation} 3s infinite`,

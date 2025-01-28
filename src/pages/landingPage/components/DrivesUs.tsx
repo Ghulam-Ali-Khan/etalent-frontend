@@ -44,16 +44,16 @@ const DrivesUs = () => {
                     Drives Us
                 </Typography>
 
-                <Grid2 container spacing={5} className="mt-[5rem]">
+                <Grid2 container spacing={5} className="mt-[5rem] w-100">
                     {
                         driveUsData(primaryColor).map((item: DriveUsCardProps, index: number) => (
-                            <Grid2 size={3}>
+                            <Grid2 size={{ xl: 3, lg: 3, md: 6, sm: 12, xs:12 }}>
                                 <DriveUsCard {...item} key={index} />
                             </Grid2>
                         ))
                     }
                 </Grid2>
-            </StyledContainer>
+            </StyledContainer >
         </>
     )
 }

@@ -7,7 +7,7 @@ const ReadyToJump = () => {
     return (
         <Container maxWidth='xl' sx={{ marginBottom: 3 }}>
             <Grid2 container>
-                <Grid2 size={8}>
+                <Grid2 size={{ xl: 8, lg: 8, md: 6, sm: 12, xs: 12 }}>
                     <Box bgcolor={primaryColor} paddingX={4} paddingY={8} minHeight={'100%'}>
                         <Stack alignItems={'start'} justifyContent={'space-between'} spacing={3}>
                             <Typography variant='h4' color='white' fontWeight={600} maxWidth={'500px'}>
@@ -25,8 +25,8 @@ const ReadyToJump = () => {
                         </Stack>
                     </Box>
                 </Grid2>
-                <Grid2 size={4}>
-                    <img src={ReadyJumpImg}/>
+                <Grid2 size={{ xl: 4, lg: 4, md: 6, sm: 12, xs: 12 }}>
+                    <img src={ReadyJumpImg} />
                 </Grid2>
             </Grid2>
         </Container>
