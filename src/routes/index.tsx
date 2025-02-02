@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom
 import LandingPage from '@/pages/landingPage';
 import LoginPage from '@/pages/auth/login';
 import RegisterPage from '@/pages/auth/register';
+import ProfilePage from '@/pages/profile';
 
 const AppRouter = () => {
   return (
@@ -13,6 +14,7 @@ const AppRouter = () => {
           <Route path='login' element={<LoginPage />} />
           <Route path='register' element={<RegisterPage />} />
         </Route>
+        <Route path='profile' element={<ProfilePage />} />
         <Route path="*" element={<>Not Found</>} /> {/* Fallback for unknown routes */}
       </Routes>
     </Router>
