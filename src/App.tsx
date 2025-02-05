@@ -9,6 +9,7 @@ import "@/styles/index.scss";
 import { useEffect } from 'react';
 import { useLoadUserQuery } from './services/private/auth';
 import { userLoaded } from './store/slices/authSlice';
+import { testFunc } from './utilis/contants';
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
   //     dispatch(userLoaded(loadUserData));
   //   }
   // }, [loadUserData]);
+
+  testFunc();
 
   return (
     <ThemeProvider theme={theme}> {/* Theme context */}

@@ -4,7 +4,16 @@ export const authAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
     login: build.mutation({
       query: payload => ({
-        url: 'auth/login',
+        url: '/Account/Logon',
+        method: 'POST',
+        body: {
+          ...payload,
+        },
+      }),
+    }),
+    register: build.mutation({
+      query: payload => ({
+        url: '/Account/Register',
         method: 'POST',
         body: {
           ...payload,
@@ -36,4 +45,4 @@ export const authAPI = publicAPI.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useResetPasswordEmailMutation, useChangeUserPasswordMutation } = authAPI;
+export const { useLoginMutation, useRegisterMutation, useResetPasswordEmailMutation, useChangeUserPasswordMutation } = authAPI;

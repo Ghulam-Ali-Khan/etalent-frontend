@@ -32,3 +32,7 @@ export interface FormikWrapperProps<T> {
     children: React.ReactNode; // Children to render inside the Formik form
   }
   
+  export interface SubmitFormParamsTypes {
+    values: object,
+    [key: string]: any
+}
