@@ -6,9 +6,12 @@ import { initialValues, validationSchema } from '../utilis/formUtilis';
 import useShowResponse from '@/customHooks/useShowResponse';
 import { SubmitFormParamsTypes } from '@/types/form';
 import { useRegisterMutation } from '@/services/public/auth';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
     const [tabValue, setTabValue] = useState(0);
+
+    const navigate = useNavigate();
 
     const [registerUser] = useRegisterMutation();
 
@@ -25,9 +28,11 @@ const RegisterForm = () => {
     const handleSubmitForm = async (values: SubmitFormParamsTypes) => {
         const response = await registerUser(values);
 
-        showResponse(response?.data, 'Registered successfull');
+        showResponse(response?.data, 'Registered successfull', 'Registration Failed');
 
-        console.log('response ==> ', response);
+        if (response?.data?.success) {
+            navigate('/auth/login');
+        }
     }
 
 

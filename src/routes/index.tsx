@@ -4,6 +4,7 @@ import LandingPage from '@/pages/landingPage';
 import LoginPage from '@/pages/auth/login';
 import RegisterPage from '@/pages/auth/register';
 import ProfilePage from '@/pages/profile';
+import PrivateRoute from './PrivateRoute';
 
 const AppRouter = () => {
   return (
@@ -14,7 +15,10 @@ const AppRouter = () => {
           <Route path='login' element={<LoginPage />} />
           <Route path='register' element={<RegisterPage />} />
         </Route>
-        <Route path='profile' element={<ProfilePage />} />
+        <Route path='portal' element={<PrivateRoute />}>
+          <Route path='profile' element={<ProfilePage />} />
+          <Route path='dashboard' element={<>Dashboard</>} />
+        </Route>
         <Route path="*" element={<>Not Found</>} /> {/* Fallback for unknown routes */}
       </Routes>
     </Router>

@@ -13,7 +13,7 @@ export const authAPI = publicAPI.injectEndpoints({
     }),
     register: build.mutation({
       query: payload => ({
-        url: '/Account/Register',
+        url: '/Account/CandidateRegister',
         method: 'POST',
         body: {
           ...payload,

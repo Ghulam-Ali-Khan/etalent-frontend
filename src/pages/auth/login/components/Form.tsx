@@ -2,13 +2,14 @@ import FormikField from '@/components/form/FormikField'
 import FormikWrapper from '@/components/form/FormikWrapper'
 import { useLoginMutation } from '@/services/public/auth';
 import { Button, Stack } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LoginSubmitParams } from '../types/Form';
 import { initialValues, loginValidationSchema } from '../utilis/formUtilis';
 import useShowResponse from '@/customHooks/useShowResponse';
 import FormikCheckbox from '@/components/form/FormikCheckbox';
 
 const LoginForm = () => {
+    const navigate = useNavigate();
 
     const [loginUser] = useLoginMutation();
 
@@ -20,7 +21,11 @@ const LoginForm = () => {
     const handleSubmitForm = async (values: LoginSubmitParams) => {
         const response = await loginUser(values);
 
-        showResponse(response?.data, 'Login successfull');
+        showResponse(response?.data, 'Login successfull', 'Login Failed');
+
+        if (response?.data?.success) {
+            navigate('/portal/dashboard');
+        }
 
         console.log('response ==> ', response);
     }
