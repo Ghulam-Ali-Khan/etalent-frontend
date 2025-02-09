@@ -11,9 +11,9 @@ const authSlice = createSlice({
   reducers: {
     onLoggedIn: (state, action) => {
       const userDetails = { ...action.payload };
-      delete userDetails.token;
+      delete userDetails.baseModel.token;
 
-      localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('token', action.payload.baseModel.token);
 
       return { ...state, isAuthenticated: true, user: userDetails.userInfo };
     },
