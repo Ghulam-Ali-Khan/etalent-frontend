@@ -20,7 +20,7 @@ const FormikField: React.FC<FormikFieldProps> = ({
     icon,
     isPasswordField = false,
     type = 'text',
-    placeholder = '',
+    placeholder = 'Please Enter',
     onBlur,
     onChange,
     isRequired = false,
