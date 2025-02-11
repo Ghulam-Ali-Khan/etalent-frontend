@@ -2,16 +2,17 @@ import { Divider, IconButton, Stack, Toolbar, Typography } from '@mui/material'
 import React from 'react'
 import ExperienceFormModal from './ExperienceFormModal'
 import { Delete, Edit } from '@mui/icons-material'
+import EducationFormModal from './EducationFormModal'
 
 const ExperienceStep = () => {
     return (
         <>
             <Toolbar className='flex justify-between'>
                 <Typography variant='h4'>
-                    Experience
+                    Education
                 </Typography>
 
-                <ExperienceFormModal />
+                <EducationFormModal />
             </Toolbar>
 
             <Divider />
@@ -22,7 +23,7 @@ const ExperienceStep = () => {
                 <Stack spacing={1}>
                     <Stack direction={'row'} justifyContent={'space-between'}>
                         <Typography variant='h6'>
-                            UI/UX Designer
+                            National University of Sciences & Technology (NUST)
                         </Typography>
 
                         <Stack direction={'row'} spacing={2}>
@@ -36,23 +37,22 @@ const ExperienceStep = () => {
                     </Stack>
 
                     <Typography variant='body2'>
-                        Behance Collaboration · Full-time
+                        https://nust.edu.pk/
                     </Typography>
                     <Typography variant='body2' color='secondary'>
-                        Remote
+                        BSCS,Computer Science
+                    </Typography>
+                    <Typography variant='body2' color='secondary'>
+                        Jan 2019-Jan 2021
+                    </Typography>
+                    <Typography variant='body2' color='secondary'>
+                        3.89
                     </Typography>
                     <Typography variant='body2' color='secondary'>
                         Islamabad,Pakistan
                     </Typography>
-                    <Typography variant='body2' color='secondary'>
-                        Participated in design challenges and collaborative projects on Behance, contributing to innovative UI/UX solutions.
-                        Collaborated with international designers to create and refine user interfaces for web and mobile applications.
-                        Conducted online critique sessions to provide and receive feedback, improving design quality and consistency.
-                        Presented design concepts and iterations through virtual meetings, effectively communicating design ideas and incorporating stakeholder feedback.
-                    </Typography>
 
-
-                    <Divider className='my-4' />
+                    <Divider className='my-4'/>
                 </Stack>
 
             </Stack>
