@@ -9,7 +9,7 @@ const useShowResponse = () => {
         if (response?.success) {
             enqueueSnackbar(successMessage, { variant: 'success' });
         } else {
-            enqueueSnackbar(errorMessage || response?.message, { variant: 'error' });
+            enqueueSnackbar(response?.message || errorMessage  , { variant: 'error' });
         }
     };
 

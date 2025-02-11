@@ -23,11 +23,13 @@ const LoginForm = () => {
 
         showResponse(response?.data, 'Login successfull', 'Login Failed');
 
-        if (response?.data?.success) {
-            navigate('/portal/dashboard');
-        }
+        localStorage.setItem('token', 'test');
 
-        console.log('response ==> ', response);
+        // if (response?.data?.success) {
+        navigate('/portal/dashboard');
+        // }
+
+        // console.log('response ==> ', response);
     }
 
     return (

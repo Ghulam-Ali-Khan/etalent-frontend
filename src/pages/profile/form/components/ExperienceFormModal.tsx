@@ -4,7 +4,7 @@ import FormikField from '@/components/form/FormikField';
 import FormikWrapper from '@/components/form/FormikWrapper';
 import { Add } from '@mui/icons-material';
 import { Box, Grid2, IconButton, Stack } from '@mui/material';
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const ExperienceFormModal = () => {
 
