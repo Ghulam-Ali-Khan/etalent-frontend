@@ -22,8 +22,8 @@ const StepIcon = ({ icon, active }: { icon: React.ReactNode; active: boolean }) 
     );
 };
 
-const StepperFormSteps = () => {
-    const activeStep = 1; // Change this dynamically
+const StepperFormSteps = ({ step }: { step: any }) => {
+    const activeStep = step; // Change this dynamically
 
     return (
         <Box

@@ -4,7 +4,7 @@ import ExperienceFormModal from './ExperienceFormModal'
 import { Delete, Edit } from '@mui/icons-material'
 import EducationFormModal from './EducationFormModal'
 
-const ExperienceStep = () => {
+const EducationStep = () => {
     return (
         <>
             <Toolbar className='flex justify-between'>
@@ -63,4 +63,4 @@ const ExperienceStep = () => {
     )
 }
 
-export default ExperienceStep
+export default EducationStep

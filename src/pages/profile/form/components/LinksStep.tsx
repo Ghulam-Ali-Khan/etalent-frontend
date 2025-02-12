@@ -14,7 +14,7 @@ const LinksStep = () => {
 
             <Divider />
 
-            <Stack spacing={2}>
+            <Stack spacing={2} mt={2}>
                 <FormikField
                     name='Facebook'
                     label='Facebook'

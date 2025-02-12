@@ -3,16 +3,12 @@ import React from 'react';
 import LogoImg from '@/assets/imgs/logo.png';
 import StepperForm from './components/StepperForm';
 import StyledContainer from '@/components/common/StyledContainer';
+import Header from '@/components/layout/Header';
 
 const ProfileForm = () => {
     return (
         <>
-
-            <Toolbar sx={{ bgcolor: 'primary.main' }}>
-                <Typography color='white' variant='h4' fontWeight={600}>
-                    eTalentBox
-                </Typography>
-            </Toolbar>
+            <Header />
 
             <StyledContainer className='mt-8'>
                 <Paper sx={{ overflow: 'hidden', minHeight: '85vh' }}>

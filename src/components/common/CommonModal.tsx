@@ -12,6 +12,7 @@ interface CommonModalProps {
   isPopup?: boolean;
   givenWidth?: string;
   noCloseSection?: boolean;
+  minWidth?: string;
 }
 
 const CommonModal: React.FC<CommonModalProps> = ({
@@ -24,6 +25,7 @@ const CommonModal: React.FC<CommonModalProps> = ({
   isPopup = false,
   givenWidth = '300px',
   noCloseSection = false,
+  minWidth
 }) => {
   return (
     <Modal
@@ -31,7 +33,7 @@ const CommonModal: React.FC<CommonModalProps> = ({
       onClose={toggle}
       className={`flex justify-center ${isPopup ? 'mt-4 items-start' : 'items-center'} overflow-auto`}
     >
-      <Card sx={{ padding: '5px 15px', minWidth: '80%',  maxWidth: '800px' }}>
+      <Card sx={{ padding: '5px 15px', minWidth: minWidth ||'80%',  maxWidth: '800px' }}>
         {!noCloseSection && (
           <Box
             className="flex justify-between items-center pb-2"
