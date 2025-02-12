@@ -1,0 +1,16 @@
+{
+    "company_info": "Company Info",
+    "profile_level": "Profile Level",
+    "student": "Student",
+    "skilled": "Skilled",
+    "non_skilled": "Non Skilled",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "dob": "Date of Birth",
+    "language": "Language",
+    "passport": "Passport/License Number",
+    "nationality": "Nationality",
+    "work_country": "Work Country",
+    "id_number": "Last Digit ID Number"
+  }
+  

@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 import { useLoadUserQuery } from './services/private/auth';
 import { userLoaded } from './store/slices/authSlice';
 import { testFunc } from './utilis/contants';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
 
 function App() {
 
@@ -25,15 +27,18 @@ function App() {
   testFunc();
 
   return (
+
     <ThemeProvider theme={theme}> {/* Theme context */}
-      {/* <Provider store={store}> Redux context */}
+      <I18nextProvider i18n={i18n}>
+        {/* <Provider store={store}> Redux context */}
         <SnackbarProvider
           preventDuplicate
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }} // Snackbar context
         >
           <Router /> {/* React Router context */}
         </SnackbarProvider>
-      {/* </Provider> */}
+        {/* </Provider> */}
+      </I18nextProvider>
     </ThemeProvider>
   );
 }

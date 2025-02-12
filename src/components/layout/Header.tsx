@@ -5,6 +5,7 @@ import UnStyledLink from '../common/UnStyledLink';
 import { useNavigate } from 'react-router-dom';
 import LogoSymbol from '@/assets/imgs/logo_symbol.svg';
 import { Notifications, Settings, Sms } from '@mui/icons-material';
+import LanguageSwitcher from './LanguageSwatcher';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -45,6 +46,8 @@ const Header = () => {
             </Stack>
 
             <Stack direction={'row'} spacing={3} alignItems={'center'}>
+                <LanguageSwitcher />
+
                 <IconButton>
                     <Settings sx={{ color: 'white' }} />
                 </IconButton>
@@ -60,6 +63,7 @@ const Header = () => {
                 <IconButton onClick={handleAnchorElOpen}>
                     <Avatar alt="Ghulam Ali" src={AvatarImg} />
                 </IconButton>
+
             </Stack>
             <Menu
                 anchorEl={anchorEl}

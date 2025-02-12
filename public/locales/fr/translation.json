@@ -1,0 +1,16 @@
+{
+    "company_info": "Informations sur l'entreprise",
+    "profile_level": "Niveau de profil",
+    "student": "Étudiant",
+    "skilled": "Compétent",
+    "non_skilled": "Non Compétent",
+    "first_name": "Prénom",
+    "last_name": "Nom de famille",
+    "dob": "Date de naissance",
+    "language": "Langue",
+    "passport": "Numéro de passeport/licence",
+    "nationality": "Nationalité",
+    "work_country": "Pays de travail",
+    "id_number": "Dernier chiffre du numéro d'identité"
+  }
+  
