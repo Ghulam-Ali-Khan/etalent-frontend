@@ -8,11 +8,25 @@ import ExperienceStep from './ExperienceStep';
 import LinksStep from './LinksStep';
 import SkillsStep from './SkillsStep';
 import EducationStep from './EducationStep';
+import { stepsInitials, stepsValidations } from '../../utilis/formUtilis';
+import { useCreateProfileMutation } from '@/services/private/profile';
 
 const StepperForm = () => {
     const [step, setStep] = useState(0);
+
+    const [createProfileMutation] = useCreateProfileMutation();
+
+    // handlers
+    const handleSubmit = async (values: any) => {
+
+        const  userId = localStorage.getItem('userId')
+
+        await createProfileMutation({...values, userId});
+
+    }
+
     return (
-        <Formik initialValues={{}} onSubmit={() => { }}>
+        <Formik initialValues={stepsInitials[step]} validationSchema={stepsValidations[step]} onSubmit={handleSubmit}>
             {() => (
                 <Form>
                     <Grid2 container spacing={2}>
@@ -33,18 +47,19 @@ const StepperForm = () => {
                                 <Button variant='outlined'
                                     onClick={() => {
                                         if (step > 0) {
-                                            setStep(prev =>  prev - 1)
+                                            setStep(prev => prev - 1)
                                         }
                                     }}
                                 >
                                     Back
                                 </Button>
                                 <Button variant='contained'
-                                    onClick={() => {
-                                        if (step < 6) {
-                                            setStep(prev => 1 + prev)
-                                        }
-                                    }}
+                                    type='submit'
+                                // onClick={() => {
+                                //     if (step < 6) {
+                                //         setStep(prev => 1 + prev)
+                                //     }
+                                // }}
                                 >
                                     Next
                                 </Button>

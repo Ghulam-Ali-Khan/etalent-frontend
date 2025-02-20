@@ -21,13 +21,16 @@ const LoginForm = () => {
     const handleSubmitForm = async (values: LoginSubmitParams) => {
         const response = await loginUser(values);
 
+        const { baseModel, user, success } = response?.data || {};
+
         showResponse(response?.data, 'Login successfull', 'Login Failed');
 
-        localStorage.setItem('token', 'test');
+        localStorage.setItem('token', baseModel?.data);
+        localStorage.setItem('userId', user);
 
-        // if (response?.data?.success) {
+        if (success) {
         navigate('/portal/dashboard');
-        // }
+        }
 
         // console.log('response ==> ', response);
     }

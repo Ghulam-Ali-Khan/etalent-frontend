@@ -12,13 +12,11 @@ import {
 import { useField } from 'formik';
 import { useDebouncedCallback } from 'use-debounce';
 
-// Styles
-import { FormikFieldProps } from '@/types/form';
-
 // Define the shape of the option object in the options array
 interface Option {
   value: string;
   label: string;
+  selectedValue?: string;
 }
 
 // Define the component props interface
@@ -26,7 +24,7 @@ interface FormikRadioProps {
   name: string;
   label?: string;
   options: Option[];
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>, selectedValue: string, selectedObj: any) => void;
   onBlur?: (value: string) => void;
   isRequired?: boolean;
   depenpencyArray?: any[]; // You can replace `any[]` with a more specific type if needed
@@ -61,10 +59,14 @@ const FormikRadio: React.FC<FormikRadioProps> = ({
     setValue(innerValue);
   }, 500);
 
+
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement>, selectedValue: string) => {
       setInnerValue(e.target.value);
-      if (onChange) onChange(e);
+
+      const selectedObj = options.find(item => item.value === selectedValue);
+
+      if (onChange) onChange(e, selectedValue, selectedObj);
       debouncingCallback();
     },
     [...depenpencyArray, onChange]
