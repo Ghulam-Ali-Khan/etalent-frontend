@@ -3,15 +3,20 @@ import FormikDatePicker from '@/components/form/FormikDatepicker';
 import FormikField from '@/components/form/FormikField';
 import FormikRadio from '@/components/form/FormikRadio';
 import FormikAutoCompleteSelect from '@/components/form/FormikSelect';
-import { Alert, Avatar, Grid2, Stack, Typography } from '@mui/material';
+import { Alert, Avatar, Box, Grid2, Stack, Typography } from '@mui/material';
 import AvatarImg from '@/assets/imgs/avatar-1.jpg';
 import { useState } from 'react';
 import { countriesOptions } from '@/utilis/helpers';
+import DropzoneFileUploader from './DropzoneFileUploader';
 
 const CompanyInfoStep = () => {
   const { t } = useTranslation(); // Hook for translations
 
-  const [profileLevelDesp, setProfileLevelDesp] = useState('{Description}')
+  const [profileLevelDesp, setProfileLevelDesp] = useState('{Description}');
+
+  const handleFileUpload = (file: File) => {
+    console.log("Uploaded file:", file);
+  };
 
   return (
     <>
@@ -38,6 +43,11 @@ const CompanyInfoStep = () => {
       </Stack>
 
       <Alert severity="info" className='mt-2 mb-4'>{profileLevelDesp}</Alert>
+
+      <Box className="flex gap-4 my-4">
+        <DropzoneFileUploader label="Upload your Resume" onFileUpload={handleFileUpload} />
+        <DropzoneFileUploader label="Upload your LinkedIn Profile" onFileUpload={handleFileUpload} />
+      </Box>
 
       <Grid2 container spacing={2}>
         <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
