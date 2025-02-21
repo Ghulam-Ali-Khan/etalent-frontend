@@ -9,14 +9,81 @@ import { useState } from 'react';
 import { countriesOptions } from '@/utilis/helpers';
 import DropzoneFileUploader from './DropzoneFileUploader';
 
+import * as pdfjs from 'pdfjs-dist';
+import mammoth from 'mammoth';
+import { useFormikContext } from 'formik';
+
 const CompanyInfoStep = () => {
   const { t } = useTranslation(); // Hook for translations
 
+  const { setFieldValue } = useFormikContext();
+  
+
   const [profileLevelDesp, setProfileLevelDesp] = useState('{Description}');
 
-  const handleFileUpload = (file: File) => {
-    console.log("Uploaded file:", file);
+  const handleFileUpload = async (file: File) => {
+    console.log('Uploaded file:', file);
+  
+    if (file.type === 'application/pdf') {
+      extractTextFromPDF(file);
+    } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+      extractTextFromDocx(file);
+    }
   };
+
+  const extractTextFromPDF = async (file: File) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const typedarray = new Uint8Array(reader.result as ArrayBuffer);
+      const pdf = await pdfjs.getDocument({ data: typedarray }).promise;
+      let extractedText = '';
+  
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        extractedText += textContent.items.map((item: any) => item.str).join(' ') + '\n';
+      }
+  
+      parseCVText(extractedText, setFieldValue); // Pass setFieldValue
+    };
+  
+    reader.readAsArrayBuffer(file);
+  };
+
+  const extractTextFromDocx = async (file: File) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const result = await mammoth.extractRawText({ arrayBuffer: reader.result as ArrayBuffer });
+      parseCVText(result.value, setFieldValue); 
+    };
+  
+    reader.readAsArrayBuffer(file);
+  };
+
+  const parseCVText = (text: string, setFieldValue: any) => {  
+    console.log('Extracted CV Text:', text); 
+
+    let nameMatch = text.match(/(?:First Name|Full Name|Given Name)\s*([\w\s]+)/i);
+
+
+    if (!nameMatch) {
+        nameMatch = text.match(/^([A-Za-z]+(?:\s[A-Za-z]+){1,2})/m);
+    }
+
+    const passportMatch = text.match(/Passport Number:\s*([\w\d]+)/i);
+    const nationalityMatch = text.match(/Nationality:\s*([A-Za-z\s]+)/i);
+  
+    console.log('Extracted Name:', nameMatch ? nameMatch[1] : 'Not found'); 
+
+    if (nameMatch) {
+      const [firstName, ...lastName] = nameMatch[1].trim().split(' ');
+      setFieldValue('firstName', firstName || '');
+      setFieldValue('lastName', lastName.join(' ') || '');
+    }
+
+    if (passportMatch) setFieldValue('passportNumber', passportMatch[1]);
+    if (nationalityMatch) setFieldValue('nationality', nationalityMatch[1]);
+};
 
   return (
     <>
