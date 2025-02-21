@@ -1,6 +1,6 @@
-import { privateAPI } from './index';
+import { publicAPI } from '../public/index';
 
-export const profileAPI = privateAPI.injectEndpoints({
+export const profileAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
     createProfile: build.mutation({
       query: (body) => ({

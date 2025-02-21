@@ -9,7 +9,7 @@ import LinksStep from './LinksStep';
 import SkillsStep from './SkillsStep';
 import EducationStep from './EducationStep';
 import { stepsInitials, stepsValidations } from '../../utilis/formUtilis';
-import { useCreateProfileMutation } from '@/services/private/profile';
+import { useCreateProfileMutation } from '@/services/public/profile';
 
 const StepperForm = () => {
     const [step, setStep] = useState(0);

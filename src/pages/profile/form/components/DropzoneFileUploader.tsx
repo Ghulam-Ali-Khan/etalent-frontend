@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Paper, Typography, IconButton, Box, Button } from "@mui/material";
+import { Paper, Typography, IconButton, Box } from "@mui/material";
 import { CloudUpload, Delete } from "@mui/icons-material";
 
 interface FileUploadBoxProps {
