@@ -10,18 +10,19 @@ import SkillsStep from './SkillsStep';
 import EducationStep from './EducationStep';
 import { stepsInitials, stepsValidations } from '../../utilis/formUtilis';
 import { useCreateProfileMutation } from '@/services/public/profile';
+import ReviewApplication from './ReviewApplication';
 
 const StepperForm = () => {
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(6);
 
     const [createProfileMutation] = useCreateProfileMutation();
 
     // handlers
     const handleSubmit = async (values: any) => {
 
-        const  userId = localStorage.getItem('userId')
+        const userId = localStorage.getItem('userId')
 
-        await createProfileMutation({...values, userId});
+        await createProfileMutation({ ...values, userId });
 
     }
 
@@ -41,6 +42,7 @@ const StepperForm = () => {
                             {step === 3 && <ExperienceStep />}
                             {step === 4 && <SkillsStep />}
                             {step === 5 && <LinksStep />}
+                            {step === 6 && <ReviewApplication />}
 
                             <Stack direction={'row'} justifyContent={'space-between'} mt={4}>
 
@@ -56,12 +58,12 @@ const StepperForm = () => {
                                 <Button variant='contained'
                                     type='submit'
                                 // onClick={() => {
-                                //     if (step < 6) {
+                                //     if (step <= 5) {
                                 //         setStep(prev => 1 + prev)
                                 //     }
                                 // }}
                                 >
-                                    Next
+                                    {step >= 6 ? 'Submit' : 'Next'}
                                 </Button>
                             </Stack>
                         </Grid2>

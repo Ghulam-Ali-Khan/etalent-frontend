@@ -30,16 +30,17 @@ export const companyInfoStepInitials = {
     firstName: "",
     lastName: "",
     profileLevel: "",
-    dateOfBirth: null, // Since it's nullable
+    dateOfBirth: '2025-02-21T00:00:00Z', // Since it's nullable
     nationality: "",
     language: "",
     workCountry: "",
     availabilities: [],
     artifactUrl: '',
-    willingToTravel: 0,
-    willingToRelocate: 0,
+    willingToTravel: false,
+    willingToRelocate: false,
+    idNumber:'',
+    passportNumber:''
 };
-
 
 export const stepsValidations = [
     companyInfoStepValidation

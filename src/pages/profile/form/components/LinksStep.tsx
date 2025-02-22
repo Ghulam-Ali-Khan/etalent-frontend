@@ -39,14 +39,6 @@ const LinksStep = () => {
                     isRequired
                 />
 
-                <Stack spacing={2} direction={'row'} justifyContent={'end'}>
-                    <Button variant='outlined'>
-                        Cancel
-                    </Button>
-                    <Button variant='contained'>
-                        Submit
-                    </Button>
-                </Stack>
             </Stack>
         </>
     )

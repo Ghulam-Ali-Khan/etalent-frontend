@@ -13,31 +13,29 @@ const AddressStep = () => {
             <Stack spacing={2}>
 
                 <FormikField
-                    name='street'
+                    name='address1'
                     label='Street'
                     isRequired
                 />
 
                 <FormikField
-                    name='flat'
+                    name='address2'
                     label='Flat/Suit No.'
                     isRequired
                 />
 
                 <Grid2 container spacing={2}>
                     <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
-                        <FormikAutoCompleteSelect
+                        <FormikField
                             name='city'
                             label='City'
-                            options={[]}
                             isRequired
                         />
                     </Grid2>
                     <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
-                        <FormikAutoCompleteSelect
+                        <FormikField
                             name='state'
                             label='State'
-                            options={[]}
                             isRequired
                         />
                     </Grid2>
@@ -45,7 +43,7 @@ const AddressStep = () => {
 
 
                 <FormikField
-                    name='zipcode'
+                    name='postalCode'
                     label='Zip code'
                     isRequired
                 />

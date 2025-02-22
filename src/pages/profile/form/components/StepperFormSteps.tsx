@@ -29,7 +29,7 @@ const StepperFormSteps = ({ step }: { step: any }) => {
         <Box
             bgcolor="#F1F1F1"
             padding={2}
-            minHeight={'100%'}
+            maxHeight={'90vh'}
             display="flex"
             flexDirection="column"
             alignItems={'center'}
@@ -38,7 +38,7 @@ const StepperFormSteps = ({ step }: { step: any }) => {
                 sx={{
                     flexGrow: 1,
                     "& .MuiStepConnector-line": {
-                        minHeight: "50px", // Ensures connector lines are properly spaced
+                        minHeight: "55px", // Ensures connector lines are properly spaced
                     }
                 }}
             >
