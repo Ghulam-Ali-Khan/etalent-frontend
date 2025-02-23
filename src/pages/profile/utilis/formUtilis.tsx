@@ -43,6 +43,40 @@ export const educationValidationSchema = yup.object({
     state: yup.string().required('Province/State is required'),
 });
 
+export const experienceValidationSchema = yup.object({
+    title: yup.string().required('Title is required'),
+    employmentType: yup.string().required('Employment Type is required'),
+    company: yup.string().required('Company is required'),
+    city: yup.string().required('City/State is required'),
+    industry: yup.string().required('Industry is required'),
+    country: yup.string().required('Country is required'),
+    currentlyWorking: yup.boolean(),
+    description: yup.string().nullable()
+});
+
+const addressValidationSchema = yup.object({
+    address1: yup.string().required('Street is required'),
+    address2: yup.string().required('Flat/Suit No. is required'),
+    city: yup.string().required('City is required'),
+    state: yup.string().required('State is required'),
+    postalCode: yup.string()
+        .matches(/^\d{5}(-\d{4})?$/, 'Invalid Zip Code') // Supports 5-digit or 9-digit format (e.g., 12345 or 12345-6789)
+        .required('Zip Code is required'),
+});
+
+export const experienceInitialValues = {
+    title: '',
+    employmentType: '',
+    company: '',
+    city: '',
+    industry: '',
+    country: '',
+    currentlyWorking: false,
+    description: ''
+};
+
+
+
 export const educationInitialValues = {
     school: '',
     degree: '',
@@ -69,14 +103,38 @@ export const companyInfoStepInitials = {
     artifactUrl: '',
     willingToTravel: false,
     willingToRelocate: false,
-    idNumber:'',
-    passportNumber:''
+    idNumber: '',
+    passportNumber: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    facebook: '',
+    twitter: '',
+    linkedin: '',
+    instagram: '',
 };
 
+
+
+
 export const stepsValidations = [
-    companyInfoStepValidation
-]
+    companyInfoStepValidation,
+    addressValidationSchema,
+    {},
+    {},
+    {},
+    {}
+];
+
+
 
 export const stepsInitials = [
-    companyInfoStepInitials
-]
+    companyInfoStepInitials,
+    addressValidationSchema,
+    {},
+    {},
+    {},
+    {}
+];

@@ -9,9 +9,16 @@ export const educationAPI = publicAPI.injectEndpoints({
         body: [body],
       }),
     }),
+    getAllEducation: build.query({
+      query: (id) => ({
+        url: `Education/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
 export const {
   useCreateEducationMutation,
+  useGetAllEducationQuery
 } = educationAPI;

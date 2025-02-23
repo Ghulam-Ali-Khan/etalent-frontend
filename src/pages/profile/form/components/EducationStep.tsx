@@ -1,10 +1,16 @@
-import { Divider, IconButton, Stack, Toolbar, Typography } from '@mui/material'
 import React from 'react'
-import ExperienceFormModal from './ExperienceFormModal'
+import moment from 'moment'
 import { Delete, Edit } from '@mui/icons-material'
+import { Box, Divider, IconButton, Stack, Toolbar, Typography } from '@mui/material'
+import ExperienceFormModal from './ExperienceFormModal'
 import EducationFormModal from './EducationFormModal'
+import { useGetAllEducationQuery } from '@/services/public/education'
 
 const EducationStep = () => {
+    const userId = localStorage.getItem('userId');
+
+    const { data: educationData } = useGetAllEducationQuery(userId);
+
     return (
         <>
             <Toolbar className='flex justify-between'>
@@ -19,41 +25,56 @@ const EducationStep = () => {
 
             <Stack className='px-6 pt-2'>
 
+                {
+                    educationData?.data?.length > 0 ? (
+                        educationData.data.map(item => (
+                            <>
+                                <Stack spacing={1}>
+                                    <Stack direction={'row'} justifyContent={'space-between'}>
+                                        <Typography variant='h6'>
+                                            {item?.school}
+                                        </Typography>
 
-                <Stack spacing={1}>
-                    <Stack direction={'row'} justifyContent={'space-between'}>
-                        <Typography variant='h6'>
-                            National University of Sciences & Technology (NUST)
-                        </Typography>
+                                        <Stack direction={'row'} spacing={2}>
+                                            <IconButton>
+                                                <Edit />
+                                            </IconButton>
+                                            <IconButton>
+                                                <Delete />
+                                            </IconButton>
+                                        </Stack>
+                                    </Stack>
 
-                        <Stack direction={'row'} spacing={2}>
-                            <IconButton>
-                                <Edit />
-                            </IconButton>
-                            <IconButton>
-                                <Delete />
-                            </IconButton>
-                        </Stack>
-                    </Stack>
+                                    <Typography variant='body2'>
+                                        {item?.schoolUrl}
+                                    </Typography>
+                                    <Typography variant='body2' color='secondary'>
+                                        {item?.degree}, {item?.fieldOfStudy}
+                                    </Typography>
+                                    <Typography variant='body2' color='secondary'>
+                                        {moment(item?.startDate).format('MMM YYYY')} - {moment(item?.endDate).format('MMM YYYY')}
+                                    </Typography>
+                                    <Typography variant='body2' color='secondary'>
+                                        {item?.grade}
+                                    </Typography>
+                                    <Typography variant='body2' color='secondary'>
+                                        {item?.city}, {item?.country}
+                                    </Typography>
 
-                    <Typography variant='body2'>
-                        https://nust.edu.pk/
-                    </Typography>
-                    <Typography variant='body2' color='secondary'>
-                        BSCS,Computer Science
-                    </Typography>
-                    <Typography variant='body2' color='secondary'>
-                        Jan 2019-Jan 2021
-                    </Typography>
-                    <Typography variant='body2' color='secondary'>
-                        3.89
-                    </Typography>
-                    <Typography variant='body2' color='secondary'>
-                        Islamabad,Pakistan
-                    </Typography>
+                                    <Divider className='my-4' />
+                                </Stack>
+                            </>
+                        ))
+                    ) : (
+                        <Box minHeight={'400px'} className='flex justify-center align-center'>
+                            <Typography variant='h6'>
+                                No Data Found
+                            </Typography>
+                        </Box>
+                    )
+                }
 
-                    <Divider className='my-4'/>
-                </Stack>
+
 
             </Stack>
 

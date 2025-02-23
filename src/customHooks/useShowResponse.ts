@@ -5,11 +5,12 @@ const useShowResponse = () => {
     const { enqueueSnackbar } = useSnackbar();
 
     // Function to show snackbar messages
-    const showResponse = (response: ApiResponseTypes, successMessage: string, errorMessage?: string) => {
+    const showResponse = (response: ApiResponseTypes, successMessage: string, errorMessage?: string, additionalFunc?: Function) => {
         if (response?.success) {
             enqueueSnackbar(successMessage, { variant: 'success' });
+            if (additionalFunc) additionalFunc();
         } else {
-            enqueueSnackbar(response?.message || errorMessage  , { variant: 'error' });
+            enqueueSnackbar(response?.message || errorMessage, { variant: 'error' });
         }
     };
 

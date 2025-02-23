@@ -8,26 +8,28 @@ import ExperienceStep from './ExperienceStep';
 import LinksStep from './LinksStep';
 import SkillsStep from './SkillsStep';
 import EducationStep from './EducationStep';
-import { stepsInitials, stepsValidations } from '../../utilis/formUtilis';
+import { companyInfoStepValidation, stepsInitials, stepsValidations } from '../../utilis/formUtilis';
 import { useCreateProfileMutation } from '@/services/public/profile';
 import ReviewApplication from './ReviewApplication';
 
 const StepperForm = () => {
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(0);
 
     const [createProfileMutation] = useCreateProfileMutation();
 
     // handlers
     const handleSubmit = async (values: any) => {
 
-        const userId = localStorage.getItem('userId')
-
-        await createProfileMutation({ ...values, userId });
+        if(step === 6){   
+            const userId = localStorage.getItem('userId')
+            
+            await createProfileMutation({ ...values, userId });
+        }
 
     }
 
     return (
-        <Formik initialValues={stepsInitials[step]} validationSchema={stepsValidations[step]} onSubmit={handleSubmit}>
+        <Formik initialValues={companyInfoStepValidation} validationSchema={stepsValidations[step]} onSubmit={handleSubmit}>
             {() => (
                 <Form>
                     <Grid2 container spacing={2}>
@@ -57,11 +59,11 @@ const StepperForm = () => {
                                 </Button>
                                 <Button variant='contained'
                                     type='submit'
-                                // onClick={() => {
-                                //     if (step <= 5) {
-                                //         setStep(prev => 1 + prev)
-                                //     }
-                                // }}
+                                    onClick={() => {
+                                        if (step <= 5) {
+                                            setStep(prev => 1 + prev)
+                                        }
+                                    }}
                                 >
                                     {step >= 6 ? 'Submit' : 'Next'}
                                 </Button>

@@ -4,13 +4,28 @@ import FormikDatePicker from '@/components/form/FormikDatepicker';
 import FormikField from '@/components/form/FormikField';
 import FormikTextEditor from '@/components/form/FormikTextEditor';
 import FormikWrapper from '@/components/form/FormikWrapper';
+import useShowResponse from '@/customHooks/useShowResponse';
+import { useCreateExperienceMutation } from '@/services/public/experience';
 import { Add } from '@mui/icons-material';
 import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
 import { useState } from 'react'
+import { experienceInitialValues, experienceValidationSchema } from '../../utilis/formUtilis';
 
 const ExperienceFormModal = () => {
 
     const [isModalOpen, setModalStatus] = useState(false);
+
+    const { showResponse } = useShowResponse()
+
+    const [createExperience] = useCreateExperienceMutation();
+
+    const handleSubmit = async (values: any) => {
+        const userId = localStorage.getItem('userId');
+        const response = await createExperience({ ...values, userId });
+
+        showResponse(response?.data, 'Experience added successfully', 'Experience process failed', () => setModalStatus(false))
+    }
+
 
     return (
         <>
@@ -20,7 +35,7 @@ const ExperienceFormModal = () => {
 
             <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Add Experience'>
                 <Box minWidth={'100%'}>
-                    <FormikWrapper formInitials={{}} submitFunc={() => { }}>
+                    <FormikWrapper formInitials={experienceInitialValues} formSchema={experienceValidationSchema} submitFunc={handleSubmit}>
                         <Stack spacing={2}>
 
                             <FormikField
@@ -30,7 +45,7 @@ const ExperienceFormModal = () => {
                             />
 
                             <FormikField
-                                name='employement_type'
+                                name='employmentType'
                                 label='Employeement Type'
                                 isRequired
                             />
@@ -69,7 +84,7 @@ const ExperienceFormModal = () => {
                             </Grid2>
                             <Box my={3}>
                                 <FormikCheckbox
-                                    name='working'
+                                    name='currentlyWorking'
                                     label='Currently Working'
                                 />
                             </Box>
@@ -83,7 +98,7 @@ const ExperienceFormModal = () => {
                                 <Button variant='outlined'>
                                     Cancel
                                 </Button>
-                                <Button variant='contained'>
+                                <Button type='submit' variant='contained'>
                                     Add
                                 </Button>
                             </Stack>

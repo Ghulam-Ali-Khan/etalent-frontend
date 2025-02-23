@@ -10,16 +10,21 @@ import { Add } from '@mui/icons-material';
 import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
 import { useState } from 'react'
 import { educationInitialValues, educationValidationSchema } from '../../utilis/formUtilis';
+import useShowResponse from '@/customHooks/useShowResponse';
 
 const EducationFormModal = () => {
 
     const [isModalOpen, setModalStatus] = useState(false);
 
+    const { showResponse } = useShowResponse()
+
     const [createEducation] = useCreateEducationMutation();
 
     const handleSubmit = async (values: any) => {
         const userId = localStorage.getItem('userId');
-        await createEducation({ ...values, userId });
+        const response = await createEducation({ ...values, userId });
+
+        showResponse(response?.data, 'Education added successfully', 'Education process failed', () => setModalStatus(false))
     }
 
     return (

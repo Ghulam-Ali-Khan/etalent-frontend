@@ -1,9 +1,16 @@
-import { Divider, IconButton, Stack, Toolbar, Typography } from '@mui/material'
+import { Box, Divider, IconButton, Stack, Toolbar, Typography } from '@mui/material'
 import React from 'react'
 import ExperienceFormModal from './ExperienceFormModal'
 import { Delete, Edit } from '@mui/icons-material'
+import { useGetAllExperienceQuery } from '@/services/public/experience'
 
 const ExperienceStep = () => {
+    const userId = localStorage.getItem('userId');
+
+    const { data: experienceData } = useGetAllExperienceQuery(userId);
+
+    console.log('experienceData ==> ', experienceData);
+
     return (
         <>
             <Toolbar className='flex justify-between'>
@@ -18,47 +25,48 @@ const ExperienceStep = () => {
 
             <Stack className='px-6 pt-2'>
 
+                {
+                    experienceData?.data?.length > 0 ? (
+                        experienceData.data.map(item => (
+                            <>
+                                <Stack spacing={1}>
+                                    <Stack direction={'row'} justifyContent={'space-between'}>
+                                        <Typography variant='h6'>
+                                            {item?.title}
+                                        </Typography>
 
-                <Stack spacing={1}>
-                    <Stack direction={'row'} justifyContent={'space-between'}>
-                        <Typography variant='h6'>
-                            UI/UX Designer
-                        </Typography>
+                                        <Stack direction={'row'} spacing={2}>
+                                            <IconButton>
+                                                <Edit />
+                                            </IconButton>
+                                            <IconButton>
+                                                <Delete />
+                                            </IconButton>
+                                        </Stack>
+                                    </Stack>
 
-                        <Stack direction={'row'} spacing={2}>
-                            <IconButton>
-                                <Edit />
-                            </IconButton>
-                            <IconButton>
-                                <Delete />
-                            </IconButton>
-                        </Stack>
-                    </Stack>
+                                    <Typography variant='body2'>
+                                        {item?.company} · {item?.employmentType}
+                                    </Typography>
+                                    <Typography variant='body2' color='secondary'>
+                                        {item?.city},{item?.country}
+                                    </Typography>
 
-                    <Typography variant='body2'>
-                        Behance Collaboration · Full-time
-                    </Typography>
-                    <Typography variant='body2' color='secondary'>
-                        Remote
-                    </Typography>
-                    <Typography variant='body2' color='secondary'>
-                        Islamabad,Pakistan
-                    </Typography>
-                    <Typography variant='body2' color='secondary'>
-                        Participated in design challenges and collaborative projects on Behance, contributing to innovative UI/UX solutions.
-                        Collaborated with international designers to create and refine user interfaces for web and mobile applications.
-                        Conducted online critique sessions to provide and receive feedback, improving design quality and consistency.
-                        Presented design concepts and iterations through virtual meetings, effectively communicating design ideas and incorporating stakeholder feedback.
-                    </Typography>
+                                    {item?.description}
 
-
-                    <Divider className='my-4' />
-                </Stack>
-
+                                    <Divider className='my-4' />
+                                </Stack>
+                            </>
+                        ))
+                    ) : (
+                        <Box minHeight={'400px'} className='flex justify-center align-center'>
+                            <Typography variant='h6'>
+                                No Data Found
+                            </Typography>
+                        </Box>
+                    )
+                }
             </Stack>
-
-
-
         </>
     )
 }
