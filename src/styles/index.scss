@@ -4,10 +4,15 @@
 
 // Custom SCSS styles
 
-body{
+body {
   background-color: #F5F5F5;
 }
 
-button{
+button {
   text-transform: capitalize !important;
+}
+
+.title-header {
+  padding: 5px 10px;
+  border-bottom: 1px solid #E7E7E7
 }

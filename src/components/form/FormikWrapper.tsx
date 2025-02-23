@@ -17,7 +17,7 @@ function FormikWrapper<T>({
         await submitFunc(values, actions);
       }}
     >
-      {() => <Form>{children}</Form>}
+      {({ values, errors }) => <Form>{console.log('values , errors ==> ', values, errors)}{children}</Form>}
     </Formik>
   );
 }

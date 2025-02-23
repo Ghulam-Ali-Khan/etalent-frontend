@@ -13,7 +13,7 @@ import { useCreateProfileMutation } from '@/services/public/profile';
 import ReviewApplication from './ReviewApplication';
 
 const StepperForm = () => {
-    const [step, setStep] = useState(6);
+    const [step, setStep] = useState(2);
 
     const [createProfileMutation] = useCreateProfileMutation();
 

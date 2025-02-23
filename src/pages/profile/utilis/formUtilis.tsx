@@ -26,6 +26,37 @@ export const companyInfoStepValidation = yup.object().shape({
     workCountry: yup.string().required("Work Country is required"),
 });
 
+
+export const educationValidationSchema = yup.object({
+    school: yup.string().required('University is required'),
+    degree: yup.string().required('Degree is required'),
+    startDate: yup.date().nullable().required('Start Date is required'),
+    schoolUrl: yup.string().url('Enter a valid URL').required('School / University URL is required'),
+    fieldOfStudy: yup.string().required('Field of Study is required'),
+    endDate: yup.date()
+        .nullable()
+        .min(yup.ref('startDate'), 'End Date cannot be before Start Date'),
+    currentlyEnrolled: yup.boolean(),
+    grade: yup.string().required('Grade/CGPA is required'),
+    city: yup.string().required('City is required'),
+    country: yup.string().nullable().required('Country is required'),
+    state: yup.string().required('Province/State is required'),
+});
+
+export const educationInitialValues = {
+    school: '',
+    degree: '',
+    startDate: null,
+    schoolUrl: '',
+    fieldOfStudy: '',
+    endDate: null,
+    currentlyEnrolled: false,
+    grade: '',
+    city: '',
+    country: null,
+    state: ''
+};
+
 export const companyInfoStepInitials = {
     firstName: "",
     lastName: "",

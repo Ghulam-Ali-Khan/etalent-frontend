@@ -2,14 +2,25 @@ import CommonModal from '@/components/common/CommonModal';
 import FormikCheckbox from '@/components/form/FormikCheckbox';
 import FormikDatePicker from '@/components/form/FormikDatepicker';
 import FormikField from '@/components/form/FormikField';
+import FormikAutoCompleteSelect from '@/components/form/FormikSelect';
 import FormikWrapper from '@/components/form/FormikWrapper';
+import { useCreateEducationMutation } from '@/services/public/education';
+import { countriesOptions } from '@/utilis/helpers';
 import { Add } from '@mui/icons-material';
 import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
 import { useState } from 'react'
+import { educationInitialValues, educationValidationSchema } from '../../utilis/formUtilis';
 
 const EducationFormModal = () => {
 
     const [isModalOpen, setModalStatus] = useState(false);
+
+    const [createEducation] = useCreateEducationMutation();
+
+    const handleSubmit = async (values: any) => {
+        const userId = localStorage.getItem('userId');
+        await createEducation({ ...values, userId });
+    }
 
     return (
         <>
@@ -19,13 +30,13 @@ const EducationFormModal = () => {
 
             <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Add Education'>
                 <Box minWidth={'100%'}>
-                    <FormikWrapper formInitials={{}} submitFunc={() => { }}>
+                    <FormikWrapper formInitials={educationInitialValues} formSchema={educationValidationSchema} submitFunc={handleSubmit}>
                         <>
                             <Grid2 container spacing={2}>
                                 <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                                     <Stack spacing={2}>
                                         <FormikField
-                                            name='university'
+                                            name='school'
                                             label='University'
                                             isRequired
                                         />
@@ -37,7 +48,7 @@ const EducationFormModal = () => {
                                         />
 
                                         <FormikDatePicker
-                                            name='start_date'
+                                            name='startDate'
                                             label='Start Date'
                                             isRequired
                                         />
@@ -46,19 +57,19 @@ const EducationFormModal = () => {
                                 <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                                     <Stack spacing={2}>
                                         <FormikField
-                                            name='university'
+                                            name='schoolUrl'
                                             label='School / University URL'
                                             isRequired
                                         />
 
                                         <FormikField
-                                            name='study'
+                                            name='fieldOfStudy'
                                             label='Field of study'
                                             isRequired
                                         />
 
                                         <FormikDatePicker
-                                            name='end_date'
+                                            name='endDate'
                                             label='End Date'
                                             isRequired
                                         />
@@ -67,7 +78,7 @@ const EducationFormModal = () => {
                             </Grid2>
                             <Box my={3}>
                                 <FormikCheckbox
-                                    name='enrolled'
+                                    name='currentlyEnrolled'
                                     label='Currently Enrolled'
                                 />
                             </Box>
@@ -87,9 +98,10 @@ const EducationFormModal = () => {
                                             isRequired
                                         />
 
-                                        <FormikDatePicker
+                                        <FormikAutoCompleteSelect
                                             name='country'
                                             label='Country'
+                                            options={countriesOptions}
                                             isRequired
                                         />
                                     </Stack>
@@ -97,7 +109,7 @@ const EducationFormModal = () => {
                                 <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                                     <Stack spacing={2}>
                                         <FormikField
-                                            name='province'
+                                            name='state'
                                             label='Province/State'
                                             isRequired
                                         />
@@ -111,7 +123,7 @@ const EducationFormModal = () => {
                                 <Button variant='outlined'>
                                     Cancel
                                 </Button>
-                                <Button variant='contained'>
+                                <Button variant='contained' type='submit'>
                                     Add
                                 </Button>
                             </Stack>

@@ -1,13 +1,21 @@
-import StyledContainer from '@/components/common/StyledContainer'
-import { Container } from '@mui/material'
-import React from 'react'
-import Header from './components/Header'
+import { Box, Container } from '@mui/material'
+import ProfileInfo from './components/ProfileInfo'
+import SkillsSection from './components/SkillsSection'
+import ExperienceSection from './components/ExperienceSection'
+import EducationSection from './components/EducationSection'
+import Header from '@/components/layout/Header'
 
 const ProfilePage = () => {
     return (
-        <StyledContainer >
+        <>
             <Header />
-        </StyledContainer>
+            <Box className="w-full px-[150px]" >
+                <ProfileInfo />
+                <SkillsSection />
+                <ExperienceSection />
+                <EducationSection />
+            </Box>
+        </>
     )
 }
 
