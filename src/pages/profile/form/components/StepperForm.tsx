@@ -8,7 +8,7 @@ import ExperienceStep from './ExperienceStep';
 import LinksStep from './LinksStep';
 import SkillsStep from './SkillsStep';
 import EducationStep from './EducationStep';
-import { companyInfoStepInitials, companyInfoStepValidation, stepsInitials, stepsValidations } from '../../utilis/formUtilis';
+import { companyInfoStepInitials, stepsValidations } from '../../utilis/formUtilis';
 import { useCreateProfileMutation } from '@/services/public/profile';
 import ReviewApplication from './ReviewApplication';
 import { isEmptyObject } from '@/utilis/helpers';
@@ -61,6 +61,8 @@ const StepperForm = () => {
                                 <Button variant='contained'
                                     onClick={async () => {
                                         const response = await validateForm();
+
+                                        console.log('response ==> ', response);
 
                                         if (isEmptyObject(response)) {
                                             if (step <= 5) {

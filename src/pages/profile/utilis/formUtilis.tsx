@@ -70,6 +70,10 @@ const addressValidationSchema = yup.object({
         .required('Zip Code is required'),
 });
 
+const socialLinksValidationSchema = yup.object({
+    linkedin: yup.string().required('Linkedin is required'),
+});
+
 export const experienceInitialValues = {
     title: '',
     employmentType: '',
@@ -128,10 +132,10 @@ export const companyInfoStepInitials = {
 export const stepsValidations = [
     companyInfoStepValidation,
     addressValidationSchema,
-    {},
-    {},
-    {},
-    {}
+    null,
+    null,
+    null,
+    socialLinksValidationSchema
 ];
 
 

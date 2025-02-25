@@ -16,27 +16,24 @@ const LinksStep = () => {
 
             <Stack spacing={2} mt={2}>
                 <FormikField
-                    name='facebook'
-                    label='Facebook'
-                    isRequired
-                />
-
-                <FormikField
-                    name='linkdin'
+                    name='linkedin'
                     label='Linkedin'
                     isRequired
                 />
 
                 <FormikField
+                    name='facebook'
+                    label='Facebook'
+                />
+
+                <FormikField
                     name='twitter'
                     label='Twitter'
-                    isRequired
                 />
 
                 <FormikField
                     name='instagram'
                     label='Instagram'
-                    isRequired
                 />
 
             </Stack>
