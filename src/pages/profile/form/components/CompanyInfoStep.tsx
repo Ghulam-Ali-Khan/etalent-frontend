@@ -12,18 +12,20 @@ import DropzoneFileUploader from './DropzoneFileUploader';
 import * as pdfjs from 'pdfjs-dist';
 import mammoth from 'mammoth';
 import { useFormikContext } from 'formik';
+import FormikAvatar from '@/components/form/FormikAvatar';
 
 const CompanyInfoStep = () => {
   const { t } = useTranslation(); // Hook for translations
 
-  const { setFieldValue } = useFormikContext();
-  
-
   const [profileLevelDesp, setProfileLevelDesp] = useState('{Description}');
 
+  const { setFieldValue } = useFormikContext();
+
+
+  // Handlers
   const handleFileUpload = async (file: File) => {
     console.log('Uploaded file:', file);
-  
+
     if (file.type === 'application/pdf') {
       extractTextFromPDF(file);
     } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
@@ -37,16 +39,16 @@ const CompanyInfoStep = () => {
       const typedarray = new Uint8Array(reader.result as ArrayBuffer);
       const pdf = await pdfjs.getDocument({ data: typedarray }).promise;
       let extractedText = '';
-  
+
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
         extractedText += textContent.items.map((item: any) => item.str).join(' ') + '\n';
       }
-  
+
       parseCVText(extractedText, setFieldValue); // Pass setFieldValue
     };
-  
+
     reader.readAsArrayBuffer(file);
   };
 
@@ -54,26 +56,26 @@ const CompanyInfoStep = () => {
     const reader = new FileReader();
     reader.onload = async () => {
       const result = await mammoth.extractRawText({ arrayBuffer: reader.result as ArrayBuffer });
-      parseCVText(result.value, setFieldValue); 
+      parseCVText(result.value, setFieldValue);
     };
-  
+
     reader.readAsArrayBuffer(file);
   };
 
-  const parseCVText = (text: string, setFieldValue: any) => {  
-    console.log('Extracted CV Text:', text); 
+  const parseCVText = (text: string, setFieldValue: any) => {
+    console.log('Extracted CV Text:', text);
 
     let nameMatch = text.match(/(?:First Name|Full Name|Given Name)\s*([\w\s]+)/i);
 
 
     if (!nameMatch) {
-        nameMatch = text.match(/^([A-Za-z]+(?:\s[A-Za-z]+){1,2})/m);
+      nameMatch = text.match(/^([A-Za-z]+(?:\s[A-Za-z]+){1,2})/m);
     }
 
     const passportMatch = text.match(/Passport Number:\s*([\w\d]+)/i);
     const nationalityMatch = text.match(/Nationality:\s*([A-Za-z\s]+)/i);
-  
-    console.log('Extracted Name:', nameMatch ? nameMatch[1] : 'Not found'); 
+
+    console.log('Extracted Name:', nameMatch ? nameMatch[1] : 'Not found');
 
     if (nameMatch) {
       const [firstName, ...lastName] = nameMatch[1].trim().split(' ');
@@ -83,13 +85,13 @@ const CompanyInfoStep = () => {
 
     if (passportMatch) setFieldValue('passportNumber', passportMatch[1]);
     if (nationalityMatch) setFieldValue('nationality', nationalityMatch[1]);
-};
+  };
 
   return (
     <>
       <Typography variant="h4">{t('company_info')}</Typography>
       <Stack direction={'row'} gap={2} className="my-6">
-        <Avatar src={AvatarImg} sx={{ width: 100, height: 100 }} />
+        <FormikAvatar name="artifactUrl" />
 
         <Stack spacing={2}>
           <Typography variant="body1">{t('profile_level')}*</Typography>
@@ -122,7 +124,7 @@ const CompanyInfoStep = () => {
             <FormikField name="firstName" label={t('first_name')} isRequired />
             <FormikDatePicker name="dateOfBirth" label={t('dob')} isRequired />
             <FormikField name="language" label={t('language')} isRequired />
-            <FormikField name="passportNumber" label={t('passport')} isRequired />
+            <FormikField name="passportNumber" label={t('passport')} />
           </Stack>
         </Grid2>
         <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
@@ -130,7 +132,7 @@ const CompanyInfoStep = () => {
             <FormikField name="lastName" label={t('last_name')} isRequired />
             <FormikAutoCompleteSelect name="nationality" label={t('nationality')} options={countriesOptions} isRequired />
             <FormikAutoCompleteSelect name="workCountry" label={t('work_country')} options={countriesOptions} isRequired />
-            <FormikField name="idNumber" label={t('id_number')} isRequired />
+            <FormikField name="idNumber" label={t('id_number')} />
           </Stack>
         </Grid2>
       </Grid2>

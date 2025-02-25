@@ -8,9 +8,10 @@ import ExperienceStep from './ExperienceStep';
 import LinksStep from './LinksStep';
 import SkillsStep from './SkillsStep';
 import EducationStep from './EducationStep';
-import { companyInfoStepValidation, stepsInitials, stepsValidations } from '../../utilis/formUtilis';
+import { companyInfoStepInitials, companyInfoStepValidation, stepsInitials, stepsValidations } from '../../utilis/formUtilis';
 import { useCreateProfileMutation } from '@/services/public/profile';
 import ReviewApplication from './ReviewApplication';
+import { isEmptyObject } from '@/utilis/helpers';
 
 const StepperForm = () => {
     const [step, setStep] = useState(0);
@@ -20,17 +21,17 @@ const StepperForm = () => {
     // handlers
     const handleSubmit = async (values: any) => {
 
-        if(step === 6){   
+        if (step === 6) {
             const userId = localStorage.getItem('userId')
-            
+
             await createProfileMutation({ ...values, userId });
         }
 
     }
 
     return (
-        <Formik initialValues={companyInfoStepValidation} validationSchema={stepsValidations[step]} onSubmit={handleSubmit}>
-            {() => (
+        <Formik initialValues={companyInfoStepInitials} validationSchema={stepsValidations[step]} onSubmit={handleSubmit}>
+            {({ submitForm, validateForm, setTouched }) => (
                 <Form>
                     <Grid2 container spacing={2}>
                         <Grid2 size={{ xl: 3, lg: 3, md: 3, }} minHeight={'85vh'}>
@@ -58,10 +59,17 @@ const StepperForm = () => {
                                     Back
                                 </Button>
                                 <Button variant='contained'
-                                    type='submit'
-                                    onClick={() => {
-                                        if (step <= 5) {
-                                            setStep(prev => 1 + prev)
+                                    onClick={async () => {
+                                        const response = await validateForm();
+
+                                        if (isEmptyObject(response)) {
+                                            if (step <= 5) {
+                                                setStep(prev => 1 + prev)
+                                            } else {
+                                                submitForm();
+                                            }
+                                        }else{
+                                            setTouched(response);
                                         }
                                     }}
                                 >

@@ -24,6 +24,12 @@ export const companyInfoStepValidation = yup.object().shape({
     nationality: yup.string().required("Nationality is required"),
     language: yup.string().required("Language is required"),
     workCountry: yup.string().required("Work Country is required"),
+    artifactUrl: yup.mixed()
+    .test("fileType", "Only image files are allowed", (value) => {
+        if (!value) return true; // Allow empty values (optional)
+        return value instanceof File && value.type.startsWith("image/");
+    })
+    .required("Profile image is required"),
 });
 
 
@@ -100,7 +106,7 @@ export const companyInfoStepInitials = {
     language: "",
     workCountry: "",
     availabilities: [],
-    artifactUrl: '',
+    artifactUrl: null,
     willingToTravel: false,
     willingToRelocate: false,
     idNumber: '',
@@ -132,7 +138,7 @@ export const stepsValidations = [
 
 export const stepsInitials = [
     companyInfoStepInitials,
-    addressValidationSchema,
+    educationInitialValues,
     {},
     {},
     {},
