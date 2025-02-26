@@ -19,9 +19,9 @@ const CompanyInfoStep = () => {
 
   const [profileLevelDesp, setProfileLevelDesp] = useState('{Description}');
 
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, values } = useFormikContext();
 
-
+  console.log('values ==> ', values);
   // Handlers
   const handleFileUpload = async (file: File) => {
     console.log('Uploaded file:', file);
@@ -91,7 +91,7 @@ const CompanyInfoStep = () => {
     <>
       <Typography variant="h4">{t('company_info')}</Typography>
       <Stack direction={'row'} gap={2} className="my-6">
-        <FormikAvatar name="artifactUrl" />
+        <FormikAvatar name="artifactUrl" isURL />
 
         <Stack spacing={2}>
           <Typography variant="body1">{t('profile_level')}*</Typography>

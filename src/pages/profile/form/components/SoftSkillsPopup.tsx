@@ -1,16 +1,29 @@
 import CommonModal from '@/components/common/CommonModal';
-import FormikCheckbox from '@/components/form/FormikCheckbox';
-import FormikDatePicker from '@/components/form/FormikDatepicker';
 import FormikField from '@/components/form/FormikField';
-import FormikTextEditor from '@/components/form/FormikTextEditor';
 import FormikWrapper from '@/components/form/FormikWrapper';
 import { Add } from '@mui/icons-material';
-import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
+import { Box, Button, IconButton, Stack } from '@mui/material';
 import { useState } from 'react'
+import { softSkillsInitialValues, softSkillsSchema } from '../../utilis/formUtilis';
+import { useCreateSoftSkillMutation } from '@/services/public/softSkills';
+import useShowResponse from '@/customHooks/useShowResponse';
 
 const SoftSkillsPopup = () => {
-
     const [isModalOpen, setModalStatus] = useState(false);
+
+    // queries and mutations
+    const [createSoftSkill] = useCreateSoftSkillMutation();
+
+    // Custom Hook
+    const { showResponse } = useShowResponse();
+
+    // handlers
+    const handleSubmit = async (values: any) => {
+        const userId = localStorage.getItem('userId');
+        const response = await createSoftSkill({ ...values, userId });
+
+        showResponse(response?.data, 'Soft skill added successfully', 'Soft skill process failed', () => setModalStatus(false))
+    }
 
     return (
         <>
@@ -20,21 +33,21 @@ const SoftSkillsPopup = () => {
 
             <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Soft Skill' minWidth='400px'>
                 <Box minWidth={'400px'}>
-                    <FormikWrapper formInitials={{}} submitFunc={() => { }}>
+                    <FormikWrapper formInitials={softSkillsInitialValues} formSchema={softSkillsSchema} submitFunc={handleSubmit}>
                         <Stack spacing={2}>
 
                             <FormikField
-                                name='Skill'
+                                name='name'
                                 label='Skill'
                                 isRequired
                             />
 
 
                             <Stack direction={'row'} justifyContent={'end'} spacing={2}>
-                                <Button variant='outlined'>
+                                <Button variant='outlined' onClick={()=> setModalStatus(false)}>
                                     Cancel
                                 </Button>
-                                <Button variant='contained'>
+                                <Button variant='contained' type='submit'>
                                     Add
                                 </Button>
                             </Stack>

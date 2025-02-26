@@ -74,6 +74,34 @@ const socialLinksValidationSchema = yup.object({
     linkedin: yup.string().required('Linkedin is required'),
 });
 
+
+export const technicalSkillsSchema = yup.object().shape({
+    name: yup.string()
+        .trim()
+        .required("Skill is required"),
+        
+    experience: yup.number()
+        .typeError("Experience must be a number")
+        .required("Experience is required")
+        .min(0, "Experience cannot be negative")
+        .max(50, "Experience must be at most 50 years")
+});
+
+export const softSkillsSchema = yup.object().shape({
+    name: yup.string()
+        .trim()
+        .required("Skill is required"),
+});
+
+export const softSkillsInitialValues = {
+    name: "",
+};
+
+export const technicalSkillsInitialValues = {
+    name: "",
+    experience: ""
+};
+
 export const experienceInitialValues = {
     title: '',
     employmentType: '',

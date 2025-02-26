@@ -14,20 +14,44 @@ import ReviewApplication from './ReviewApplication';
 import { isEmptyObject } from '@/utilis/helpers';
 
 const StepperForm = () => {
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(6);
 
     const [createProfileMutation] = useCreateProfileMutation();
 
     // handlers
     const handleSubmit = async (values: any) => {
-
         if (step === 6) {
-            const userId = localStorage.getItem('userId')
-
-            await createProfileMutation({ ...values, userId });
+            const userId = localStorage.getItem("userId");
+    
+            // Create a FormData instance
+            const formData = new FormData();
+    
+            // Append all values to FormData
+            Object.entries(values).forEach(([key, value]) => {
+                if (value instanceof File) {
+                    // If value is a File (for file uploads)
+                    formData.append(key, value);
+                } else if (Array.isArray(value)) {
+                    // If value is an array (e.g., multiple files or selected options)
+                    value.forEach((item, index) => {
+                        formData.append(`${key}[${index}]`, item);
+                    });
+                } else {
+                    // Convert other values to strings and append
+                    formData.append(key, value?.toString() || "");
+                }
+            });
+    
+            // Append userId separately
+            if (userId) {
+                formData.append("userId", userId);
+            }
+    
+            // Call your mutation
+            await createProfileMutation(formData);
         }
-
-    }
+    };
+    
 
     return (
         <Formik initialValues={companyInfoStepInitials} validationSchema={stepsValidations[step]} onSubmit={handleSubmit}>

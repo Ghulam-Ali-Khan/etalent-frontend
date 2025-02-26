@@ -1,8 +1,11 @@
 import { Avatar, Box, Grid2, List, ListItem, Paper, Stack, Typography } from '@mui/material'
 import React from 'react';
 import AvatarImg from '@/assets/imgs/avatar-1.jpg';
+import { useFormikContext } from 'formik';
+import moment from 'moment';
 
 const ReviewApplication = () => {
+    const { values } = useFormikContext();
     return (
         <Box>
             <Typography variant='h4' mb={3}>
@@ -20,26 +23,26 @@ const ReviewApplication = () => {
                             <Grid2 size={{ xl: 9, lg: 9, md: 9, sm: 12, xs: 12 }}>
                                 <Stack spacing={2}>
                                     <Typography variant='h4'>
-                                        Ghulam Ali
+                                        {values?.firstName} {values?.lastName}
                                     </Typography>
 
                                     <Grid2 container spacing={2}>
                                         <Grid2 size={{ xl: 4, lg: 4, md: 4, sm: 12, xs: 12 }}>
                                             <Stack spacing={1}>
-                                                <LabelValuePair label={'Date of birth'} value={'25-08-2000'} />
-                                                <LabelValuePair label={'Work Country'} value={'Pakistani'} />
+                                                <LabelValuePair label={'Date of birth'} value={moment(values?.dateOfBirth).format('DD MMM YYYY')} />
+                                                <LabelValuePair label={'Work Country'} value={values?.workCountry} />
                                             </Stack>
                                         </Grid2>
                                         <Grid2 size={{ xl: 4, lg: 4, md: 4, sm: 12, xs: 12 }}>
                                             <Stack spacing={1}>
-                                                <LabelValuePair label={'Language'} value={'Urdu'} />
-                                                <LabelValuePair label={'Passport/License number'} value={'1122'} />
+                                                <LabelValuePair label={'Language'} value={values?.language} />
+                                                <LabelValuePair label={'Passport/License number'} value={values?.passportNumber} />
                                             </Stack>
                                         </Grid2>
                                         <Grid2 size={{ xl: 4, lg: 4, md: 4, sm: 12, xs: 12 }}>
                                             <Stack spacing={1}>
-                                                <LabelValuePair label={'Nationality'} value={'Pakistani'} />
-                                                <LabelValuePair label={'Last Digit Id Number'} value={'1122'} />
+                                                <LabelValuePair label={'Nationality'} value={values?.nationality} />
+                                                <LabelValuePair label={'Last Digit Id Number'} value={values?.idNumber} />
                                             </Stack>
                                         </Grid2>
                                     </Grid2>
@@ -50,17 +53,17 @@ const ReviewApplication = () => {
                     <SectionDetailed heading={'Address'}>
                         <>
                             <Stack spacing={1}>
-                                <LabelValuePair label={'Street'} value={'H# 8, St# 20 Ram nagar rajgarh Lahore'} />
-                                <LabelValuePair label={'Flat/Suit No'} value={'H# 8, St# 20 Ram nagar rajgarh Lahore'} />
+                                <LabelValuePair label={'Street'} value={values?.address1} />
+                                <LabelValuePair label={'Flat/Suit No'} value={values?.address2} />
                                 <Grid2 container spacing={2}>
                                     <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                        <LabelValuePair label={'City'} value={'Lahore'} />
+                                        <LabelValuePair label={'City'} value={values?.city} />
                                     </Grid2>
                                     <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                        <LabelValuePair label={'State'} value={'Punjab'} />
+                                        <LabelValuePair label={'State'} value={values?.state} />
                                     </Grid2>
                                     <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                        <LabelValuePair label={'Zipcode'} value={'54000'} />
+                                        <LabelValuePair label={'Zipcode'} value={values?.postalCode} />
                                     </Grid2>
 
                                 </Grid2>
@@ -155,16 +158,16 @@ const ReviewApplication = () => {
                     <SectionDetailed heading={'Social Profile URLs'}>
                         <Grid2 container spacing={2}>
                             <Grid2 size={{ xl: 3, lg: 3, md: 4, sm: 6, xs: 6 }}>
-                                <LabelValuePair label={'Facebook'} value={'facebook.com'} />
+                                <LabelValuePair label={'Facebook'} value={values?.facebook} />
                             </Grid2>
                             <Grid2 size={{ xl: 3, lg: 3, md: 4, sm: 6, xs: 6 }}>
-                                <LabelValuePair label={'Linkedin'} value={'linkedin.com'} />
+                                <LabelValuePair label={'Linkedin'} value={values?.linkedin} />
                             </Grid2>
                             <Grid2 size={{ xl: 3, lg: 3, md: 4, sm: 6, xs: 6 }}>
-                                <LabelValuePair label={'Twitter'} value={'twitter.com'} />
+                                <LabelValuePair label={'Twitter'} value={values?.twitter} />
                             </Grid2>
                             <Grid2 size={{ xl: 3, lg: 3, md: 4, sm: 6, xs: 6 }}>
-                                <LabelValuePair label={'Instagram'} value={'instagram.com'} />
+                                <LabelValuePair label={'Instagram'} value={values?.instagram} />
                             </Grid2>
                         </Grid2>
                     </SectionDetailed>
@@ -196,11 +199,11 @@ const SectionDetailed = ({ heading, children }) => {
 
 const LabelValuePair = ({ label, value }) => {
     return (
-        <>
+        value && (<>
             <Stack spacing={1}>
                 <Typography fontSize={'12px'} fontWeight={600} >{label}</Typography>
                 <Typography fontSize={'12px'} color='secondary' >{value}</Typography>
             </Stack>
-        </>
+        </>)
     )
 }
