@@ -22,3 +22,13 @@ export const countriesOptions = optionsMaker({ optionsArray: countries, label: '
 export const isEmptyObject = (obj: unknown): boolean => {
     return !!obj && typeof obj === "object" && Object.keys(obj).length === 0 && obj.constructor === Object;
 };
+
+export const saveLocalStorage = ({ label, data }: { label: string, data: any }) => {
+    localStorage.setItem(label, JSON.stringify(data));
+}
+
+export const getDataLocalStorage = ({ label }: { label: string }) => {
+    const data = JSON.parse(localStorage.getItem(label));
+
+    return data;
+}

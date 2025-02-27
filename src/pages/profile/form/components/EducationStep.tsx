@@ -5,11 +5,14 @@ import { Box, Divider, IconButton, Stack, Toolbar, Typography } from '@mui/mater
 import ExperienceFormModal from './ExperienceFormModal'
 import EducationFormModal from './EducationFormModal'
 import { useGetAllEducationQuery } from '@/services/public/education'
+import { saveLocalStorage } from '@/utilis/helpers'
 
 const EducationStep = () => {
     const userId = localStorage.getItem('userId');
 
     const { data: educationData } = useGetAllEducationQuery(userId);
+
+    saveLocalStorage({ label: 'education', data: educationData });
 
     return (
         <>

@@ -3,13 +3,14 @@ import React from 'react'
 import ExperienceFormModal from './ExperienceFormModal'
 import { Delete, Edit } from '@mui/icons-material'
 import { useGetAllExperienceQuery } from '@/services/public/experience'
+import { saveLocalStorage } from '@/utilis/helpers'
 
 const ExperienceStep = () => {
     const userId = localStorage.getItem('userId');
 
     const { data: experienceData } = useGetAllExperienceQuery(userId);
 
-    console.log('experienceData ==> ', experienceData);
+    saveLocalStorage({ label: 'experience', data: experienceData });
 
     return (
         <>
