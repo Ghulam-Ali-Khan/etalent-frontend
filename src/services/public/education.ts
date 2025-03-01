@@ -10,12 +10,14 @@ export const educationAPI = publicAPI.injectEndpoints({
         method: 'POST',
         body: [body],
       }),
+      invalidatesTags: ['education_list']
     }),
     getAllEducation: build.query({
       query: () => ({
         url: `Education/${userId}`,
         method: 'GET',
       }),
+      providesTags: ['education_list']
     }),
   }),
 });

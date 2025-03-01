@@ -10,15 +10,17 @@ export const experienceAPI = publicAPI.injectEndpoints({
         method: 'POST',
         body: [body],
       }),
+      invalidatesTags: ['experince_list']
     }),
     getAllExperience: build.query({
       query: () => ({
         url: `Experience`,
         method: 'GET',
         params: {
-            userId,
+          userId,
         }
       }),
+      providesTags: ['experince_list']
     }),
   }),
 });

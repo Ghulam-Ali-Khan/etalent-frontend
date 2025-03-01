@@ -1,19 +1,21 @@
 import { useGetAllExperienceQuery } from '@/services/public/experience';
 import { Delete, Edit } from '@mui/icons-material';
 import { Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
+import ExperienceFormModal from '../form/components/ExperienceFormModal';
 
 const ExperienceSection = () => {
     const { data: experienceData } = useGetAllExperienceQuery({});
 
-    console.log('experienceData ==> ', experienceData)
     return (
 
         (experienceData?.data?.length > 0) && (
             <Paper>
-                <Stack className='title-header '>
+                <Stack className='title-header ' direction={'row'} justifyContent={'space-between'}>
                     <Typography variant='h6' fontWeight={600}>
                         Experience
                     </Typography>
+
+                    <ExperienceFormModal />
                 </Stack>
                 <Box padding={2}>
                     <Stack spacing={1}>

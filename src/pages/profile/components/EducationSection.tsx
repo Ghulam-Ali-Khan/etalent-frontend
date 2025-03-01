@@ -3,6 +3,7 @@ import { Delete, Edit } from '@mui/icons-material';
 import { Box, IconButton, Paper, Stack, Typography } from '@mui/material'
 import moment from 'moment';
 import React from 'react'
+import EducationFormModal from '../form/components/EducationFormModal';
 
 const EducationSection = () => {
     const { data: educationData } = useGetAllEducationQuery({});
@@ -10,10 +11,12 @@ const EducationSection = () => {
     return (
         educationData?.data?.length > 0 && (
             <Paper className='my-3'>
-                <Stack className='title-header '>
+                <Stack className='title-header ' direction={'row'} justifyContent={'space-between'}>
                     <Typography variant='h6' fontWeight={600}>
                         Education
                     </Typography>
+
+                    <EducationFormModal />
                 </Stack>
                 <Box padding={2}>
                     <Stack spacing={1}>
