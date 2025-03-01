@@ -1,5 +1,7 @@
 import { publicAPI } from '../public/index';
 
+const userId = localStorage.getItem('userId');
+
 export const educationAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
     createEducation: build.mutation({
@@ -10,8 +12,8 @@ export const educationAPI = publicAPI.injectEndpoints({
       }),
     }),
     getAllEducation: build.query({
-      query: (id) => ({
-        url: `Education/${id}`,
+      query: () => ({
+        url: `Education/${userId}`,
         method: 'GET',
       }),
     }),

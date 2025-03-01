@@ -5,12 +5,18 @@ import TechnicalSkillsPopup from './TechnicalSkillsPopup'
 import SoftSkillsPopup from './SoftSkillsPopup'
 import { useGetAllTechnicalSkillsQuery } from '@/services/public/technicalSkills'
 import { useGetAllSoftSkillsQuery } from '@/services/public/softSkills'
+import { getDataLocalStorage, saveLocalStorage } from '@/utilis/helpers'
 
 const SkillsStep = () => {
     const { data: technicalSkills } = useGetAllTechnicalSkillsQuery({});
     const { data: softSkills } = useGetAllSoftSkillsQuery({});
 
-    console.log('technicalSkills , softSkills ==> ', softSkills, technicalSkills);
+    saveLocalStorage({ label: 'technicalSkills', data: technicalSkills });
+    saveLocalStorage({ label: 'softSkills', data: softSkills });
+
+    const technicalStorageData = getDataLocalStorage({ label: 'technicalSkills' });
+    const softStorageData = getDataLocalStorage({ label: 'softSkills' });
+
 
     return (
         <>
@@ -24,11 +30,11 @@ const SkillsStep = () => {
 
             <Divider />
             {
-                (technicalSkills?.data?.length > 0) && (
+                (technicalStorageData?.data?.length > 0) && (
                     <Stack className='px-6 pt-2'>
                         <Stack spacing={1}>
                             {
-                                technicalSkills.data.map(item => (
+                                technicalStorageData.data.map(item => (
                                     <>
                                         <Stack direction={'row'} justifyContent={'space-between'}>
                                             <Typography variant='h6'>
@@ -66,11 +72,11 @@ const SkillsStep = () => {
             <Divider />
 
             {
-                (softSkills?.data?.length > 0) && (
+                (softStorageData?.data?.length > 0) && (
                     <Stack className='px-6 pt-2'>
                         <Stack spacing={1}>
                             {
-                                softSkills.data.map(item => (
+                                softStorageData.data.map(item => (
                                     <>
                                         <Stack direction={'row'} justifyContent={'space-between'}>
                                             <Typography variant='h6'>

@@ -1,5 +1,7 @@
 import { publicAPI } from '../public/index';
 
+const userId = localStorage.getItem('userId');
+
 export const experienceAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
     createExperience: build.mutation({
@@ -10,11 +12,11 @@ export const experienceAPI = publicAPI.injectEndpoints({
       }),
     }),
     getAllExperience: build.query({
-      query: (id) => ({
+      query: () => ({
         url: `Experience`,
         method: 'GET',
         params: {
-            userId: id
+            userId,
         }
       }),
     }),

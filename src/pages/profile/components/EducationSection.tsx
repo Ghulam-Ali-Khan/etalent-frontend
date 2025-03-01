@@ -1,35 +1,57 @@
-import { Box, Paper, Stack, Typography } from '@mui/material'
+import { useGetAllEducationQuery } from '@/services/public/education';
+import { Delete, Edit } from '@mui/icons-material';
+import { Box, IconButton, Paper, Stack, Typography } from '@mui/material'
+import moment from 'moment';
 import React from 'react'
 
 const EducationSection = () => {
-    return (
-        <Paper className='my-3'>
-            <Stack className='title-header '>
-                <Typography variant='h6' fontWeight={600}>
-                    Education
-                </Typography>
-            </Stack>
-            <Box padding={2}>
-                <Stack spacing={1}>
-                    <Typography variant='h6'>
-                        Superior University
-                    </Typography>
-                    <Typography variant='body2' color='secondary' fontSize={'12px'}>
-                        BSCS
-                    </Typography>
-                    <Typography variant='body2' color='secondary' fontSize={'12px'}>
-                        Lahore, Punjab, Pakistan
-                    </Typography>
-                    <Typography variant='body2' color='secondary' fontSize={'12px'}>
-                        Participated in design challenges and collaborative projects on Behance, contributing to innovative UI/UX solutions.
-                        Collaborated with international designers to create and refine user interfaces for web and mobile applications.
-                        Conducted online critique sessions to provide and receive feedback, improving design quality and consistency.
-                        Presented design concepts and iterations through virtual meetings, effectively communicating design ideas and incorporating stakeholder feedback.
-                    </Typography>
+    const { data: educationData } = useGetAllEducationQuery({});
 
+    return (
+        educationData?.data?.length > 0 && (
+            <Paper className='my-3'>
+                <Stack className='title-header '>
+                    <Typography variant='h6' fontWeight={600}>
+                        Education
+                    </Typography>
                 </Stack>
-            </Box>
-        </Paper>
+                <Box padding={2}>
+                    <Stack spacing={1}>
+                        {
+                            educationData.data.map((item: any) => (
+                                <>
+                                    <Stack direction={'row'} justifyContent={'space-between'}>
+                                        <Typography variant='h6'>
+                                            {item?.school}
+                                        </Typography>
+
+                                        <Stack direction={'row'} spacing={2}>
+                                            <IconButton>
+                                                <Edit />
+                                            </IconButton>
+                                            <IconButton>
+                                                <Delete />
+                                            </IconButton>
+                                        </Stack>
+                                    </Stack>
+                                    <Typography variant='body2' color='secondary'>
+                                        {item?.degree}, {item?.fieldOfStudy}
+                                    </Typography>
+                                    <Typography variant='body2' color='secondary'>
+                                        {moment(item?.startDate).format('MMM YYYY')} - {moment(item?.endDate).format('MMM YYYY')}
+                                    </Typography>
+                                    <Typography variant='body2' color='secondary'>
+                                        {item?.grade}
+                                    </Typography>
+                                    <Typography variant='body2' color='secondary' fontSize={'12px'}>
+                                        {item?.city}, {item?.country}
+                                    </Typography>
+                                </>
+                            ))
+                        }
+                    </Stack>
+                </Box>
+            </Paper>)
     )
 }
 

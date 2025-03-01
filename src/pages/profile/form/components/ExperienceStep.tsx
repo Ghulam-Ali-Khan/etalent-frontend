@@ -3,14 +3,14 @@ import React from 'react'
 import ExperienceFormModal from './ExperienceFormModal'
 import { Delete, Edit } from '@mui/icons-material'
 import { useGetAllExperienceQuery } from '@/services/public/experience'
-import { saveLocalStorage } from '@/utilis/helpers'
+import { getDataLocalStorage, saveLocalStorage } from '@/utilis/helpers'
 
 const ExperienceStep = () => {
-    const userId = localStorage.getItem('userId');
-
-    const { data: experienceData } = useGetAllExperienceQuery(userId);
+    const { data: experienceData } = useGetAllExperienceQuery({});
 
     saveLocalStorage({ label: 'experience', data: experienceData });
+
+    const experienceStorageData = getDataLocalStorage({ label: 'experience' });
 
     return (
         <>
@@ -27,8 +27,8 @@ const ExperienceStep = () => {
             <Stack className='px-6 pt-2'>
 
                 {
-                    experienceData?.data?.length > 0 ? (
-                        experienceData.data.map(item => (
+                    experienceStorageData?.data?.length > 0 ? (
+                        experienceStorageData.data.map((item: any) => (
                             <>
                                 <Stack spacing={1}>
                                     <Stack direction={'row'} justifyContent={'space-between'}>
@@ -53,7 +53,7 @@ const ExperienceStep = () => {
                                         {item?.city},{item?.country}
                                     </Typography>
 
-                                    {item?.description}
+                                    <Box dangerouslySetInnerHTML={{ __html: item?.description }} />
 
                                     <Divider className='my-4' />
                                 </Stack>

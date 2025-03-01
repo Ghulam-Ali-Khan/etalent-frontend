@@ -5,14 +5,14 @@ import { Box, Divider, IconButton, Stack, Toolbar, Typography } from '@mui/mater
 import ExperienceFormModal from './ExperienceFormModal'
 import EducationFormModal from './EducationFormModal'
 import { useGetAllEducationQuery } from '@/services/public/education'
-import { saveLocalStorage } from '@/utilis/helpers'
+import { getDataLocalStorage, saveLocalStorage } from '@/utilis/helpers'
 
 const EducationStep = () => {
-    const userId = localStorage.getItem('userId');
-
-    const { data: educationData } = useGetAllEducationQuery(userId);
+    const { data: educationData } = useGetAllEducationQuery({});
 
     saveLocalStorage({ label: 'education', data: educationData });
+
+    const educationStorageData = getDataLocalStorage({ label: 'education' });
 
     return (
         <>
@@ -29,8 +29,8 @@ const EducationStep = () => {
             <Stack className='px-6 pt-2'>
 
                 {
-                    educationData?.data?.length > 0 ? (
-                        educationData.data.map(item => (
+                    educationStorageData?.data?.length > 0 ? (
+                        educationStorageData.data.map((item: any) => (
                             <>
                                 <Stack spacing={1}>
                                     <Stack direction={'row'} justifyContent={'space-between'}>
@@ -76,13 +76,7 @@ const EducationStep = () => {
                         </Box>
                     )
                 }
-
-
-
             </Stack>
-
-
-
         </>
     )
 }

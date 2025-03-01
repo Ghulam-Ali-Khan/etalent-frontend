@@ -3,9 +3,16 @@ import React from 'react';
 import AvatarImg from '@/assets/imgs/avatar-1.jpg';
 import { useFormikContext } from 'formik';
 import moment from 'moment';
+import { getDataLocalStorage } from '@/utilis/helpers';
 
 const ReviewApplication = () => {
     const { values } = useFormikContext();
+
+    const educationStorageData = getDataLocalStorage({ label: 'education' });
+    const experienceStorageData = getDataLocalStorage({ label: 'experience' });
+    const technicalStorageData = getDataLocalStorage({ label: 'technicalSkills' });
+    const softStorageData = getDataLocalStorage({ label: 'softSkills' });
+
     return (
         <Box>
             <Typography variant='h4' mb={3}>
@@ -18,7 +25,7 @@ const ReviewApplication = () => {
                     <SectionDetailed heading={'Profile information'}>
                         <Grid2 container spacing={2}>
                             <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                <Avatar src={AvatarImg} sx={{ width: '200px', height: '200px' }} />
+                                <Avatar src={URL.createObjectURL(values?.artifactUrl)} sx={{ width: '200px', height: '200px' }} />
                             </Grid2>
                             <Grid2 size={{ xl: 9, lg: 9, md: 9, sm: 12, xs: 12 }}>
                                 <Stack spacing={2}>
@@ -70,90 +77,146 @@ const ReviewApplication = () => {
                             </Stack>
                         </>
                     </SectionDetailed>
-                    <SectionDetailed heading={'Education'}>
-                        <>
-                            <List className="w-full" sx={{ listStyleType: "disc", paddingLeft: "20px" }}>
-                                <ListItem className="w-full" sx={{ display: "list-item" }}>
-                                    <Stack spacing={2} className='w-full'>
-                                        <Typography fontSize={'14px'} fontWeight={'bold'}>
-                                            BSCS - Superior University (2525 - 2345)
-                                        </Typography>
+                    {
+                        educationStorageData?.data?.length > 0 && (
+                            <SectionDetailed heading={'Education'}>
+                                <>
+                                    <List className="w-full" sx={{ listStyleType: "disc", paddingLeft: "20px" }}>
+                                        {
+                                            educationStorageData.data.map((item: any) => (
+                                                <ListItem className="w-full" sx={{ display: "list-item" }}>
+                                                    <Stack spacing={2} className='w-full'>
+                                                        <Typography fontSize={'14px'} fontWeight={'bold'}>
+                                                            {item?.degree} - {item?.school} (   {moment(item?.startDate).format('MMM YYYY')} - {moment(item?.endDate).format('MMM YYYY')})
+                                                        </Typography>
 
-                                        <Grid2 container spacing={2}>
-                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                                <Stack spacing={1}>
-                                                    <LabelValuePair label={'Grade/CGPA'} value={'3.6'} />
-                                                    <LabelValuePair label={'School/University URL'} value={'superior.com'} />
-                                                </Stack>
-                                            </Grid2>
-                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                                <LabelValuePair label={'City'} value={'Lahore'} />
-                                            </Grid2>
-                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                                <LabelValuePair label={'Province/State'} value={'Punjab'} />
-                                            </Grid2>
-                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                                <LabelValuePair label={'Country'} value={'Pakistan'} />
-                                            </Grid2>
-                                        </Grid2>
-                                    </Stack>
-                                </ListItem>
-                            </List>
-                        </>
-                    </SectionDetailed>
-                    <SectionDetailed heading={'Experience'}>
-                        <>
-                            <List className="w-full" sx={{ listStyleType: "disc", paddingLeft: "20px" }}>
-                                <ListItem className="w-full" sx={{ display: "list-item" }}>
-                                    <Stack spacing={2} className='w-full'>
-                                        <Typography fontSize={'14px'} fontWeight={'bold'}>
-                                            React Js developer
-                                        </Typography>
-                                        <Typography fontSize={'12px'}>
-                                            Beyond Eris Solutions . Fulltime
-                                        </Typography>
+                                                        <Grid2 container spacing={2}>
+                                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                                <Stack spacing={1}>
+                                                                    <LabelValuePair label={'Grade/CGPA'} value={item?.grade} />
+                                                                    <LabelValuePair label={'School/University URL'} value={item?.schoolUrl} />
+                                                                </Stack>
+                                                            </Grid2>
+                                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                                <LabelValuePair label={'City'} value={item?.city} />
+                                                            </Grid2>
+                                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                                <LabelValuePair label={'Province/State'} value={item?.state} />
+                                                            </Grid2>
+                                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                                <LabelValuePair label={'Country'} value={item?.country} />
+                                                            </Grid2>
+                                                        </Grid2>
+                                                    </Stack>
+                                                </ListItem>
+                                            ))}
+                                    </List>
+                                </>
+                            </SectionDetailed>
+                        )}
 
-                                        <Grid2 container spacing={2}>
-                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                                <LabelValuePair label={'Industry'} value={'IT'} />
-                                            </Grid2>
-                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                                <LabelValuePair label={'City/State'} value={'Lahore'} />
-                                            </Grid2>
-                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                                <LabelValuePair label={'Country'} value={'Pakistan'} />
-                                            </Grid2>
-                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                                <LabelValuePair label={'Currently Working'} value={'Yes'} />
-                                            </Grid2>
-                                        </Grid2>
-                                        <LabelValuePair label={'Description'} value={'Beyond Eris Solutions . Fulltime    Beyond Eris Solutions . Fulltime   Beyond Eris Solutions . Fulltime   Beyond Eris Solutions . Fulltime   Beyond Eris Solutions . Fulltime'} />
-                                    </Stack>
-                                </ListItem>
-                            </List>
+                    {
+                        experienceStorageData?.data?.length > 0 && (
+                            <SectionDetailed heading={'Experience'}>
+                                <>
+                                    <List className="w-full" sx={{ listStyleType: "disc", paddingLeft: "20px" }}>
+                                        {
+                                            experienceStorageData.data.map((item: any) => (
+                                                <ListItem className="w-full" sx={{ display: "list-item" }}>
+                                                    <Stack spacing={2} className='w-full'>
+                                                        <Typography fontSize={'14px'} fontWeight={'bold'}>
+                                                            {item?.title}
+                                                        </Typography>
+                                                        <Typography fontSize={'12px'}>
+                                                            {item?.company} · {item?.employmentType}
+                                                        </Typography>
 
-                        </>
-                    </SectionDetailed>
+                                                        <Grid2 container spacing={2}>
+                                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                                <LabelValuePair label={'Industry'} value={item?.industry} />
+                                                            </Grid2>
+                                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                                <LabelValuePair label={'City/State'} value={item?.city} />
+                                                            </Grid2>
+                                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                                <LabelValuePair label={'Country'} value={item?.country} />
+                                                            </Grid2>
+                                                            <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                                <LabelValuePair label={'Currently Working'} value={item?.currentlyWorking ? 'Yes' : 'No'} />
+                                                            </Grid2>
+                                                        </Grid2>
+                                                        <LabelValuePair label={'Description'} value={item?.description} />
+                                                    </Stack>
+                                                </ListItem>
+                                            ))
+                                        }
+                                        {/* <ListItem className="w-full" sx={{ display: "list-item" }}>
+                                            <Stack spacing={2} className='w-full'>
+                                                <Typography fontSize={'14px'} fontWeight={'bold'}>
+                                                    React Js developer
+                                                </Typography>
+                                                <Typography fontSize={'12px'}>
+                                                    Beyond Eris Solutions . Fulltime
+                                                </Typography>
 
-                    <SectionDetailed heading={'Soft Skills'}>
-                        <Grid2 container spacing={2}>
-                            <Grid2 size={{ xl: 2, lg: 2, md: 3, sm: 6, xs: 6 }}>
-                                <Paper sx={{ bgcolor: '#E3E3E3', padding: '5px 10px', borderRadius: 10, maxWidth: 'max-content' }}>
-                                    Ghulam Ali
-                                </Paper>
-                            </Grid2>
-                        </Grid2>
-                    </SectionDetailed>
+                                                <Grid2 container spacing={2}>
+                                                    <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                        <LabelValuePair label={'Industry'} value={'IT'} />
+                                                    </Grid2>
+                                                    <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                        <LabelValuePair label={'City/State'} value={'Lahore'} />
+                                                    </Grid2>
+                                                    <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                        <LabelValuePair label={'Country'} value={'Pakistan'} />
+                                                    </Grid2>
+                                                    <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
+                                                        <LabelValuePair label={'Currently Working'} value={'Yes'} />
+                                                    </Grid2>
+                                                </Grid2>
+                                                <LabelValuePair label={'Description'} value={'Beyond Eris Solutions . Fulltime    Beyond Eris Solutions . Fulltime   Beyond Eris Solutions . Fulltime   Beyond Eris Solutions . Fulltime   Beyond Eris Solutions . Fulltime'} />
+                                            </Stack>
+                                        </ListItem> */}
+                                    </List>
 
-                    <SectionDetailed heading={'Technical Skills'}>
-                        <Grid2 container spacing={2}>
-                            <Grid2 size={{ xl: 2, lg: 2, md: 3, sm: 6, xs: 6 }}>
-                                <Paper sx={{ bgcolor: '#E3E3E3', padding: '5px 10px', borderRadius: 10, maxWidth: 'max-content' }}>
-                                    Ghulam Ali
-                                </Paper>
-                            </Grid2>
-                        </Grid2>
-                    </SectionDetailed>
+                                </>
+                            </SectionDetailed>
+                        )}
+                    {
+                        (softStorageData?.data?.length > 0) && (
+                            <SectionDetailed heading={'Soft Skills'}>
+                                <Grid2 container spacing={2}>
+                                    {
+                                        technicalStorageData.data.map((item: any) => (
+                                            <Grid2 size={{ xl: 2, lg: 2, md: 3, sm: 6, xs: 6 }}>
+                                                <Paper sx={{ bgcolor: '#E3E3E3', padding: '5px 10px', borderRadius: 10, maxWidth: 'max-content' }}>
+                                                    {item?.name}
+                                                </Paper>
+                                            </Grid2>
+                                        ))}
+                                </Grid2>
+                            </SectionDetailed>
+
+                        )}
+
+                    {
+                        (technicalStorageData?.data?.length > 0) && (
+                            <SectionDetailed heading={'Technical Skills'}>
+                                <Grid2 container spacing={2}>
+                                    {
+                                        technicalStorageData.data.map((item: any) => (
+                                            <Grid2 size={{ xl: 2, lg: 2, md: 3, sm: 6, xs: 6 }}>
+                                                <Paper sx={{ bgcolor: '#E3E3E3', padding: '5px 10px', borderRadius: 10, maxWidth: 'max-content' }}>
+                                                    {item?.name}
+                                                </Paper>
+                                            </Grid2>
+                                        ))
+                                    }
+                                </Grid2>
+                            </SectionDetailed>
+                        )
+                    }
+
+
 
                     <SectionDetailed heading={'Social Profile URLs'}>
                         <Grid2 container spacing={2}>
