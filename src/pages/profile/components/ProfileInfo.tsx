@@ -1,9 +1,13 @@
 import { Avatar, Box, Grid2, Paper, Rating, Stack, Typography } from '@mui/material'
-import React from 'react'
 import AvatarImg from '@/assets/imgs/avatar-1.jpg';
 import { FacebookOutlined, InsertChartOutlined, Instagram, LinkedIn, Twitter, WorkOutlineOutlined } from '@mui/icons-material';
+import AddSectionMenu from './AddSectionMenu';
+import { Link } from 'react-router-dom';
+import { sectionLinks } from '../utilis/data';
 
 const ProfileInfo = () => {
+
+
     return (
         <>
             <Paper className='p-4'>
@@ -45,7 +49,8 @@ const ProfileInfo = () => {
                 <Grid2 container>
                     <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                         <Stack direction={'row'} justifyContent={'space-between'}
-                            borderTop={'1px solid #E7E7E7'} mt={2} py={2}>
+                            borderTop={'1px solid #E7E7E7'}
+                            borderBottom={'1px solid #E7E7E7'} mt={2} py={2}>
                             <IconCard
                                 icon={<WorkOutlineOutlined fontSize='14px' />}
                                 heading={'Work Experience'}
@@ -62,6 +67,17 @@ const ProfileInfo = () => {
                                 value={'LinkedIn'}
                             />
                         </Stack>
+
+                        <AddSectionMenu />
+
+                        <Stack direction={'row'} gap={4} mt={4}>
+                            {sectionLinks.map((link) => (
+                                <Link key={link.to} to={link.to}>
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </Stack>
+
                     </Grid2>
                 </Grid2>
             </Paper>

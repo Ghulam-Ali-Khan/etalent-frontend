@@ -11,7 +11,7 @@ import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
 import { useState } from 'react'
 import { experienceInitialValues, experienceValidationSchema } from '../../utilis/formUtilis';
 
-const ExperienceFormModal = () => {
+const ExperienceFormModal = ({ isModalTxt }) => {
 
     const [isModalOpen, setModalStatus] = useState(false);
 
@@ -29,9 +29,17 @@ const ExperienceFormModal = () => {
 
     return (
         <>
-            <IconButton onClick={() => setModalStatus(true)}>
-                <Add />
-            </IconButton>
+            {
+                isModalTxt ? (
+                    <Box onClick={() => setModalStatus(true)} className="w-full">
+                        Experience
+                    </Box>
+                ) : (
+                    <IconButton onClick={() => setModalStatus(true)}>
+                        <Add />
+                    </IconButton>
+                )
+            }
 
             <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Add Experience'>
                 <Box minWidth={'100%'}>

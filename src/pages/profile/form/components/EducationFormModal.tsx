@@ -12,7 +12,7 @@ import { useState } from 'react'
 import { educationInitialValues, educationValidationSchema } from '../../utilis/formUtilis';
 import useShowResponse from '@/customHooks/useShowResponse';
 
-const EducationFormModal = () => {
+const EducationFormModal = ({ isModalTxt }) => {
 
     const [isModalOpen, setModalStatus] = useState(false);
 
@@ -29,9 +29,18 @@ const EducationFormModal = () => {
 
     return (
         <>
-            <IconButton onClick={() => setModalStatus(true)}>
-                <Add />
-            </IconButton>
+            {
+                isModalTxt ? (
+                    <Box onClick={() => setModalStatus(true)} className="w-full">
+                        Education
+                    </Box>
+                ) : (
+                    <IconButton onClick={() => setModalStatus(true)}>
+                        <Add />
+                    </IconButton>
+                )
+            }
+
 
             <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Add Education'>
                 <Box minWidth={'100%'}>

@@ -11,7 +11,7 @@ import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
 import { useState } from 'react'
 import { technicalSkillsInitialValues, technicalSkillsSchema } from '../../utilis/formUtilis';
 
-const TechnicalSkillsPopup = () => {
+const TechnicalSkillsPopup = ({isModalTxt}) => {
     // states
     const [isModalOpen, setModalStatus] = useState(false);
 
@@ -31,9 +31,17 @@ const TechnicalSkillsPopup = () => {
 
     return (
         <>
-            <IconButton onClick={() => setModalStatus(true)}>
-                <Add />
-            </IconButton>
+            {
+                isModalTxt ? (
+                    <Box onClick={() => setModalStatus(true)} className="w-full">
+                        Technical Skill
+                    </Box>
+                ) : (
+                    <IconButton onClick={() => setModalStatus(true)}>
+                        <Add />
+                    </IconButton>
+                )
+            }
 
             <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Add Technical Skill' minWidth='400px'>
                 <Box minWidth={'400px'}>
@@ -53,7 +61,7 @@ const TechnicalSkillsPopup = () => {
 
 
                             <Stack direction={'row'} justifyContent={'end'} spacing={2} >
-                                <Button variant='outlined' onClick={()=> setModalStatus(false)}>
+                                <Button variant='outlined' onClick={() => setModalStatus(false)}>
                                     Cancel
                                 </Button>
                                 <Button variant='contained' type='submit'>

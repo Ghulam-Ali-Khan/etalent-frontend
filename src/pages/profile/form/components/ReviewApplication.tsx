@@ -186,7 +186,7 @@ const ReviewApplication = () => {
                             <SectionDetailed heading={'Soft Skills'}>
                                 <Grid2 container spacing={2}>
                                     {
-                                        technicalStorageData.data.map((item: any) => (
+                                        softStorageData.data.map((item: any) => (
                                             <Grid2 size={{ xl: 2, lg: 2, md: 3, sm: 6, xs: 6 }}>
                                                 <Paper sx={{ bgcolor: '#E3E3E3', padding: '5px 10px', borderRadius: 10, maxWidth: 'max-content' }}>
                                                     {item?.name}

@@ -8,7 +8,7 @@ import { softSkillsInitialValues, softSkillsSchema } from '../../utilis/formUtil
 import { useCreateSoftSkillMutation } from '@/services/public/softSkills';
 import useShowResponse from '@/customHooks/useShowResponse';
 
-const SoftSkillsPopup = () => {
+const SoftSkillsPopup = ({ isModalTxt }) => {
     const [isModalOpen, setModalStatus] = useState(false);
 
     // queries and mutations
@@ -27,9 +27,17 @@ const SoftSkillsPopup = () => {
 
     return (
         <>
-            <IconButton onClick={() => setModalStatus(true)}>
-                <Add />
-            </IconButton>
+            {
+                isModalTxt ? (
+                    <Box onClick={() => setModalStatus(true)} className="w-full">
+                        Soft Skill
+                    </Box>
+                ) : (
+                    <IconButton onClick={() => setModalStatus(true)}>
+                        <Add />
+                    </IconButton>
+                )
+            }
 
             <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Soft Skill' minWidth='400px'>
                 <Box minWidth={'400px'}>
@@ -44,7 +52,7 @@ const SoftSkillsPopup = () => {
 
 
                             <Stack direction={'row'} justifyContent={'end'} spacing={2}>
-                                <Button variant='outlined' onClick={()=> setModalStatus(false)}>
+                                <Button variant='outlined' onClick={() => setModalStatus(false)}>
                                     Cancel
                                 </Button>
                                 <Button variant='contained' type='submit'>

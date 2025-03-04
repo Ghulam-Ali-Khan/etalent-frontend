@@ -17,6 +17,7 @@ const SkillsStep = () => {
     const technicalStorageData = getDataLocalStorage({ label: 'technicalSkills' });
     const softStorageData = getDataLocalStorage({ label: 'softSkills' });
 
+    console.log('softSkills ==> ', softSkills)
 
     return (
         <>
