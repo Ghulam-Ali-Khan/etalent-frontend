@@ -4,6 +4,7 @@ export const addSectionMenuItems =({
     softSkillModal,
     technicalSkillModal,
     projectModal,
+    publicationModal
 }) =>([
     {
         title: 'Info',
@@ -36,7 +37,7 @@ export const addSectionMenuItems =({
         title: 'Accomplishments',
         data: [
             { title: 'Projects', component: projectModal },
-            { title: 'Publications', handleOnClick: '' },
+            { title: 'Publications', component: publicationModal },
             { title: 'Awards', handleOnClick: '' },
         ],
     },

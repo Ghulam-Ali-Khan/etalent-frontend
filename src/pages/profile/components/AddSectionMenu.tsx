@@ -8,6 +8,7 @@ import ExperienceFormModal from '../form/components/ExperienceFormModal';
 import SoftSkillsPopup from '../form/components/SoftSkillsPopup';
 import TechnicalSkillsPopup from '../form/components/TechnicalSkillsPopup';
 import ProjectModal from './ProjectModal';
+import PublicationModal from './PublicationModal';
 
 const AddSectionMenu = () => {
     const { anchorEl, handleAnchorElClose, handleAnchorElOpen } = useGetPopupUtilis();
@@ -41,7 +42,8 @@ const AddSectionMenu = () => {
                         experienceModal: <ExperienceFormModal isModalTxt />,
                         softSkillModal: <SoftSkillsPopup isModalTxt />,
                         technicalSkillModal: <TechnicalSkillsPopup isModalTxt />,
-                        projectModal: <ProjectModal />
+                        projectModal: <ProjectModal />,
+                        publicationModal: <PublicationModal/>,
                     }).map(item => (
                         item?.data ? (
                             <div key={item.title}>
