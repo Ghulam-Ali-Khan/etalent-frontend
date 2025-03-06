@@ -3,7 +3,7 @@ import FormikDatePicker from '@/components/form/FormikDatepicker';
 import FormikField from '@/components/form/FormikField';
 import FormikRadio from '@/components/form/FormikRadio';
 import FormikAutoCompleteSelect from '@/components/form/FormikSelect';
-import { Alert, Avatar, Box, Grid2, Stack, Typography } from '@mui/material';
+import { Alert, Avatar, Box, Grid2, Paper, Stack, Typography } from '@mui/material';
 import AvatarImg from '@/assets/imgs/avatar-1.jpg';
 import { useState } from 'react';
 import { countriesOptions } from '@/utilis/helpers';
@@ -13,23 +13,30 @@ import * as pdfjs from 'pdfjs-dist';
 import mammoth from 'mammoth';
 import { useFormikContext } from 'formik';
 import FormikAvatar from '@/components/form/FormikAvatar';
+import CommonModal from '@/components/common/CommonModal';
+import LinkedinImg from '@/assets/imgs/linkedin-save-pdf.png';
+import { ArrowForward, CloudUpload } from '@mui/icons-material';
 
 const CompanyInfoStep = () => {
   const { t } = useTranslation(); // Hook for translations
 
   const [profileLevelDesp, setProfileLevelDesp] = useState('{Description}');
+  const [isResumeModalOpen, setResumeModalStatus] = useState(false);
 
-  const { setFieldValue, values } = useFormikContext();
+  const { setFieldValue } = useFormikContext();
 
-  console.log('values ==> ', values);
   // Handlers
+  const handleToggleResumeModal = () => setResumeModalStatus((prev: boolean) => !prev);
+
   const handleFileUpload = async (file: File) => {
     console.log('Uploaded file:', file);
 
     if (file.type === 'application/pdf') {
       extractTextFromPDF(file);
+      setResumeModalStatus(false);
     } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
       extractTextFromDocx(file);
+      setResumeModalStatus(false);
     }
   };
 
@@ -87,6 +94,22 @@ const CompanyInfoStep = () => {
     if (nationalityMatch) setFieldValue('nationality', nationalityMatch[1]);
   };
 
+
+  const uploadResumeSteps = [
+    {
+      title: 'Step 1',
+      subtitle: 'Log in to your LinkedIn profile page'
+    },
+    {
+      title: 'Step 2',
+      subtitle: 'Click the More... button and select Save to PDF'
+    },
+    {
+      title: 'Step 3',
+      subtitle: 'Upload your LinkedIn Profile'
+    }
+  ]
+
   return (
     <>
       <Typography variant="h4">{t('company_info')}</Typography>
@@ -115,7 +138,26 @@ const CompanyInfoStep = () => {
 
       <Box className="flex gap-4 my-4">
         <DropzoneFileUploader label="Upload your Resume" onFileUpload={handleFileUpload} />
-        <DropzoneFileUploader label="Upload your LinkedIn Profile" onFileUpload={handleFileUpload} />
+
+        <Paper
+          variant="outlined"
+          sx={{
+            p: 2,
+            width: 300,
+            textAlign: "center",
+            cursor: "pointer",
+            border: "2px dashed #ccc",
+            bgcolor:  "background.paper",
+          }}
+          onClick={handleToggleResumeModal}
+        >
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <CloudUpload color="primary" fontSize="large" />
+            <Typography variant="body1" color="textSecondary">
+              {"Drop the file here..."}
+            </Typography>
+          </Box>
+        </Paper>
       </Box>
 
       <Grid2 container spacing={2}>
@@ -136,6 +178,34 @@ const CompanyInfoStep = () => {
           </Stack>
         </Grid2>
       </Grid2>
+
+      <CommonModal isOpen={Boolean(isResumeModalOpen)} toggle={handleToggleResumeModal} title='Import your Linkedin Profile' minWidth='60%' maxWidth={'600px'}>
+        <Box >
+
+          <Stack direction={'row'} gap={3} alignItems={'center'} justifyContent={'center'} minWidth={'100%'} my={3}>
+            <img src={LinkedinImg} className='w-[400px]' />
+
+            <ArrowForward />
+
+            <DropzoneFileUploader label="Upload your LinkedIn Profile" onFileUpload={handleFileUpload} />
+          </Stack>
+
+          <Stack direction={'row'} gap={4} justifyContent={'center'} mb={4}>
+            {
+              uploadResumeSteps.map((item, index) => (
+                <Stack gap={2} key={item?.title + index} alignItems={'center'}>
+                  <Typography variant='h6'>
+                    {item.title}
+                  </Typography>
+                  <Typography variant='body2'>
+                    {item.subtitle}
+                  </Typography>
+                </Stack>
+              ))
+            }
+          </Stack>
+        </Box>
+      </CommonModal>
     </>
   );
 };
