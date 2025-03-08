@@ -3,6 +3,8 @@ import { Box, Grid, Paper, Rating, Stack, Typography } from "@mui/material";
 import Chart from "react-apexcharts";
 import { useGetAllTechnicalSkillsQuery } from "@/services/public/technicalSkills";
 import { useGetAllSoftSkillsQuery } from "@/services/public/softSkills";
+import SoftSkillsPopup from "../form/components/SoftSkillsPopup";
+import TechnicalSkillsPopup from "../form/components/TechnicalSkillsPopup";
 
 const colors = ["#A4E2C6", "#AED4FB", "#0E4D92"];
 
@@ -28,8 +30,8 @@ const SkillsSection = () => {
     const series = [60, 40, 30]; // Adjust based on actual skill proficiency percentages
 
     const skillsData = [
-        { title: "Technical Skills", options: getChartOptions(technicalSkills) },
-        { title: "Soft Skills", options: getChartOptions(softSkills) },
+        { title: "Technical Skills", options: getChartOptions(technicalSkills), popup: <TechnicalSkillsPopup /> },
+        { title: "Soft Skills", options: getChartOptions(softSkills), popup: <SoftSkillsPopup /> },
     ];
 
     return (
@@ -41,13 +43,15 @@ const SkillsSection = () => {
             </Stack>
             <Box padding={2}>
                 <Grid container spacing={2}>
-                    {skillsData.map(({ title, options }, index) => (
+                    {skillsData.map(({ title, options, popup }, index) => (
                         <Grid item key={title} xl={6} lg={6} md={6} sm={12} xs={12}>
                             <Paper sx={{ bgcolor: "#F9F9F9", padding: 2 }}>
-                                <Stack className="title-header">
+                                <Stack className="title-header" direction={'row'} justifyContent={'space-between'}>
                                     <Typography variant="h6" fontWeight={600}>
                                         {title}
                                     </Typography>
+
+                                    {popup}
                                 </Stack>
                                 <Box display={'flex'} justifyContent={'space-between'}>
 

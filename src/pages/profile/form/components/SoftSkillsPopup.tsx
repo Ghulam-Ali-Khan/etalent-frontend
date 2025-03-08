@@ -8,7 +8,7 @@ import { softSkillsInitialValues, softSkillsSchema } from '../../utilis/formUtil
 import { useCreateSoftSkillMutation } from '@/services/public/softSkills';
 import useShowResponse from '@/customHooks/useShowResponse';
 
-const SoftSkillsPopup = ({ isModalTxt }) => {
+const SoftSkillsPopup = ({ isModalTxt }: {isModalTxt?:boolean}) => {
     const [isModalOpen, setModalStatus] = useState(false);
 
     // queries and mutations

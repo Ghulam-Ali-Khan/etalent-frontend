@@ -11,7 +11,7 @@ import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
 import { useState } from 'react'
 import { technicalSkillsInitialValues, technicalSkillsSchema } from '../../utilis/formUtilis';
 
-const TechnicalSkillsPopup = ({isModalTxt}) => {
+const TechnicalSkillsPopup =  ({ isModalTxt }: {isModalTxt?:boolean}) => {
     // states
     const [isModalOpen, setModalStatus] = useState(false);
 

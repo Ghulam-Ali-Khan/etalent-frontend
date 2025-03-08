@@ -5,26 +5,41 @@ import FormikField from '@/components/form/FormikField';
 import FormikTextEditor from '@/components/form/FormikTextEditor';
 import FormikWrapper from '@/components/form/FormikWrapper';
 import useShowResponse from '@/customHooks/useShowResponse';
-import { useCreateExperienceMutation } from '@/services/public/experience';
-import { Add } from '@mui/icons-material';
+import { useCreateExperienceMutation, useUpdateExperienceMutation } from '@/services/public/experience';
+import { Add, Edit } from '@mui/icons-material';
 import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { experienceInitialValues, experienceValidationSchema } from '../../utilis/formUtilis';
 
-const ExperienceFormModal = ({ isModalTxt }) => {
-
+const ExperienceFormModal = ({ isModalTxt, singleData }: { isModalTxt?: boolean, singleData?: object }) => {
+    const [formValues, setFormValues] = useState(experienceInitialValues);
     const [isModalOpen, setModalStatus] = useState(false);
 
     const { showResponse } = useShowResponse()
 
     const [createExperience] = useCreateExperienceMutation();
+    const [updateExperience] = useUpdateExperienceMutation();
 
+    // Handlers
     const handleSubmit = async (values: any) => {
+        let response = {};
         const userId = localStorage.getItem('userId');
-        const response = await createExperience({ ...values, userId });
 
-        showResponse(response?.data, 'Experience added successfully', 'Experience process failed', () => setModalStatus(false))
+        if (singleData) {
+            response = await updateExperience({ ...values, userId });
+        } else {
+            response = await createExperience({ ...values, userId });
+        }
+
+        showResponse(response?.data, `Experience ${singleData ? 'updated' : 'added'} successfully`, 'Experience process failed', () => setModalStatus(false))
     }
+
+    // Values updation on edit
+    useEffect(() => {
+        if (singleData) {
+            setFormValues(singleData);
+        }
+    }, [singleData]);
 
 
     return (
@@ -36,14 +51,14 @@ const ExperienceFormModal = ({ isModalTxt }) => {
                     </Box>
                 ) : (
                     <IconButton onClick={() => setModalStatus(true)}>
-                        <Add />
+                        {singleData ? <Edit /> : <Add />}
                     </IconButton>
                 )
             }
 
             <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Add Experience'>
                 <Box minWidth={'100%'}>
-                    <FormikWrapper formInitials={experienceInitialValues} formSchema={experienceValidationSchema} submitFunc={handleSubmit}>
+                    <FormikWrapper formInitials={formValues} formSchema={experienceValidationSchema} submitFunc={handleSubmit}>
                         <Stack spacing={2}>
 
                             <FormikField
@@ -107,7 +122,7 @@ const ExperienceFormModal = ({ isModalTxt }) => {
                                     Cancel
                                 </Button>
                                 <Button type='submit' variant='contained'>
-                                    Add
+                                    {singleData ? 'Update' : 'Add'}
                                 </Button>
                             </Stack>
                         </Stack>

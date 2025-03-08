@@ -125,7 +125,7 @@ export const educationInitialValues = {
     currentlyEnrolled: false,
     grade: '',
     city: '',
-    country: null,
+    country: null, 
     state: ''
 };
 
@@ -152,6 +152,20 @@ export const companyInfoStepInitials = {
     twitter: '',
     linkedin: '',
     instagram: '',
+};
+
+
+export const projectModalInitialValues = {
+    name: '', // Project Name
+    currentlyWorking: false, // Checkbox for currently working
+    startDate: null, // Project start date
+    endDate: null, // Project end date
+    experienceId: null, // Associated experience (if any)
+    educationId: null, // Associated education (if any)
+    accociatedWithFreelance: false, // Checkbox for freelance association
+    technicalSkills: [], // Array for technical skills input
+    projectUrl: '', // Project URL
+    description: '', // Rich text editor for project description
 };
 
 

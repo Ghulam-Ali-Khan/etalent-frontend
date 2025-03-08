@@ -2,9 +2,15 @@ import { useGetAllExperienceQuery } from '@/services/public/experience';
 import { Delete, Edit } from '@mui/icons-material';
 import { Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
 import ExperienceFormModal from '../form/components/ExperienceFormModal';
+import { useState } from 'react';
 
 const ExperienceSection = () => {
+    const [showActionBtns, setShowActionBtns] = useState(false);
+
     const { data: experienceData } = useGetAllExperienceQuery({});
+
+    // Handlers
+    const handleToggleActionBtns = () => setShowActionBtns(prev => !prev);
 
     return (
 
@@ -15,7 +21,16 @@ const ExperienceSection = () => {
                         Experience
                     </Typography>
 
-                    <ExperienceFormModal />
+
+                    <Stack direction={'row'} gap={2}>
+                        <IconButton
+                            onClick={handleToggleActionBtns}
+                        >
+                            <Edit />
+                        </IconButton>
+
+                        <ExperienceFormModal />
+                    </Stack>
                 </Stack>
                 <Box padding={2}>
                     <Stack spacing={1}>
@@ -27,14 +42,18 @@ const ExperienceSection = () => {
                                             {item?.title}
                                         </Typography>
 
-                                        <Stack direction={'row'} spacing={2}>
-                                            <IconButton>
-                                                <Edit />
-                                            </IconButton>
-                                            <IconButton>
-                                                <Delete />
-                                            </IconButton>
-                                        </Stack>
+
+                                        {showActionBtns && (
+                                            <Stack direction={'row'} spacing={2}>
+                                                <ExperienceFormModal singleData={item} />
+
+                                                <IconButton>
+                                                    <Delete />
+                                                </IconButton>
+                                            </Stack>
+                                        )
+                                        }
+
 
                                     </Stack>
                                     <Typography variant='body2' color='secondary' fontSize={'12px'}>

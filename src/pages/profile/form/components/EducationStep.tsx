@@ -39,9 +39,7 @@ const EducationStep = () => {
                                         </Typography>
 
                                         <Stack direction={'row'} spacing={2}>
-                                            <IconButton>
-                                                <Edit />
-                                            </IconButton>
+                                            <ExperienceFormModal singleData={item} />
                                             <IconButton>
                                                 <Delete />
                                             </IconButton>

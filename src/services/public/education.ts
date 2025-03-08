@@ -12,6 +12,14 @@ export const educationAPI = publicAPI.injectEndpoints({
       }),
       invalidatesTags: ['education_list']
     }),
+    updateEducation: build.mutation({
+      query: (body) => ({
+        url: 'Education',
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: ['education_list']
+    }),
     getAllEducation: build.query({
       query: () => ({
         url: `Education/${userId}`,
@@ -24,5 +32,6 @@ export const educationAPI = publicAPI.injectEndpoints({
 
 export const {
   useCreateEducationMutation,
-  useGetAllEducationQuery
+  useGetAllEducationQuery,
+  useUpdateEducationMutation
 } = educationAPI;

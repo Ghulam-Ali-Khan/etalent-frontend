@@ -12,6 +12,14 @@ export const experienceAPI = publicAPI.injectEndpoints({
       }),
       invalidatesTags: ['experince_list']
     }),
+    updateExperience: build.mutation({
+      query: (body) => ({
+        url: 'Experience',
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: ['experince_list']
+    }),
     getAllExperience: build.query({
       query: () => ({
         url: `Experience`,
@@ -27,5 +35,6 @@ export const experienceAPI = publicAPI.injectEndpoints({
 
 export const {
   useCreateExperienceMutation,
-  useGetAllExperienceQuery
+  useGetAllExperienceQuery,
+  useUpdateExperienceMutation
 } = experienceAPI;

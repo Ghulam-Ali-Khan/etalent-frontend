@@ -2,12 +2,16 @@ import { useGetAllEducationQuery } from '@/services/public/education';
 import { Delete, Edit } from '@mui/icons-material';
 import { Box, IconButton, Paper, Stack, Typography } from '@mui/material'
 import moment from 'moment';
-import React from 'react'
+import React, { useState } from 'react'
 import EducationFormModal from '../form/components/EducationFormModal';
 
 const EducationSection = () => {
+    const [showActionBtns, setShowActionBtns] = useState(false);
+
     const { data: educationData } = useGetAllEducationQuery({});
 
+    // Handlers
+    const handleToggleActionBtns = () => setShowActionBtns(prev => !prev);
     return (
         educationData?.data?.length > 0 && (
             <Paper className='my-3'>
@@ -16,7 +20,14 @@ const EducationSection = () => {
                         Education
                     </Typography>
 
-                    <EducationFormModal />
+                    <Stack direction={'row'} gap={2}>
+                        <IconButton
+                            onClick={handleToggleActionBtns}
+                        >
+                            <Edit />
+                        </IconButton>
+                        <EducationFormModal />
+                    </Stack>
                 </Stack>
                 <Box padding={2}>
                     <Stack spacing={1}>
@@ -28,14 +39,13 @@ const EducationSection = () => {
                                             {item?.school}
                                         </Typography>
 
-                                        <Stack direction={'row'} spacing={2}>
-                                            <IconButton>
-                                                <Edit />
-                                            </IconButton>
-                                            <IconButton>
-                                                <Delete />
-                                            </IconButton>
-                                        </Stack>
+                                        {showActionBtns && (
+                                            <Stack direction={'row'} spacing={2}>
+                                                <EducationFormModal singleData={item} />
+                                                <IconButton>
+                                                    <Delete />
+                                                </IconButton>
+                                            </Stack>)}
                                     </Stack>
                                     <Typography variant='body2' color='secondary'>
                                         {item?.degree}, {item?.fieldOfStudy}
