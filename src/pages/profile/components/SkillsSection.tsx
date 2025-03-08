@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Paper, Rating, Stack, Typography } from "@mui/material";
+import { Box, Grid, Grid2, Paper, Rating, Stack, Typography } from "@mui/material";
 import Chart from "react-apexcharts";
 import { useGetAllTechnicalSkillsQuery } from "@/services/public/technicalSkills";
 import { useGetAllSoftSkillsQuery } from "@/services/public/softSkills";
@@ -15,23 +15,20 @@ const SkillsSection = () => {
     console.log('technicalSkills ==> ', technicalSkills);
 
     const getChartOptions = (skills) => ({
-        chart: { type: "donut" },
-        plotOptions: {
-            radialBar: {
-                hollow: { size: "40%" },
-                dataLabels: { show: false },
-            },
+        chart: { type: "bar" },
+        xaxis: {
+            categories: skills?.data?.map((item) => item?.name) || [],
         },
-        legend: { show: false }, // Hide built-in legend
-        labels: skills?.data?.map((item) => item?.name) || [],
         colors,
     });
 
-    const series = [60, 40, 30]; // Adjust based on actual skill proficiency percentages
+    const getSeries = skills => ([{
+        data: skills?.data?.map((item) => item?.rating) || [],// Adjust based on actual skill proficiency percentages
+    }]);
 
     const skillsData = [
-        { title: "Technical Skills", options: getChartOptions(technicalSkills), popup: <TechnicalSkillsPopup /> },
-        { title: "Soft Skills", options: getChartOptions(softSkills), popup: <SoftSkillsPopup /> },
+        { title: "Technical Skills", options: getChartOptions(technicalSkills), popup: <TechnicalSkillsPopup />, series: getSeries(technicalSkills) },
+        { title: "Soft Skills", options: getChartOptions(softSkills), popup: <SoftSkillsPopup />, series: getSeries(softSkills) },
     ];
 
     return (
@@ -42,9 +39,9 @@ const SkillsSection = () => {
                 </Typography>
             </Stack>
             <Box padding={2}>
-                <Grid container spacing={2}>
-                    {skillsData.map(({ title, options, popup }, index) => (
-                        <Grid item key={title} xl={6} lg={6} md={6} sm={12} xs={12}>
+                <Grid2 container spacing={2}>
+                    {skillsData.map(({ title, options, popup, series }, index) => (
+                        <Grid2 key={title} size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                             <Paper sx={{ bgcolor: "#F9F9F9", padding: 2 }}>
                                 <Stack className="title-header" direction={'row'} justifyContent={'space-between'}>
                                     <Typography variant="h6" fontWeight={600}>
@@ -55,10 +52,10 @@ const SkillsSection = () => {
                                 </Stack>
                                 <Box display={'flex'} justifyContent={'space-between'}>
 
-                                    <Chart options={options} series={series} type="donut" height={250} />
+                                    <Chart options={options} series={series} type="bar" height={250} width={500} />
 
                                     <Stack gap={1} direction={'column'}>
-                                        {options?.labels?.map((item, index) => (
+                                        {options?.xaxis?.categories?.map((item, index) => (
                                             <Box display={'flex'} gap={2} alignItems={'center'}>
                                                 <Box sx={{ width: 10, height: 10, bgcolor: colors[index] }} />
                                                 <Typography fontSize={'14px'} color="secondary">
@@ -70,9 +67,9 @@ const SkillsSection = () => {
                                     </Stack>
                                 </Box>
                             </Paper>
-                        </Grid>
+                        </Grid2>
                     ))}
-                </Grid>
+                </Grid2>
             </Box>
         </Paper>
     );
