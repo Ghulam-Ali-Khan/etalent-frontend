@@ -1,15 +1,16 @@
-export const addSectionMenuItems =({
+export const addSectionMenuItems = ({
     educationModal,
     experienceModal,
     softSkillModal,
     technicalSkillModal,
     projectModal,
-    publicationModal
-}) =>([
+    publicationModal,
+    basicInfoModal
+}) => ([
     {
         title: 'Info',
         data: [
-            { title: 'Basic Info', handleOnClick: '' },
+            { title: 'Basic Info', component: basicInfoModal },
         ],
     },
     {
@@ -50,5 +51,4 @@ export const sectionLinks = [
     { to: '#experience', label: 'Experience' },
     { to: '#skills', label: 'Skills' },
     { to: '#portfolio', label: 'Portfolio' },
-  ];
-  
+];

@@ -17,7 +17,7 @@ import CommonModal from '@/components/common/CommonModal';
 import LinkedinImg from '@/assets/imgs/linkedin-save-pdf.png';
 import { ArrowForward, CloudUpload } from '@mui/icons-material';
 
-const CompanyInfoStep = () => {
+const CompanyInfoStep = ({ noStep }: { noStep?: boolean }) => {
   const { t } = useTranslation(); // Hook for translations
 
   const [profileLevelDesp, setProfileLevelDesp] = useState('{Description}');
@@ -112,7 +112,7 @@ const CompanyInfoStep = () => {
 
   return (
     <>
-      <Typography variant="h4">{t('company_info')}</Typography>
+      <Typography variant="h4">{!noStep ? t('company_info'): 'Info'}</Typography>
       <Stack direction={'row'} gap={2} className="my-6">
         <FormikAvatar name="artifactUrl" is64base />
 
@@ -134,31 +134,39 @@ const CompanyInfoStep = () => {
         </Stack>
       </Stack>
 
-      <Alert severity="info" className='mt-2 mb-4'>{profileLevelDesp}</Alert>
+      {
+        !noStep && (
+          <>
 
-      <Box className="flex gap-4 my-4">
-        <DropzoneFileUploader label="Upload your Resume" onFileUpload={handleFileUpload} />
+            <Alert severity="info" className='mt-2 mb-4'>{profileLevelDesp}</Alert>
 
-        <Paper
-          variant="outlined"
-          sx={{
-            p: 2,
-            width: 300,
-            textAlign: "center",
-            cursor: "pointer",
-            border: "2px dashed #ccc",
-            bgcolor: "background.paper",
-          }}
-          onClick={handleToggleResumeModal}
-        >
-          <Box display="flex" flexDirection="column" alignItems="center">
-            <CloudUpload color="primary" fontSize="large" />
-            <Typography variant="body1" color="textSecondary">
-              {"Drop the file here..."}
-            </Typography>
-          </Box>
-        </Paper>
-      </Box>
+            <Box className="flex gap-4 my-4">
+              <DropzoneFileUploader label="Upload your Resume" onFileUpload={handleFileUpload} />
+
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 2,
+                  width: 300,
+                  textAlign: "center",
+                  cursor: "pointer",
+                  border: "2px dashed #ccc",
+                  bgcolor: "background.paper",
+                }}
+                onClick={handleToggleResumeModal}
+              >
+                <Box display="flex" flexDirection="column" alignItems="center">
+                  <CloudUpload color="primary" fontSize="large" />
+                  <Typography variant="body1" color="textSecondary">
+                    {"Drop the file here..."}
+                  </Typography>
+                </Box>
+              </Paper>
+            </Box>
+
+          </>
+        )
+      }
 
       <Grid2 container spacing={2}>
         <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>

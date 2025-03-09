@@ -14,6 +14,7 @@ import ReviewApplication from './ReviewApplication';
 import { isEmptyObject } from '@/utilis/helpers';
 import useShowResponse from '@/customHooks/useShowResponse';
 import { useNavigate } from 'react-router-dom';
+import { useCreateSocialLinkMutation } from '@/services/public/socialLink';
 
 const StepperForm = () => {
     const [step, setStep] = useState(0);
@@ -23,16 +24,19 @@ const StepperForm = () => {
     const { showResponse } = useShowResponse();
 
     const [createProfileMutation] = useCreateProfileMutation();
+    const [createSocialLinks] = useCreateSocialLinkMutation();
 
     // handlers
     const handleSubmit = async (values: any) => {
         if (step === 6) {
+            const { facebook, twitter, instagram, linkedin } = values;
             let response = {};
 
             const userId = localStorage.getItem("userId");
 
 
             response = await createProfileMutation({ ...values, userId, });
+            await createSocialLinks({ facebook, twitter, instagram, linkedin });
 
             showResponse(response?.data, `Profile created successfully`, 'Experience process failed', () => navigate('portal/profile/'))
 

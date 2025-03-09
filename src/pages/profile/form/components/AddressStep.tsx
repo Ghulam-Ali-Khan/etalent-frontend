@@ -3,11 +3,11 @@ import FormikAutoCompleteSelect from '@/components/form/FormikSelect'
 import { Grid2, Stack, Typography } from '@mui/material'
 import React from 'react'
 
-const AddressStep = () => {
+const AddressStep = ({ noStep }: { noStep?: boolean }) => {
     return (
         <>
             <Typography variant='h4'>
-                Address Step
+                Address {!noStep && 'Step'}
             </Typography>
 
             <Stack spacing={2}>

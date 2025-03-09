@@ -21,7 +21,7 @@ const PrivateRoute = () => {
     }
 
     if (!user?.eTalent && location.pathname !== "/portal/profile/add") {
-        return <Navigate to="/portal/profile/add" />;
+        // return <Navigate to="/portal/profile/add" />;
     }
 
     return <Outlet />;

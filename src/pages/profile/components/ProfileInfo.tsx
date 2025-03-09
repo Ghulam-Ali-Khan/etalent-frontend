@@ -4,29 +4,39 @@ import { FacebookOutlined, InsertChartOutlined, Instagram, LinkedIn, Twitter, Wo
 import AddSectionMenu from './AddSectionMenu';
 import { Link } from 'react-router-dom';
 import { sectionLinks } from '../utilis/data';
+import { useGetPorfileQuery } from '@/services/public/profile';
+import { useGetAllSocialLinksQuery } from '@/services/public/socialLink';
 
 const ProfileInfo = () => {
 
+    const { data: profileInfoData } = useGetPorfileQuery({});
+    const { data: socialLinkData } = useGetAllSocialLinksQuery({});
+
+
+    const { artifactUrl = AvatarImg, firstName, lastName, city, nationality, profileRating } = profileInfoData?.data || {}
+    const { facebook, instagram, linkedin, twitter } = socialLinkData?.data?.[0] || {};
+    console.log('socialLinkData ==> ', socialLinkData
+    );
 
     return (
         <>
             <Paper className='p-4'>
                 <Stack direction={'row'} justifyContent={'space-between'} alignItems={'start'}>
                     <Box display={'flex'} gap={2}>
-                        <Avatar src={AvatarImg} sx={{ height: '100px', width: '100px' }} />
+                        <Avatar src={artifactUrl} sx={{ height: '100px', width: '100px' }} />
 
                         <Stack>
                             <Typography variant='h5' fontWeight={600}>
-                                Ghulam Ali
+                                {firstName} {lastName}
                             </Typography>
-                            <Typography color='secondary' fontSize={'12px'}>
+                            {/* <Typography color='secondary' fontSize={'12px'}>
                                 React Js Developer
-                            </Typography>
+                            </Typography> */}
                             <Typography color='secondary' fontSize={'12px'}>
-                                Islamabad, Pakistan
+                                {city}, {nationality}
                             </Typography>
 
-                            <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
+                            <Rating name="half-rating" defaultValue={profileRating} />
 
                         </Stack>
                     </Box>
@@ -38,10 +48,34 @@ const ProfileInfo = () => {
                             </Typography>
                         </Paper>
                         <Stack direction={'row'} gap={1} mt={2}>
-                            <FacebookOutlined color='secondary' />
-                            <Instagram color='secondary' />
-                            <LinkedIn color='secondary' />
-                            <Twitter color='secondary' />
+                            {
+                                facebook && (
+                                    <a href={facebook}>
+                                        <FacebookOutlined color='secondary' />
+                                    </a>
+                                )
+                            }
+                            {
+                                instagram && (
+                                    <a href={instagram}>
+                                        <Instagram color='secondary' />
+                                    </a>
+                                )
+                            }
+                            {
+                                linkedin && (
+                                    <a href={linkedin}>
+                                        <LinkedIn color='secondary' />
+                                    </a>
+                                )
+                            }
+                            {
+                                twitter && (
+                                    <a href={twitter}>
+                                        <Twitter color='secondary' />
+                                    </a>
+                                )
+                            }
                         </Stack>
                     </Stack>
                 </Stack>
