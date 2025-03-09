@@ -5,7 +5,8 @@ export const addSectionMenuItems = ({
     technicalSkillModal,
     projectModal,
     publicationModal,
-    basicInfoModal
+    basicInfoModal,
+    overviewModal,
 }) => ([
     {
         title: 'Info',
@@ -16,7 +17,7 @@ export const addSectionMenuItems = ({
     {
         title: 'About',
         data: [
-            { title: 'Overview', handleOnClick: '' },
+            { title: 'Overview', component: overviewModal },
         ],
     },
     {

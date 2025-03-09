@@ -4,10 +4,14 @@ import { FacebookOutlined, InsertChartOutlined, Instagram, LinkedIn, Twitter, Wo
 import AddSectionMenu from './AddSectionMenu';
 import { Link } from 'react-router-dom';
 import { sectionLinks } from '../utilis/data';
+import QRCode from 'react-qr-code';
 import { useGetPorfileQuery } from '@/services/public/profile';
 import { useGetAllSocialLinksQuery } from '@/services/public/socialLink';
 
+const apiUrl = import.meta.env.VITE_APP_URL;
+
 const ProfileInfo = () => {
+    const userId = localStorage.getItem('userId');
 
     const { data: profileInfoData } = useGetPorfileQuery({});
     const { data: socialLinkData } = useGetAllSocialLinksQuery({});
@@ -77,6 +81,7 @@ const ProfileInfo = () => {
                                 )
                             }
                         </Stack>
+
                     </Stack>
                 </Stack>
 
@@ -112,6 +117,11 @@ const ProfileInfo = () => {
                             ))}
                         </Stack>
 
+                    </Grid2>
+                    <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
+                        <Stack mt={3} direction={'row'} justifyContent={'end'}>
+                            <QRCode value={`${apiUrl}/user-profile/${userId}`} size={200} />
+                        </Stack>
                     </Grid2>
                 </Grid2>
             </Paper>

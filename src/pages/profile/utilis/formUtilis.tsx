@@ -11,6 +11,10 @@ export const steps = [
     { icon: <Reviews />, title: 'Review' },
 ];
 
+export const overviewInitialValues = {
+    overviewDetail: '',
+}
+
 
 export const companyInfoStepValidation = yup.object().shape({
     firstName: yup.string().required("First Name is required"),

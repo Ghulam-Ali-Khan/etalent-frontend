@@ -16,3 +16,9 @@ button {
   padding: 5px 10px;
   border-bottom: 1px solid #E7E7E7
 }
+
+.min-height-ck{
+  .ck-content{
+    min-height: 400px;
+  }
+}

@@ -5,6 +5,7 @@ import ExperienceSection from './components/ExperienceSection'
 import EducationSection from './components/EducationSection'
 import Header from '@/components/layout/Header'
 import FreelanceProjectsSection from './components/FreelanceProjectsSection'
+import AboutSection from './components/AboutSection'
 
 const ProfilePage = () => {
     return (
@@ -12,6 +13,7 @@ const ProfilePage = () => {
             <Header />
             <Box className="w-full px-[150px]" >
                 <ProfileInfo />
+                <AboutSection />
                 <SkillsSection />
                 <ExperienceSection />
                 <EducationSection />

@@ -2,64 +2,71 @@ import { useEffect, useState } from 'react';
 import CommonModal from '@/components/common/CommonModal';
 import FormikWrapper from '@/components/form/FormikWrapper';
 import { Box, Button, IconButton, Stack } from '@mui/material';
-import { companyInfoStepInitials } from '../utilis/formUtilis';
+import { companyInfoStepInitials, overviewInitialValues } from '../utilis/formUtilis';
 import { Add, Edit } from '@mui/icons-material';
 import useShowResponse from '@/customHooks/useShowResponse';
 import CompanyInfoStep from '../form/components/CompanyInfoStep';
 import AddressStep from '../form/components/AddressStep';
 import { useGetPorfileQuery, useUpdateProfileMutation } from '@/services/public/profile';
+import FormikTextEditor from '@/components/form/FormikTextEditor';
+import { useCreateOverviewMutation, useGetOverviewQuery, useUpdateOverviewMutation } from '@/services/public/overview';
 
-const BasicInfoModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: boolean, singleData?: object, isFreelance?: boolean }) => {
+const OverviewModal = ({ isModalTxt }: { isModalTxt?: boolean}) => {
     const [isModalOpen, setModalStatus] = useState(false);
-    const [formValues, setFormValues] = useState(companyInfoStepInitials)
+    const [formValues, setFormValues] = useState(overviewInitialValues)
 
     // Mutations & queres
-    const { data: userProfileData } = useGetPorfileQuery({});
-    const [updateProfile] = useUpdateProfileMutation();
+    const { data: overviewData } = useGetOverviewQuery({});
+    const [createOverview] = useCreateOverviewMutation();
+    const [updateOverview] = useUpdateOverviewMutation();
 
-    console.log('userProfileData ==> ', userProfileData);
+    const isEdit = overviewData?.data;
 
     // Custom Hooks
     const { showResponse } = useShowResponse()
 
     const handleSubmitForm = async (values: any) => {
-        const response = await updateProfile(values);
+        let response = {};
 
-        showResponse(response?.data, `Basic info ${singleData ? 'updated' : 'added'} successfully`, 'Basic info process failed', () => setModalStatus(false))
+        if (isEdit) {
+            response = await updateOverview(values);
+        } else {
+            response = await createOverview(values);
+        }
+
+        showResponse(response?.data, `Overview ${isEdit ? 'updated' : 'added'} successfully`, 'Overview process failed', () => setModalStatus(false))
 
     };
 
     // UseEffects
     useEffect(() => {
-        if (userProfileData?.data) {
-            setFormValues(({ ...companyInfoStepInitials, ...userProfileData?.data }));
+        if (isEdit) {
+            setFormValues(({ ...overviewData?.data }));
         }
-    }, [singleData])
+    }, [overviewData])
 
     return (
         <>
             {
                 isModalTxt ? (
                     <Box onClick={() => setModalStatus(true)} className="w-full">
-                        Basic Info
+                        Overview
                     </Box>
                 ) : (
                     <IconButton onClick={() => setModalStatus(true)}>
-                        {singleData ? <Edit /> : <Add />}
+                        {isEdit ? <Edit /> : <Add />}
                     </IconButton>
                 )
             }
 
-            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title={'Update Project'}>
-                <Box minWidth={'100%'}>
+            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title={`${isEdit ? 'Update' : 'Add'} Overview`}>
+                <Box minWidth={'100%'} className="min-height-ck">
                     <FormikWrapper
                         formInitials={formValues}
                         submitFunc={handleSubmitForm}
                     >
                         <>
-                            <CompanyInfoStep noStep />
-                            <br />
-                            <AddressStep noStep />
+                            <FormikTextEditor name='overviewDetail' />
 
                             <Stack direction={'row'} justifyContent={'end'} gap={2} mt={2}>
                                 <Button variant='outlined' onClick={() => setModalStatus(false)}>
@@ -67,7 +74,7 @@ const BasicInfoModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: 
                                 </Button>
 
                                 <Button type='submit' variant='contained'>
-                                    Update
+                                    {isEdit ? 'Update' : 'Add'}
                                 </Button>
                             </Stack>
                         </>
@@ -78,4 +85,4 @@ const BasicInfoModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: 
     );
 };
 
-export default BasicInfoModal;
+export default OverviewModal;
