@@ -12,6 +12,14 @@ export const technicalSkillsAPI = publicAPI.injectEndpoints({
             }),
             invalidatesTags: ['technical_skills']
         }),
+        updateTechnicalSkill: build.mutation({
+            query: (body) => ({
+                url: 'TechnicalSkill',
+                method: 'PUT',
+                body: body,
+            }),
+            invalidatesTags: ['technical_skills']
+        }),
         getAllTechnicalSkills: build.query({
             query: () => ({
                 url: `TechnicalSkill`,
@@ -27,5 +35,6 @@ export const technicalSkillsAPI = publicAPI.injectEndpoints({
 
 export const {
     useCreateTechnicalSkillMutation,
-    useGetAllTechnicalSkillsQuery
+    useGetAllTechnicalSkillsQuery,
+    useUpdateTechnicalSkillMutation
 } = technicalSkillsAPI;

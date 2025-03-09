@@ -5,29 +5,48 @@ import FormikField from '@/components/form/FormikField';
 import FormikTextEditor from '@/components/form/FormikTextEditor';
 import FormikWrapper from '@/components/form/FormikWrapper';
 import useShowResponse from '@/customHooks/useShowResponse';
-import { useCreateTechnicalSkillMutation } from '@/services/public/technicalSkills';
-import { Add } from '@mui/icons-material';
+import { useCreateTechnicalSkillMutation, useUpdateTechnicalSkillMutation } from '@/services/public/technicalSkills';
+import { Add, Edit } from '@mui/icons-material';
 import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { technicalSkillsInitialValues, technicalSkillsSchema } from '../../utilis/formUtilis';
 
-const TechnicalSkillsPopup =  ({ isModalTxt }: {isModalTxt?:boolean}) => {
+const TechnicalSkillsPopup = ({ isModalTxt, singleData }: { isModalTxt?: boolean, singleData?: object }) => {
     // states
+    const [formValues, setFormValues] = useState(technicalSkillsInitialValues)
     const [isModalOpen, setModalStatus] = useState(false);
+
+    console.log('singleData ==> ', singleData)
 
     // queries and mutations
     const [createTechnicalSkill] = useCreateTechnicalSkillMutation();
+    const [updateTechnicalSkill] = useUpdateTechnicalSkillMutation();
 
     // Custom Hook
     const { showResponse } = useShowResponse();
 
-    // handlers
-    const handleSubmit = async (values: any) => {
-        const userId = localStorage.getItem('userId');
-        const response = await createTechnicalSkill({ ...values, userId });
 
-        showResponse(response?.data, 'Technical skill added successfully', 'Technical skill process failed', () => setModalStatus(false))
+    // Handlers
+    const handleSubmit = async (values: any) => {
+        let response = {};
+        const userId = localStorage.getItem('userId');
+
+        if (singleData) {
+            response = await updateTechnicalSkill({ ...values, userId });
+        } else {
+            response = await createTechnicalSkill({ ...values, userId });
+        }
+
+        showResponse(response?.data, `Technical skill ${singleData ? 'updated' : 'added'} successfully`, 'Technical skill process failed', () => setModalStatus(false))
     }
+
+    // Values updation on edit
+    useEffect(() => {
+        if (singleData) {
+            const { userId, id, name, experience } = singleData;
+            setFormValues({ userId, id, name, experience });
+        }
+    }, [singleData]);
 
     return (
         <>
@@ -38,14 +57,14 @@ const TechnicalSkillsPopup =  ({ isModalTxt }: {isModalTxt?:boolean}) => {
                     </Box>
                 ) : (
                     <IconButton onClick={() => setModalStatus(true)}>
-                        <Add />
+                        {singleData ? <Edit /> : <Add />}
                     </IconButton>
                 )
             }
 
-            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Add Technical Skill' minWidth='400px'>
+            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title={`${singleData ? 'Update' : 'Add'} Technical Skill`} minWidth='400px'>
                 <Box minWidth={'400px'}>
-                    <FormikWrapper formInitials={technicalSkillsInitialValues} formSchema={technicalSkillsSchema} submitFunc={handleSubmit}>
+                    <FormikWrapper formInitials={formValues} formSchema={technicalSkillsSchema} submitFunc={handleSubmit}>
                         <Stack spacing={2}>
                             <FormikField
                                 name='name'
@@ -65,7 +84,7 @@ const TechnicalSkillsPopup =  ({ isModalTxt }: {isModalTxt?:boolean}) => {
                                     Cancel
                                 </Button>
                                 <Button variant='contained' type='submit'>
-                                    Add
+                                    {singleData ? 'Update' : 'Add'}
                                 </Button>
                             </Stack>
                         </Stack>

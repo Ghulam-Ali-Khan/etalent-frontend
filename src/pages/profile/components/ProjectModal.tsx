@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormikContext } from 'formik';
 import CommonModal from '@/components/common/CommonModal';
 import FormikCheckbox from '@/components/form/FormikCheckbox';
@@ -7,51 +7,87 @@ import FormikField from '@/components/form/FormikField';
 import FormikAutoCompleteSelect from '@/components/form/FormikSelect';
 import FormikTextEditor from '@/components/form/FormikTextEditor';
 import FormikWrapper from '@/components/form/FormikWrapper';
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, IconButton, Stack } from '@mui/material';
 import FormikSkillsInput from '@/components/form/FormikSkillsInput';
 import { useGetAllExperienceQuery } from '@/services/public/experience';
 import { optionsMaker } from '@/utilis/helpers';
 import { useGetAllEducationQuery } from '@/services/public/education';
-import { projectModalInitialValues } from '../utilis/formUtilis';
-import { useCreatePortfolioMutation, useGetAllPortfolioQuery } from '@/services/public/portfolio';
+import { projectModalInitialValues, projectValidationSchema } from '../utilis/formUtilis';
+import { useCreatePortfolioMutation, useUpdatePortfolioMutation } from '@/services/public/portfolio';
 import moment from 'moment';
-import { useCreateProjectMutation, useGetAllProjectQuery } from '@/services/public/project';
+import { useCreateProjectMutation, useUpdateProjectMutation } from '@/services/public/project';
+import { Add, Edit } from '@mui/icons-material';
+import useShowResponse from '@/customHooks/useShowResponse';
 
-const ProjectModal = () => {
-    const [isModalOpen, setModalStatus] = React.useState(false);
+const ProjectModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: boolean, singleData?: object, isFreelance?: boolean }) => {
+    const [isModalOpen, setModalStatus] = useState(false);
+    const [formValues, setFormValues] = useState(projectModalInitialValues)
 
+    // Mutations 
     const [addPortfolio] = useCreatePortfolioMutation();
+    const [updatePortfolio] = useUpdatePortfolioMutation();
     const [addProject] = useCreateProjectMutation();
+    const [updateProject] = useUpdateProjectMutation();
+
+    // Custom Hooks
+    const { showResponse } = useShowResponse()
 
     const handleSubmitForm = async (values: any) => {
+        let response = {};
         const technicalSkills = Array.isArray(values.technicalSkills)
             ? values.technicalSkills.join(',')
             : '';
 
         let { accociatedWithFreelance, ...newValues } = values;
 
-        if (accociatedWithFreelance) {
+        if (accociatedWithFreelance || isFreelance) {
             newValues = { ...newValues, isPrivate: false };
-            await addPortfolio({ ...newValues, technicalSkills });
+            if (singleData) {
+                response = await updatePortfolio({ ...newValues, technicalSkills });
+            } else {
+                response = await addPortfolio({ ...newValues, technicalSkills });
+            }
         } else {
-            await addProject({ ...newValues, technicalSkills });
+            if (singleData) {
+                response = await updateProject({ ...newValues, technicalSkills });
+            } else {
+                response = await addProject({ ...newValues, technicalSkills });
+            }
         }
+
+        showResponse(response?.data, `Project ${singleData ? 'updated' : 'added'} successfully`, 'Project process failed', () => setModalStatus(false))
 
     };
 
+    // UseEffects
+    useEffect(() => {
+        if (singleData) {
+            setFormValues(({ ...projectModalInitialValues, ...singleData }));
+        }
+    }, [singleData])
+
     return (
         <>
-            <Box onClick={() => setModalStatus(true)} className="w-full">
-                Projects
-            </Box>
+            {
+                isModalTxt ? (
+                    <Box onClick={() => setModalStatus(true)} className="w-full">
+                        Projects
+                    </Box>
+                ) : (
+                    <IconButton onClick={() => setModalStatus(true)}>
+                        {singleData ? <Edit /> : <Add />}
+                    </IconButton>
+                )
+            }
 
-            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title="Add Project">
+            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title={`${singleData ? 'Update' : 'Add'} Project`}>
                 <Box minWidth={'100%'}>
                     <FormikWrapper
-                        formInitials={projectModalInitialValues}
+                        formInitials={formValues}
+                        formSchema={projectValidationSchema}
                         submitFunc={handleSubmitForm}
                     >
-                        <ProjectFormContent />
+                        <ProjectFormContent isFreelance={isFreelance} singleData={singleData} />
                     </FormikWrapper>
                 </Box>
             </CommonModal>
@@ -59,16 +95,11 @@ const ProjectModal = () => {
     );
 };
 
-const ProjectFormContent = () => {
+const ProjectFormContent = ({ isFreelance, singleData }: { isFreelance?: boolean, singleData?: any }) => {
     const { values, setFieldValue } = useFormikContext();
 
     const { data: experienceData } = useGetAllExperienceQuery({});
     const { data: educationData } = useGetAllEducationQuery({});
-
-    const { data: portfolioData } = useGetAllPortfolioQuery({});
-    const {data: projectsData} = useGetAllProjectQuery({});
-
-    console.log('portfolioData ==> ', portfolioData, projectsData)
 
     const experienceOptions = optionsMaker({
         optionsArray: experienceData?.data || [],
@@ -107,32 +138,37 @@ const ProjectFormContent = () => {
 
             <Stack spacing={2} direction="row">
                 <FormikDatePicker name="startDate" label="Start Date" isRequired />
-                <FormikDatePicker name="endDate" label="End Date" minDate={moment(values?.startDate)} isRequired  isDisable={values?.currentlyWorking}/>
+                <FormikDatePicker name="endDate" label="End Date" minDate={moment(values?.startDate)} isRequired isDisable={values?.currentlyWorking} />
             </Stack>
 
-            <FormikAutoCompleteSelect
-                name="experienceId"
-                label="Associate with experience"
-                options={experienceOptions}
-                isRequired
-                isDisabled={!!values.educationId || !!values.accociatedWithFreelance}
-            />
+            {
+                !isFreelance && (
+                    <>
+                        <FormikAutoCompleteSelect
+                            name="experienceId"
+                            label="Associate with experience"
+                            options={experienceOptions}
+                            isRequired
+                            isDisabled={!!values.educationId || !!values.accociatedWithFreelance}
+                        />
+                        <FormikAutoCompleteSelect
+                            name="educationId"
+                            label="Associate with education"
+                            options={educationOptions}
+                            isRequired
+                            isDisabled={!!values.experienceId || !!values.accociatedWithFreelance}
+                        />
 
-            <FormikAutoCompleteSelect
-                name="educationId"
-                label="Associate with education"
-                options={educationOptions}
-                isRequired
-                isDisabled={!!values.experienceId || !!values.accociatedWithFreelance}
-            />
-
-            <Box my={3}>
-                <FormikCheckbox
-                    name="accociatedWithFreelance"
-                    label="Associated with freelance"
-                    disabled={!!values.educationId || !!values.experienceId}
-                />
-            </Box>
+                        <Box my={3}>
+                            <FormikCheckbox
+                                name="accociatedWithFreelance"
+                                label="Associated with freelance"
+                                disabled={!!values.educationId || !!values.experienceId}
+                            />
+                        </Box>
+                    </>
+                )
+            }
 
             <FormikSkillsInput name="technicalSkills" label="Technical Skills" />
             <FormikField name="projectUrl" label="Project URL" />
@@ -141,7 +177,7 @@ const ProjectFormContent = () => {
             <Stack direction="row" justifyContent="end" spacing={2}>
                 <Button variant="outlined">Cancel</Button>
                 <Button type="submit" variant="contained">
-                    Add
+                    {singleData ? 'Update' : 'Add'}
                 </Button>
             </Stack>
         </Stack>

@@ -42,7 +42,7 @@ const AddSectionMenu = () => {
                         experienceModal: <ExperienceFormModal isModalTxt />,
                         softSkillModal: <SoftSkillsPopup isModalTxt />,
                         technicalSkillModal: <TechnicalSkillsPopup isModalTxt />,
-                        projectModal: <ProjectModal />,
+                        projectModal: <ProjectModal isModalTxt />,
                         publicationModal: <PublicationModal/>,
                     }).map(item => (
                         item?.data ? (

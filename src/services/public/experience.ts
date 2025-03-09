@@ -10,7 +10,7 @@ export const experienceAPI = publicAPI.injectEndpoints({
         method: 'POST',
         body: [body],
       }),
-      invalidatesTags: ['experince_list']
+      invalidatesTags: ['experince_list', 'education_experience_list']
     }),
     updateExperience: build.mutation({
       query: (body) => ({
@@ -18,7 +18,7 @@ export const experienceAPI = publicAPI.injectEndpoints({
         method: 'PUT',
         body: body,
       }),
-      invalidatesTags: ['experince_list']
+      invalidatesTags: ['experince_list', 'education_experience_list']
     }),
     getAllExperience: build.query({
       query: () => ({

@@ -23,7 +23,7 @@ const CompanyInfoStep = () => {
   const [profileLevelDesp, setProfileLevelDesp] = useState('{Description}');
   const [isResumeModalOpen, setResumeModalStatus] = useState(false);
 
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, values } = useFormikContext();
 
   // Handlers
   const handleToggleResumeModal = () => setResumeModalStatus((prev: boolean) => !prev);
@@ -114,7 +114,7 @@ const CompanyInfoStep = () => {
     <>
       <Typography variant="h4">{t('company_info')}</Typography>
       <Stack direction={'row'} gap={2} className="my-6">
-        <FormikAvatar name="artifactUrl" isURL />
+        <FormikAvatar name="artifactUrl" is64base />
 
         <Stack spacing={2}>
           <Typography variant="body1">{t('profile_level')}*</Typography>
@@ -147,7 +147,7 @@ const CompanyInfoStep = () => {
             textAlign: "center",
             cursor: "pointer",
             border: "2px dashed #ccc",
-            bgcolor:  "background.paper",
+            bgcolor: "background.paper",
           }}
           onClick={handleToggleResumeModal}
         >

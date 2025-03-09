@@ -14,9 +14,9 @@ export const projectAPI = publicAPI.injectEndpoints({
         }),
         updateProject: build.mutation({
             query: (body) => ({
-                url: `Project/${body?.id}`,
+                url: `Project`,
                 method: 'PUT',
-                body: body,
+                body: {...body, userId},
             }),
             invalidatesTags: ['project_list']
         }),

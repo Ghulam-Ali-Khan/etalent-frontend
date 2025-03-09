@@ -1,29 +1,46 @@
 import CommonModal from '@/components/common/CommonModal';
 import FormikField from '@/components/form/FormikField';
 import FormikWrapper from '@/components/form/FormikWrapper';
-import { Add } from '@mui/icons-material';
+import { Add, Edit } from '@mui/icons-material';
 import { Box, Button, IconButton, Stack } from '@mui/material';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { softSkillsInitialValues, softSkillsSchema } from '../../utilis/formUtilis';
-import { useCreateSoftSkillMutation } from '@/services/public/softSkills';
+import { useCreateSoftSkillMutation, useUpdateSoftSkillMutation } from '@/services/public/softSkills';
 import useShowResponse from '@/customHooks/useShowResponse';
 
-const SoftSkillsPopup = ({ isModalTxt }: {isModalTxt?:boolean}) => {
+const SoftSkillsPopup = ({ isModalTxt, singleData }: { isModalTxt?: boolean, singleData?: object }) => {
+    const [formValues, setFormValues] = useState(softSkillsInitialValues);
     const [isModalOpen, setModalStatus] = useState(false);
 
     // queries and mutations
     const [createSoftSkill] = useCreateSoftSkillMutation();
+    const [updateSoftSkill] = useUpdateSoftSkillMutation();
 
     // Custom Hook
     const { showResponse } = useShowResponse();
 
-    // handlers
+    // Handlers
     const handleSubmit = async (values: any) => {
+        let response = {};
         const userId = localStorage.getItem('userId');
-        const response = await createSoftSkill({ ...values, userId });
 
-        showResponse(response?.data, 'Soft skill added successfully', 'Soft skill process failed', () => setModalStatus(false))
+        if (singleData) {
+            response = await updateSoftSkill({ ...values, userId });
+        } else {
+            response = await createSoftSkill({ ...values, userId });
+        }
+
+        showResponse(response?.data, `Soft skill ${singleData ? 'updated' : 'added'} successfully`, 'Soft skill process failed', () => setModalStatus(false))
     }
+
+    // Values updation on edit
+    useEffect(() => {
+        if (singleData) {
+            const { userId, id, name } = singleData;
+            setFormValues({ userId, id, name });
+        }
+    }, [singleData]);
+
 
     return (
         <>
@@ -34,14 +51,14 @@ const SoftSkillsPopup = ({ isModalTxt }: {isModalTxt?:boolean}) => {
                     </Box>
                 ) : (
                     <IconButton onClick={() => setModalStatus(true)}>
-                        <Add />
+                        {singleData ? <Edit /> : <Add />}
                     </IconButton>
                 )
             }
 
-            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title='Soft Skill' minWidth='400px'>
+            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title={`${singleData ? 'Update' : 'Add'} Soft Skill`} minWidth='400px'>
                 <Box minWidth={'400px'}>
-                    <FormikWrapper formInitials={softSkillsInitialValues} formSchema={softSkillsSchema} submitFunc={handleSubmit}>
+                    <FormikWrapper formInitials={formValues} formSchema={softSkillsSchema} submitFunc={handleSubmit}>
                         <Stack spacing={2}>
 
                             <FormikField
@@ -56,7 +73,7 @@ const SoftSkillsPopup = ({ isModalTxt }: {isModalTxt?:boolean}) => {
                                     Cancel
                                 </Button>
                                 <Button variant='contained' type='submit'>
-                                    Add
+                                    {singleData ? 'Update' : 'Add'}
                                 </Button>
                             </Stack>
                         </Stack>

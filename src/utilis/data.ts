@@ -248,3 +248,15 @@ export const countries = [
     { code: 'ZM', label: 'Zambia', phone: '260' },
     { code: 'ZW', label: 'Zimbabwe', phone: '263' },
   ];
+
+
+  export const chartColors = [
+    "#A4E2C6", "#AED4FB", "#0E4D92", "#FF5733", "#33FF57", "#5733FF", "#FFD700",
+    "#DC143C", "#8A2BE2", "#7FFF00", "#FF4500", "#2E8B57", "#FF1493", "#20B2AA",
+    "#9370DB", "#3CB371", "#FF6347", "#4682B4", "#32CD32", "#BA55D3", "#00CED1",
+    "#FF8C00", "#8B0000", "#556B2F", "#FF00FF", "#1E90FF", "#B22222", "#00FF7F",
+    "#FF69B4", "#008080", "#D2691E", "#7B68EE", "#ADFF2F", "#C71585", "#5F9EA0",
+    "#BDB76B", "#9932CC", "#00FA9A", "#CD5C5C", "#008B8B", "#DAA520", "#D8BFD8",
+    "#FFDEAD", "#8B4513", "#A52A2A", "#6A5ACD", "#DDA0DD", "#FFDAB9", "#468499"
+  ];
+  

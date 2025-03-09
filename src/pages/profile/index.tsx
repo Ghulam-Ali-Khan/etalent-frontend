@@ -4,6 +4,7 @@ import SkillsSection from './components/SkillsSection'
 import ExperienceSection from './components/ExperienceSection'
 import EducationSection from './components/EducationSection'
 import Header from '@/components/layout/Header'
+import FreelanceProjectsSection from './components/FreelanceProjectsSection'
 
 const ProfilePage = () => {
     return (
@@ -14,6 +15,7 @@ const ProfilePage = () => {
                 <SkillsSection />
                 <ExperienceSection />
                 <EducationSection />
+                <FreelanceProjectsSection />
             </Box>
         </>
     )

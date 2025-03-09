@@ -25,7 +25,7 @@ const ReviewApplication = () => {
                     <SectionDetailed heading={'Profile information'}>
                         <Grid2 container spacing={2}>
                             <Grid2 size={{ xl: 3, lg: 3, md: 3, sm: 12, xs: 12 }}>
-                                <Avatar src={URL.createObjectURL(values?.artifactUrl)} sx={{ width: '200px', height: '200px' }} />
+                                <Avatar src={values?.artifactUrl} sx={{ width: '200px', height: '200px' }} />
                             </Grid2>
                             <Grid2 size={{ xl: 9, lg: 9, md: 9, sm: 12, xs: 12 }}>
                                 <Stack spacing={2}>

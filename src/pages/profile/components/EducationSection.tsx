@@ -4,16 +4,18 @@ import { Box, IconButton, Paper, Stack, Typography } from '@mui/material'
 import moment from 'moment';
 import React, { useState } from 'react'
 import EducationFormModal from '../form/components/EducationFormModal';
+import { useGetAllExperienceEducationQuery } from '@/services/public/educationExperienceProjects';
+import ProjectSection from './ProjectsSectionForList';
 
 const EducationSection = () => {
     const [showActionBtns, setShowActionBtns] = useState(false);
 
-    const { data: educationData } = useGetAllEducationQuery({});
+    const { data: educationData } = useGetAllExperienceEducationQuery({});
 
     // Handlers
     const handleToggleActionBtns = () => setShowActionBtns(prev => !prev);
     return (
-        educationData?.data?.length > 0 && (
+        educationData?.data?.education?.length > 0 && (
             <Paper className='my-3'>
                 <Stack className='title-header ' direction={'row'} justifyContent={'space-between'}>
                     <Typography variant='h6' fontWeight={600}>
@@ -32,7 +34,7 @@ const EducationSection = () => {
                 <Box padding={2}>
                     <Stack spacing={1}>
                         {
-                            educationData.data.map((item: any) => (
+                            educationData.data.education.map((item: any) => (
                                 <>
                                     <Stack direction={'row'} justifyContent={'space-between'}>
                                         <Typography variant='h6'>
@@ -59,6 +61,8 @@ const EducationSection = () => {
                                     <Typography variant='body2' color='secondary' fontSize={'12px'}>
                                         {item?.city}, {item?.country}
                                     </Typography>
+
+                                    <ProjectSection projectsArray={item?.projects} showActionBtns={showActionBtns} />
                                 </>
                             ))
                         }

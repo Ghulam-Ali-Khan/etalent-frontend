@@ -14,7 +14,7 @@ export const portfolioAPI = publicAPI.injectEndpoints({
         }),
         updatePortfolio: build.mutation({
             query: (body) => ({
-                url: `Portfolio/${body?.id}`,
+                url: `Portfolio`,
                 method: 'PUT',
                 body: body,
             }),

@@ -6,24 +6,24 @@ interface FormikAvatarProps {
     name: string;
     label?: string;
     isRequired?: boolean;
-    isURL?: boolean; // New prop to determine if value is a URL
+    is64base?: boolean; // New prop to determine if value is a base64 string
 }
 
-const FormikAvatar: React.FC<FormikAvatarProps> = ({ name, label, isRequired = false, isURL = false }) => {
+const FormikAvatar: React.FC<FormikAvatarProps> = ({ name, label, isRequired = false, is64base = false }) => {
     const { setFieldValue, setFieldError } = useFormikContext();
     const [field, meta] = useField(name);
     const [preview, setPreview] = useState<string | null>(null);
 
     useEffect(() => {
-        if (isURL && typeof field.value === "string") {
-            setPreview(field.value); // Directly use the URL
+        if (is64base && typeof field.value === "string") {
+            setPreview(field.value); // Directly use the base64 string
         } else if (field.value instanceof File) {
             const imageUrl = URL.createObjectURL(field.value);
             setPreview(imageUrl);
 
             return () => URL.revokeObjectURL(imageUrl); // Cleanup
         }
-    }, [field.value, isURL]);
+    }, [field.value, is64base]);
 
     // Handle image selection
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,17 @@ const FormikAvatar: React.FC<FormikAvatarProps> = ({ name, label, isRequired = f
                 setFieldError(name, "Only image files are allowed.");
                 return;
             }
-            setFieldValue(name, file);
+
+            // Convert file to base64 if is64base is true
+            if (is64base) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setFieldValue(name, reader.result); // Set base64 string
+                };
+                reader.readAsDataURL(file);
+            } else {
+                setFieldValue(name, file); // Set file object
+            }
         }
     };
 

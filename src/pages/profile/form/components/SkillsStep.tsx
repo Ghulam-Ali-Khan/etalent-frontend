@@ -43,9 +43,8 @@ const SkillsStep = () => {
                                             </Typography>
 
                                             <Stack direction={'row'} spacing={2}>
-                                                <IconButton>
-                                                    <Edit />
-                                                </IconButton>
+                                                <TechnicalSkillsPopup singleData={item} />
+
                                                 <IconButton>
                                                     <Delete />
                                                 </IconButton>
@@ -85,9 +84,8 @@ const SkillsStep = () => {
                                             </Typography>
 
                                             <Stack direction={'row'} spacing={2}>
-                                                <IconButton>
-                                                    <Edit />
-                                                </IconButton>
+                                                <SoftSkillsPopup singleData={item} />
+
                                                 <IconButton>
                                                     <Delete />
                                                 </IconButton>

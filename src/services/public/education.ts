@@ -10,7 +10,7 @@ export const educationAPI = publicAPI.injectEndpoints({
         method: 'POST',
         body: [body],
       }),
-      invalidatesTags: ['education_list']
+      invalidatesTags: ['education_list', 'education_experience_list']
     }),
     updateEducation: build.mutation({
       query: (body) => ({
@@ -18,7 +18,7 @@ export const educationAPI = publicAPI.injectEndpoints({
         method: 'PUT',
         body: body,
       }),
-      invalidatesTags: ['education_list']
+      invalidatesTags: ['education_list', 'education_experience_list']
     }),
     getAllEducation: build.query({
       query: () => ({

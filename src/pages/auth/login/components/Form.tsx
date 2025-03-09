@@ -13,7 +13,6 @@ const LoginForm = () => {
 
     const [loginUser] = useLoginMutation();
 
-
     // Custom Hooks 
     const { showResponse } = useShowResponse()
 
@@ -27,9 +26,10 @@ const LoginForm = () => {
 
         localStorage.setItem('token', baseModel?.data);
         localStorage.setItem('userId', user);
+        localStorage.setItem('userData', JSON.stringify(response?.data));
 
         if (success) {
-        navigate('/portal/dashboard');
+            navigate('/portal/dashboard');
         }
 
         // console.log('response ==> ', response);
