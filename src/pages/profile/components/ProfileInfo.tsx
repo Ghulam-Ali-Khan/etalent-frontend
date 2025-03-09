@@ -1,17 +1,28 @@
-import { Avatar, Box, Grid2, Paper, Rating, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Button, Grid2, Paper, Rating, Stack, Tooltip, Typography } from '@mui/material'
 import AvatarImg from '@/assets/imgs/avatar-1.jpg';
-import { FacebookOutlined, InsertChartOutlined, Instagram, LinkedIn, Twitter, WorkOutlineOutlined } from '@mui/icons-material';
+import { ContentCopy, FacebookOutlined, InsertChartOutlined, Instagram, LinkedIn, Twitter, WorkOutlineOutlined } from '@mui/icons-material';
 import AddSectionMenu from './AddSectionMenu';
 import { Link } from 'react-router-dom';
 import { sectionLinks } from '../utilis/data';
 import QRCode from 'react-qr-code';
 import { useGetPorfileQuery } from '@/services/public/profile';
 import { useGetAllSocialLinksQuery } from '@/services/public/socialLink';
+import { useState } from 'react';
 
 const apiUrl = import.meta.env.VITE_APP_URL;
 
 const ProfileInfo = () => {
     const userId = localStorage.getItem('userId');
+
+    const [copied, setCopied] = useState(false);
+    const profileUrl = `${apiUrl}user-profile/${userId}`;
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(profileUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+    };
+
 
     const { data: profileInfoData } = useGetPorfileQuery({});
     const { data: socialLinkData } = useGetAllSocialLinksQuery({});
@@ -119,8 +130,17 @@ const ProfileInfo = () => {
 
                     </Grid2>
                     <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
-                        <Stack mt={3} direction={'row'} justifyContent={'end'}>
-                            <QRCode value={`${apiUrl}/user-profile/${userId}`} size={200} />
+                        <Stack mt={3} gap={2} alignItems={'end'} justifyContent={'end'}>
+                            <QRCode value={profileUrl} size={200} />
+                            <Tooltip title={copied ? "Copied!" : "Copy to clipboard"} arrow>
+                                <Button
+                                    onClick={handleCopy}
+                                    variant="contained"
+                                    startIcon={<ContentCopy />}
+                                >
+                                    Copy Link
+                                </Button>
+                            </Tooltip>
                         </Stack>
                     </Grid2>
                 </Grid2>
