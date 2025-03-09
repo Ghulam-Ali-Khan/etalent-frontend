@@ -24,8 +24,15 @@ const SkillsSection = () => {
         xaxis: {
             categories: skills?.data?.map((item) => item?.name) || [],
         },
-        chartColors,
+        colors: skills?.data?.map((_, index) => chartColors[index]) || [], // Assign unique colors to bars
+        plotOptions: {
+            bar: {
+                distributed: true, // This ensures each bar gets a separate color
+            }
+        },
+        legend: { show: false }, // Hide default legend if needed
     });
+    
 
     const getSeries = skills => ([{
         data: skills?.data?.map((item) => item?.rating) || [],// Adjust based on actual skill proficiency percentages
