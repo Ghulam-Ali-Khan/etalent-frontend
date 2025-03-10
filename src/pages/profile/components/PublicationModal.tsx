@@ -24,9 +24,10 @@ const PublicationModal = () => {
                 <Box minWidth={'100%'}>
                     <FormikWrapper formInitials={{}} submitFunc={() => { }}>
                         <Stack spacing={2}>
+  
 
                             <FormikField
-                                name='publicationAuthorName'
+                                name='authorName'
                                 label='Author Name'
                                 isRequired
                             />
@@ -35,27 +36,28 @@ const PublicationModal = () => {
                                 <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                                     <Stack spacing={2}>
                                         <FormikField
-                                            name='publicationTitle'
+                                            name='title'
                                             label='Title'
                                             isRequired
                                         />
 
                                         <FormikField
-                                            name='publicationAuthorName'
+                                            name='authorName'
                                             label='Second Author'
                                         />
                                     </Stack>
                                 </Grid2>
+    
                                 <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                                     <Stack spacing={2}>
                                         <FormikField
-                                            name='publicationPublisherName'
+                                            name='publisherName'
                                             label='Publisher Name'
                                             isRequired
                                         />
 
                                         <FormikDatePicker
-                                            name='publishDate'
+                                            name='publicationDate'
                                             label='Publication Date'
                                             isRequired
                                         />
@@ -64,12 +66,13 @@ const PublicationModal = () => {
                             </Grid2>
 
 
+
                             <Box my={3}>
-                                <FormikField name='publicationUrl' label='Publish Url' />
+                                <FormikField name='url' label='Publish Url' />
                             </Box>
 
                             <FormikTextEditor
-                                name='publicationDescription'
+                                name='description'
                             />
 
 
