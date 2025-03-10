@@ -1,14 +1,15 @@
-import React from 'react'
 import moment from 'moment'
-import { Delete, Edit } from '@mui/icons-material'
-import { Box, Divider, IconButton, Stack, Toolbar, Typography } from '@mui/material'
+import { Box, Divider, Stack, Toolbar, Typography } from '@mui/material'
 import ExperienceFormModal from './ExperienceFormModal'
 import EducationFormModal from './EducationFormModal'
-import { useGetAllEducationQuery } from '@/services/public/education'
+import { useDeleteEducationMutation, useGetAllEducationQuery } from '@/services/public/education'
 import { getDataLocalStorage, saveLocalStorage } from '@/utilis/helpers'
+import DeletePopup from '@/components/common/DeletePopup'
 
 const EducationStep = () => {
     const { data: educationData } = useGetAllEducationQuery({});
+
+    const [deleteEducation] = useDeleteEducationMutation();
 
     saveLocalStorage({ label: 'education', data: educationData });
 
@@ -40,9 +41,8 @@ const EducationStep = () => {
 
                                         <Stack direction={'row'} spacing={2}>
                                             <ExperienceFormModal singleData={item} />
-                                            <IconButton>
-                                                <Delete />
-                                            </IconButton>
+
+                                            <DeletePopup deleteFunc={deleteEducation} id={item?.id} deleteItemName='Education' />
                                         </Stack>
                                     </Stack>
 

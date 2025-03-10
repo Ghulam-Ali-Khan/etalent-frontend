@@ -3,21 +3,23 @@ import ExperienceFormModal from './ExperienceFormModal'
 import { Delete, Edit } from '@mui/icons-material'
 import TechnicalSkillsPopup from './TechnicalSkillsPopup'
 import SoftSkillsPopup from './SoftSkillsPopup'
-import { useGetAllTechnicalSkillsQuery } from '@/services/public/technicalSkills'
-import { useGetAllSoftSkillsQuery } from '@/services/public/softSkills'
+import { useDeleteTechnicalSkillMutation, useGetAllTechnicalSkillsQuery } from '@/services/public/technicalSkills'
+import { useDeleteSoftSkillMutation, useGetAllSoftSkillsQuery } from '@/services/public/softSkills'
 import { getDataLocalStorage, saveLocalStorage } from '@/utilis/helpers'
+import DeletePopup from '@/components/common/DeletePopup'
 
 const SkillsStep = () => {
     const { data: technicalSkills } = useGetAllTechnicalSkillsQuery({});
     const { data: softSkills } = useGetAllSoftSkillsQuery({});
+
+    const [deleteSoftSkill] = useDeleteSoftSkillMutation();
+    const [deleteTechnicalSkill] = useDeleteTechnicalSkillMutation();
 
     saveLocalStorage({ label: 'technicalSkills', data: technicalSkills });
     saveLocalStorage({ label: 'softSkills', data: softSkills });
 
     const technicalStorageData = getDataLocalStorage({ label: 'technicalSkills' });
     const softStorageData = getDataLocalStorage({ label: 'softSkills' });
-
-    console.log('softSkills ==> ', softSkills)
 
     return (
         <>
@@ -45,9 +47,7 @@ const SkillsStep = () => {
                                             <Stack direction={'row'} spacing={2}>
                                                 <TechnicalSkillsPopup singleData={item} />
 
-                                                <IconButton>
-                                                    <Delete />
-                                                </IconButton>
+                                                <DeletePopup deleteFunc={deleteTechnicalSkill} id={item?.id} deleteItemName="Technical skill" />
                                             </Stack>
                                         </Stack>
 
@@ -86,9 +86,7 @@ const SkillsStep = () => {
                                             <Stack direction={'row'} spacing={2}>
                                                 <SoftSkillsPopup singleData={item} />
 
-                                                <IconButton>
-                                                    <Delete />
-                                                </IconButton>
+                                                <DeletePopup deleteFunc={deleteSoftSkill} id={item?.id} deleteItemName="Soft skill" />
                                             </Stack>
                                         </Stack>
 

@@ -2,11 +2,14 @@ import { Box, Divider, IconButton, Stack, Toolbar, Typography } from '@mui/mater
 import React from 'react'
 import ExperienceFormModal from './ExperienceFormModal'
 import { Delete, Edit } from '@mui/icons-material'
-import { useGetAllExperienceQuery } from '@/services/public/experience'
+import { useDeleteExperienceMutation, useGetAllExperienceQuery } from '@/services/public/experience'
 import { getDataLocalStorage, saveLocalStorage } from '@/utilis/helpers'
+import DeletePopup from '@/components/common/DeletePopup'
 
 const ExperienceStep = () => {
     const { data: experienceData } = useGetAllExperienceQuery({});
+
+    const [deleteExperience] = useDeleteExperienceMutation();
 
     saveLocalStorage({ label: 'experience', data: experienceData });
 
@@ -39,9 +42,7 @@ const ExperienceStep = () => {
                                         <Stack direction={'row'} spacing={2}>
                                             <ExperienceFormModal singleData={item} />
 
-                                            <IconButton>
-                                                <Delete />
-                                            </IconButton>
+                                            <DeletePopup deleteFunc={deleteExperience} id={item?.id} deleteItemName='Experience' />
                                         </Stack>
                                     </Stack>
 

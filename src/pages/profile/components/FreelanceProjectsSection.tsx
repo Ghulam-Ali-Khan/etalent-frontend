@@ -1,9 +1,10 @@
-import { useGetAllPortfolioQuery } from '@/services/public/portfolio';
-import { Delete, Edit } from '@mui/icons-material';
+import { useDeletePortfolioMutation, useGetAllPortfolioQuery } from '@/services/public/portfolio';
+import { Edit } from '@mui/icons-material';
 import { Box, Grid2, IconButton, Paper, Rating, Stack, Typography } from '@mui/material';
 import moment from 'moment';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ProjectModal from './ProjectModal';
+import DeletePopup from '@/components/common/DeletePopup';
 
 const FreelanceProjectsSection = () => {
     const [showActionBtns, setShowActionBtns] = useState(false);
@@ -50,6 +51,9 @@ const FreelanceProjectsSection = () => {
 export default FreelanceProjectsSection;
 
 const FreelaceCard = ({ data, showActionBtns }: { data: any, showActionBtns?: boolean }) => {
+
+    const [deletePortfolio] = useDeletePortfolioMutation();
+
     return (
         <Paper className='p-4'>
             <Stack gap={2} minHeight={'180px'}>
@@ -63,9 +67,8 @@ const FreelaceCard = ({ data, showActionBtns }: { data: any, showActionBtns?: bo
                         showActionBtns && (
                             <Stack direction={'row'} gap={1}>
                                 <ProjectModal singleData={data} isFreelance />
-                                <IconButton>
-                                    <Delete fontSize='small' />
-                                </IconButton>
+
+                                <DeletePopup deleteFunc={deletePortfolio} id={data?.id} deleteItemName='Porject' />
                             </Stack>
                         )
                     }

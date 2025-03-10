@@ -1,9 +1,13 @@
-import { Box, Divider, IconButton, Rating, Stack, Typography } from "@mui/material";
+import { Box, Divider, Rating, Stack, Typography } from "@mui/material";
 import ProjectModal from "./ProjectModal";
 import moment from "moment";
-import { Delete } from "@mui/icons-material";
+import { useDeleteProjectMutation } from "@/services/public/project";
+import DeletePopup from "@/components/common/DeletePopup";
 
 const ProjectSection = ({ projectsArray, showActionBtns }: { projectsArray: any, showActionBtns?: boolean }) => {
+
+    const [deleteProject] = useDeleteProjectMutation();
+
     return (
         (projectsArray?.length > 0) && (
             <>
@@ -27,9 +31,8 @@ const ProjectSection = ({ projectsArray, showActionBtns }: { projectsArray: any,
                                         showActionBtns && (
                                             <Stack direction={'row'} gap={1}>
                                                 <ProjectModal singleData={data} />
-                                                <IconButton>
-                                                    <Delete fontSize='small' />
-                                                </IconButton>
+
+                                                <DeletePopup deleteFunc={deleteProject} id={data?.id} deleteItemName="Project" />
                                             </Stack>
                                         )
                                     }

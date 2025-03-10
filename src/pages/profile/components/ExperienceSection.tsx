@@ -1,20 +1,18 @@
-import { useGetAllExperienceQuery } from '@/services/public/experience';
-import { Delete, Edit } from '@mui/icons-material';
-import { Box, Divider, IconButton, Paper, Rating, Stack, Typography } from '@mui/material'
+import { useDeleteExperienceMutation } from '@/services/public/experience';
+import { Edit } from '@mui/icons-material';
+import { Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
 import ExperienceFormModal from '../form/components/ExperienceFormModal';
 import { useState } from 'react';
 import { useGetAllExperienceEducationQuery } from '@/services/public/educationExperienceProjects';
-import moment from 'moment';
-import ProjectModal from './ProjectModal';
 import ProjectSection from './ProjectsSectionForList';
+import DeletePopup from '@/components/common/DeletePopup';
 
 const ExperienceSection = () => {
     const [showActionBtns, setShowActionBtns] = useState(false);
 
     const { data: experienceData } = useGetAllExperienceEducationQuery({});
-    // const { data: experienceData } = useGetAllExperienceQuery({});
 
-    console.log('experienceData1 ==> ', experienceData)
+    const [deleteExperience] = useDeleteExperienceMutation();
 
     // Handlers
     const handleToggleActionBtns = () => setShowActionBtns(prev => !prev);
@@ -54,9 +52,7 @@ const ExperienceSection = () => {
                                             <Stack direction={'row'} spacing={2}>
                                                 <ExperienceFormModal singleData={item} />
 
-                                                <IconButton>
-                                                    <Delete />
-                                                </IconButton>
+                                                <DeletePopup deleteFunc={deleteExperience} id={item?.id} deleteItemName='Experience' />
                                             </Stack>
                                         )
                                         }

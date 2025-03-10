@@ -1,4 +1,4 @@
-import { useGetAllEducationQuery } from '@/services/public/education';
+import { useDeleteEducationMutation, useGetAllEducationQuery } from '@/services/public/education';
 import { Delete, Edit } from '@mui/icons-material';
 import { Box, IconButton, Paper, Stack, Typography } from '@mui/material'
 import moment from 'moment';
@@ -6,11 +6,14 @@ import React, { useState } from 'react'
 import EducationFormModal from '../form/components/EducationFormModal';
 import { useGetAllExperienceEducationQuery } from '@/services/public/educationExperienceProjects';
 import ProjectSection from './ProjectsSectionForList';
+import DeletePopup from '@/components/common/DeletePopup';
 
 const EducationSection = () => {
     const [showActionBtns, setShowActionBtns] = useState(false);
 
     const { data: educationData } = useGetAllExperienceEducationQuery({});
+
+    const [deleteEducation] = useDeleteEducationMutation();
 
     // Handlers
     const handleToggleActionBtns = () => setShowActionBtns(prev => !prev);
@@ -44,9 +47,8 @@ const EducationSection = () => {
                                         {showActionBtns && (
                                             <Stack direction={'row'} spacing={2}>
                                                 <EducationFormModal singleData={item} />
-                                                <IconButton>
-                                                    <Delete />
-                                                </IconButton>
+
+                                                <DeletePopup deleteFunc={deleteEducation} id={item?.id} deleteItemName='Education' />
                                             </Stack>)}
                                     </Stack>
                                     <Typography variant='body2' color='secondary'>
