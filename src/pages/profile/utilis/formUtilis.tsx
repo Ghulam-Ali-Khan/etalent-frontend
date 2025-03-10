@@ -11,6 +11,63 @@ export const steps = [
     { icon: <Reviews />, title: 'Review' },
 ];
 
+export const certificateInitialValues = {
+    title: '',
+    certificationId: '',
+    organizationName: '',
+    organizationUrl: '',
+    issueDate: null,
+    expireDate: null,
+    doesntExpire: false,
+    score: 0,
+    artifactUrl: '',
+};
+
+export const publicationInitialValues = {
+    title: '',
+    authorName: '',
+    publisherName: '',
+    publicationDate: null, // Assuming this is a date object
+    url: '',
+    description: '',
+};
+
+export const publicationValidationSchema = yup.object().shape({
+    title: yup.string()
+        .required('Title is required'),
+    authorName: yup.string()
+        .optional(),
+    publisherName: yup.string()
+        .required('Publisher Name is required'),
+    publicationDate: yup.date()
+        .required('Publication Date is required')
+        .nullable(),
+    url: yup.string()
+        .url('Must be a valid URL')
+        .optional(),
+    description: yup.string()
+        .optional(),
+
+});
+
+export const certificateValidationSchema = yup.object().shape({
+    title: yup.string().required('Name is required'),
+    certificationId: yup.string(),
+    organizationName: yup.string().required('Issuing Organization Name is required'),
+    organizationUrl: yup.string().url('Enter a valid URL'),
+    issueDate: yup.date().required('Issue Date is required'),
+    expireDate: yup.date()
+        .nullable()
+        .min(yup.ref('issueDate'), 'End Date cannot be before Issue Date')
+        .when('doesntExpire', {
+            is: false,
+            then: (schema) => schema.required('End Date is required'),
+        }),
+    doesntExpire: yup.boolean(),
+    score: yup.string(),
+    artifactUrl: yup.string().nullable(),
+});
+
 export const overviewInitialValues = {
     overviewDetail: '',
 }

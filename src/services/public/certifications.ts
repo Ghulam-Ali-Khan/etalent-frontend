@@ -29,11 +29,11 @@ export const certificationsAPI = publicAPI.injectEndpoints({
             invalidatesTags: ['certification_list']
         }),
         getAllCertification: build.query({
-            query: () => ({
+            query: (id) => ({
                 url: `CertificationAndTraining`,
                 method: 'GET',
                 params: {
-                    userId,
+                   userId: id || userId,
                 }
             }),
             providesTags: ['certification_list']

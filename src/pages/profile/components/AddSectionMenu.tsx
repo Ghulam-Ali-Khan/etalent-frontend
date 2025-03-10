@@ -11,6 +11,7 @@ import ProjectModal from './ProjectModal';
 import PublicationModal from './PublicationModal';
 import BasicInfoModal from './BasicInfoModal';
 import OverviewModal from './OverviewModal';
+import CretificationsAndTrainings from './CretificationsAndTrainings';
 
 const AddSectionMenu = () => {
     const { anchorEl, handleAnchorElClose, handleAnchorElOpen } = useGetPopupUtilis();
@@ -45,9 +46,10 @@ const AddSectionMenu = () => {
                         softSkillModal: <SoftSkillsPopup isModalTxt />,
                         technicalSkillModal: <TechnicalSkillsPopup isModalTxt />,
                         projectModal: <ProjectModal isModalTxt />,
-                        publicationModal: <PublicationModal/>,
-                        basicInfoModal: <BasicInfoModal isModalTxt/>,
-                        overviewModal: <OverviewModal isModalTxt />
+                        publicationModal: <PublicationModal isModalTxt />,
+                        basicInfoModal: <BasicInfoModal isModalTxt />,
+                        overviewModal: <OverviewModal isModalTxt />,
+                        cretificatesModal: <CretificationsAndTrainings isModalTxt />
                     }).map(item => (
                         item?.data ? (
                             <div key={item.title}>

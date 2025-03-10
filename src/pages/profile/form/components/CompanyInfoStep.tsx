@@ -7,7 +7,7 @@ import { Alert, Avatar, Box, Grid2, Paper, Stack, Typography } from '@mui/materi
 import AvatarImg from '@/assets/imgs/avatar-1.jpg';
 import { useState } from 'react';
 import { countriesOptions } from '@/utilis/helpers';
-import DropzoneFileUploader from './DropzoneFileUploader';
+import DropzoneFileUploader from '../../../../components/form/DropzoneFileUploader';
 
 import * as pdfjs from 'pdfjs-dist';
 import mammoth from 'mammoth';

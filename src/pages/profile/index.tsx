@@ -6,6 +6,8 @@ import EducationSection from './components/EducationSection'
 import Header from '@/components/layout/Header'
 import FreelanceProjectsSection from './components/FreelanceProjectsSection'
 import AboutSection from './components/AboutSection'
+import CertificationSection from './components/CertificationSection'
+import PublicationSection from './components/PublicationSection'
 
 const ProfilePage = () => {
     return (
@@ -18,6 +20,8 @@ const ProfilePage = () => {
                 <ExperienceSection />
                 <EducationSection />
                 <FreelanceProjectsSection />
+                <CertificationSection />
+                <PublicationSection />
             </Box>
         </>
     )

@@ -29,11 +29,11 @@ export const publictionAPI = publicAPI.injectEndpoints({
             invalidatesTags: ['publication_list']
         }),
         getAllPublications: build.query({
-            query: () => ({
+            query: (id) => ({
                 url: `Publication`,
                 method: 'GET',
                 params: {
-                    userId,
+                    userId: id || userId,
                 }
             }),
             providesTags: ['publication_list']

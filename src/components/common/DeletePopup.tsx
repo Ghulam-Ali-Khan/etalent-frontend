@@ -34,7 +34,7 @@ const DeletePopup = ({ deleteFunc, id, deleteItemName }: { deleteFunc: Function,
                     <img src={WarningImg} />
 
                     <Typography variant='body2' color='secondary'>
-                        Are you sure you wanted to delete this skill?
+                        Are you sure you wanted to delete this {deleteItemName}?
                     </Typography>
 
                     <Stack direction={'row'} justifyContent={'center'} gap={2}>
