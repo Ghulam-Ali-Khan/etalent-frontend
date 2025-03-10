@@ -5,11 +5,11 @@ const userId = localStorage.getItem('userId');
 export const educationExperienceAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
     getAllExperienceEducation: build.query({
-      query: () => ({
+      query: (id) => ({
         url: `Project/GetProjects`,
         method: 'GET',
         params: {
-            userId,
+          userId: id || userId,
         }
       }),
       providesTags: ['education_experience_list', 'project_list']

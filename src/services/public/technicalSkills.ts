@@ -32,11 +32,11 @@ export const technicalSkillsAPI = publicAPI.injectEndpoints({
             invalidatesTags: ['technical_skills']
         }),
         getAllTechnicalSkills: build.query({
-            query: () => ({
+            query: (id) => ({
                 url: `TechnicalSkill`,
                 method: 'GET',
                 params: {
-                    userId: userId,
+                    userId: id || userId,
                 }
             }),
             providesTags: ['technical_skills']

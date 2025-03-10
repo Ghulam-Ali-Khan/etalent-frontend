@@ -7,11 +7,12 @@ import { useGetAllExperienceEducationQuery } from '@/services/public/educationEx
 import ProjectSection from './ProjectsSectionForList';
 import DeletePopup from '@/components/common/DeletePopup';
 
-const ExperienceSection = () => {
+const ExperienceSection = ({ viewProfileId }: { viewProfileId?: any }) => {
+    // States
     const [showActionBtns, setShowActionBtns] = useState(false);
 
-    const { data: experienceData } = useGetAllExperienceEducationQuery({});
-
+    // Mutations & Queries
+    const { data: experienceData } = useGetAllExperienceEducationQuery(viewProfileId);
     const [deleteExperience] = useDeleteExperienceMutation();
 
     // Handlers
@@ -27,15 +28,19 @@ const ExperienceSection = () => {
                     </Typography>
 
 
-                    <Stack direction={'row'} gap={2}>
-                        <IconButton
-                            onClick={handleToggleActionBtns}
-                        >
-                            <Edit />
-                        </IconButton>
+                    {
+                        !viewProfileId && (
+                            <Stack direction={'row'} gap={2}>
+                                <IconButton
+                                    onClick={handleToggleActionBtns}
+                                >
+                                    <Edit />
+                                </IconButton>
 
-                        <ExperienceFormModal />
-                    </Stack>
+                                <ExperienceFormModal />
+                            </Stack>
+                        )
+                    }
                 </Stack>
                 <Box padding={2}>
                     <Stack spacing={1}>
@@ -48,7 +53,7 @@ const ExperienceSection = () => {
                                         </Typography>
 
 
-                                        {showActionBtns && (
+                                        {!viewProfileId && showActionBtns && (
                                             <Stack direction={'row'} spacing={2}>
                                                 <ExperienceFormModal singleData={item} />
 

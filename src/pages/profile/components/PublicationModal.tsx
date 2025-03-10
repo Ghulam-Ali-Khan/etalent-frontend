@@ -1,14 +1,10 @@
 import CommonModal from '@/components/common/CommonModal';
-import FormikCheckbox from '@/components/form/FormikCheckbox';
 import FormikDatePicker from '@/components/form/FormikDatepicker';
 import FormikField from '@/components/form/FormikField';
-import FormikAutoCompleteSelect from '@/components/form/FormikSelect';
 import FormikTextEditor from '@/components/form/FormikTextEditor';
 import FormikWrapper from '@/components/form/FormikWrapper';
 import { Box, Button, Grid2, Stack } from '@mui/material';
-import React, { useState } from 'react'
-import SkillsInput from './AddSkillsField';
-import FormikSkillsInput from '@/components/form/FormikSkillsInput';
+import { useState } from 'react'
 
 const PublicationModal = () => {
     const [isModalOpen, setModalStatus] = useState(false);

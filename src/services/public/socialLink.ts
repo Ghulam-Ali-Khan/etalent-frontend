@@ -8,12 +8,12 @@ export const socialLinkAPI = publicAPI.injectEndpoints({
       query: (body) => ({
         url: 'SocialLink',
         method: 'POST',
-        body: {...body, userId},
+        body: { ...body, userId },
       }),
     }),
     getAllSocialLinks: build.query({
-      query: () => ({
-        url: `SocialLink/${userId}`,
+      query: (id) => ({
+        url: `SocialLink/${id || userId}`,
         method: 'GET',
       }),
     }),

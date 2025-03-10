@@ -8,7 +8,7 @@ export const overviewAPI = publicAPI.injectEndpoints({
             query: (body) => ({
                 url: 'Overview',
                 method: 'POST',
-                body: {...body, userId} ,
+                body: { ...body, userId },
             }),
             invalidatesTags: ['overview']
         }),
@@ -29,11 +29,11 @@ export const overviewAPI = publicAPI.injectEndpoints({
             invalidatesTags: ['overview']
         }),
         getOverview: build.query({
-            query: () => ({
+            query: (id) => ({
                 url: `Overview`,
                 method: 'GET',
                 params: {
-                    userId,
+                    userId: id || userId,
                 }
             }),
             providesTags: ['overview']

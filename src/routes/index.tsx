@@ -7,7 +7,7 @@ import ProfilePage from '@/pages/profile';
 import PrivateRoute from './PrivateRoute';
 import ProfileForm from '@/pages/profile/form';
 import DashboardPage from '@/pages/dashboard';
-import OtherPersonProfile from '@/pages/profile/test';
+import OtherPersonProfile from '@/pages/profile/otherProfileView';
 
 const AppRouter = () => {
   return (

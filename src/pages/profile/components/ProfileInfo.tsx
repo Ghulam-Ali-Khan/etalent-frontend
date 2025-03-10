@@ -11,11 +11,11 @@ import { useState } from 'react';
 
 const apiUrl = import.meta.env.VITE_APP_URL;
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
     const userId = localStorage.getItem('userId');
 
     const [copied, setCopied] = useState(false);
-    const profileUrl = `${apiUrl}portal/user-profile/${userId}`;
+    const profileUrl = `${apiUrl}portal/user-profile/${viewProfileId || userId}`;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(profileUrl);
@@ -24,14 +24,12 @@ const ProfileInfo = () => {
     };
 
 
-    const { data: profileInfoData } = useGetPorfileQuery({});
-    const { data: socialLinkData } = useGetAllSocialLinksQuery({});
+    const { data: profileInfoData } = useGetPorfileQuery(viewProfileId);
+    const { data: socialLinkData } = useGetAllSocialLinksQuery(viewProfileId);
 
 
     const { artifactUrl = AvatarImg, firstName, lastName, city, nationality, profileRating } = profileInfoData?.data || {}
     const { facebook, instagram, linkedin, twitter } = socialLinkData?.data?.[0] || {};
-    console.log('socialLinkData ==> ', socialLinkData
-    );
 
     return (
         <>
@@ -118,7 +116,11 @@ const ProfileInfo = () => {
                             />
                         </Stack>
 
-                        <AddSectionMenu />
+                        {
+                            !viewProfileId && (
+                                <AddSectionMenu />
+                            )
+                        }
 
                         <Stack direction={'row'} gap={4} mt={4}>
                             {sectionLinks.map((link) => (

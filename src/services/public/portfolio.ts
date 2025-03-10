@@ -32,11 +32,12 @@ export const portfolioAPI = publicAPI.injectEndpoints({
             invalidatesTags: ['portfolio_list']
         }),
         getAllPortfolio: build.query({
-            query: () => ({
+            query: (id) => ({
                 url: `Portfolio`,
                 method: 'GET',
                 params: {
-                    userId, currentId: userId
+                    userId: id || userId,
+                    currentId: id || userId
                 }
             }),
             providesTags: ['portfolio_list']

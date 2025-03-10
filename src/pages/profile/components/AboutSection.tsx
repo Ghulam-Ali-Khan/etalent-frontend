@@ -2,9 +2,9 @@ import { Box, Paper, Stack, Typography } from '@mui/material'
 import OverviewModal from './OverviewModal';
 import { useGetOverviewQuery } from '@/services/public/overview';
 
-const AboutSection = () => {
+const AboutSection = ({ viewProfileId }: { viewProfileId?: any }) => {
 
-  const { data: overviewData } = useGetOverviewQuery({});
+    const { data: overviewData } = useGetOverviewQuery(viewProfileId);
 
     return (
         overviewData?.data && (
@@ -14,12 +14,16 @@ const AboutSection = () => {
                         About
                     </Typography>
 
-                    <Stack direction={'row'} gap={2}>
-                        <OverviewModal />
-                    </Stack>
+                    {
+                        !viewProfileId && (
+                            <Stack direction={'row'} gap={2}>
+                                <OverviewModal />
+                            </Stack>
+                        )
+                    }
                 </Stack>
                 <Box padding={2}>
-                <Box dangerouslySetInnerHTML={{ __html: overviewData?.data?.overviewDetail }} />
+                    <Box dangerouslySetInnerHTML={{ __html: overviewData?.data?.overviewDetail }} />
                 </Box>
             </Paper>)
     )

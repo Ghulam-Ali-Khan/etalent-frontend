@@ -32,8 +32,8 @@ export const softSkillsAPI = publicAPI.injectEndpoints({
             invalidatesTags: ['soft_skills']
         }),
         getAllSoftSkills: build.query({
-            query: () => ({
-                url: `SoftSkill/${userId}`,
+            query: (id) => ({
+                url: `SoftSkill/${id || userId}`,
                 method: 'GET',
             }),
             providesTags: ['soft_skills']

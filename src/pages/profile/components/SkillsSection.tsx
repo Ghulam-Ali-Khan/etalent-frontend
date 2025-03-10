@@ -1,26 +1,32 @@
-import React, { useState } from "react";
-import { Box, Grid, Grid2, IconButton, Paper, Rating, Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import { Box, Grid2, IconButton, Paper, Rating, Stack, Typography } from "@mui/material";
 import Chart from "react-apexcharts";
 import { useDeleteTechnicalSkillMutation, useGetAllTechnicalSkillsQuery } from "@/services/public/technicalSkills";
 import { useDeleteSoftSkillMutation, useGetAllSoftSkillsQuery } from "@/services/public/softSkills";
 import SoftSkillsPopup from "../form/components/SoftSkillsPopup";
 import TechnicalSkillsPopup from "../form/components/TechnicalSkillsPopup";
-import { Delete, Edit } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 import { chartColors } from "@/utilis/data";
 import DeletePopup from "@/components/common/DeletePopup";
 
 
-const SkillsSection = () => {
-
+const SkillsSection = ({ viewProfileId }: { viewProfileId?: any }) => {
+    // States
     const [showSoftSkillsActions, setSoftSkillsActions] = useState(false);
     const [showTechnicalSkillsActions, setTechnicalSkillsActions] = useState(false);
 
-    const { data: technicalSkills } = useGetAllTechnicalSkillsQuery({});
-    const { data: softSkills } = useGetAllSoftSkillsQuery({});
+    // Quries & Muations
+    const { data: technicalSkills } = useGetAllTechnicalSkillsQuery(viewProfileId);
+    const { data: softSkills } = useGetAllSoftSkillsQuery(viewProfileId);
     const [deleteSoftSkill] = useDeleteSoftSkillMutation();
     const [deleteTechnicalSkill] = useDeleteTechnicalSkillMutation();
 
-    const getChartOptions = (skills) => ({
+    // Handlers
+    const handleToggleSoftSkillsActions = () => setSoftSkillsActions(prev => !prev);
+
+    const handleToggleTechnicalSkillsActions = () => setTechnicalSkillsActions(prev => !prev);
+
+    const getChartOptions = (skills:any) => ({
         chart: { type: "bar" },
         xaxis: {
             categories: skills?.data?.map((item) => item?.name) || [],
@@ -34,14 +40,11 @@ const SkillsSection = () => {
         legend: { show: false }, // Hide default legend if needed
     });
 
-
     const getSeries = skills => ([{
         data: skills?.data?.map((item) => item?.rating) || [],// Adjust based on actual skill proficiency percentages
     }]);
 
-    const handleToggleSoftSkillsActions = () => setSoftSkillsActions(prev => !prev);
-    const handleToggleTechnicalSkillsActions = () => setTechnicalSkillsActions(prev => !prev);
-
+    // Data Generated
     const skillsData = [
         {
             title: "Technical Skills", options: getChartOptions(technicalSkills),
@@ -78,13 +81,20 @@ const SkillsSection = () => {
                                         {title}
                                     </Typography>
 
-                                    <Stack direction={'row'} gap={1}>
-                                        <IconButton onClick={toggle}>
-                                            <Edit />
-                                        </IconButton>
+                                    {
+                                        !viewProfileId && (
 
-                                        {popup}
-                                    </Stack>
+                                            <Stack direction={'row'} gap={1}>
+                                                <IconButton onClick={toggle}>
+                                                    <Edit />
+                                                </IconButton>
+
+                                                {popup}
+                                            </Stack>
+
+                                        )
+                                    }
+
                                 </Stack>
                                 <Box display={'flex'} justifyContent={'space-between'}>
 
@@ -97,10 +107,10 @@ const SkillsSection = () => {
                                                 <Typography fontSize={'14px'} color="secondary" minWidth={'70px'}>
                                                     {item?.name}
                                                 </Typography>
-                                                <Rating size="small" />
+                                                <Rating size="small" defaultValue={item?.rating} disabled={Boolean(!viewProfileId)} />
 
                                                 {
-                                                    showActions && (
+                                                    !viewProfileId && showActions && (
                                                         <Stack direction={'row'} gap={1}>
                                                             {editPopup(item)}
                                                             {deletePopup(item?.id)}

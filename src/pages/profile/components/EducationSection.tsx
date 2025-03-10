@@ -8,11 +8,11 @@ import { useGetAllExperienceEducationQuery } from '@/services/public/educationEx
 import ProjectSection from './ProjectsSectionForList';
 import DeletePopup from '@/components/common/DeletePopup';
 
-const EducationSection = () => {
+const EducationSection = ({ viewProfileId }: { viewProfileId?: any }) => {
     const [showActionBtns, setShowActionBtns] = useState(false);
 
-    const { data: educationData } = useGetAllExperienceEducationQuery({});
-
+    // Mutations & queries
+    const { data: educationData } = useGetAllExperienceEducationQuery(viewProfileId);
     const [deleteEducation] = useDeleteEducationMutation();
 
     // Handlers
@@ -25,14 +25,17 @@ const EducationSection = () => {
                         Education
                     </Typography>
 
-                    <Stack direction={'row'} gap={2}>
-                        <IconButton
-                            onClick={handleToggleActionBtns}
-                        >
-                            <Edit />
-                        </IconButton>
-                        <EducationFormModal />
-                    </Stack>
+                    {!viewProfileId && (
+                        <Stack direction={'row'} gap={2}>
+                            <IconButton
+                                onClick={handleToggleActionBtns}
+                            >
+                                <Edit />
+                            </IconButton>
+                            <EducationFormModal />
+                        </Stack>
+                    )}
+
                 </Stack>
                 <Box padding={2}>
                     <Stack spacing={1}>
@@ -44,7 +47,7 @@ const EducationSection = () => {
                                             {item?.school}
                                         </Typography>
 
-                                        {showActionBtns && (
+                                        {!viewProfileId && showActionBtns && (
                                             <Stack direction={'row'} spacing={2}>
                                                 <EducationFormModal singleData={item} />
 

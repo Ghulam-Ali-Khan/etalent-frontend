@@ -5,12 +5,16 @@ import moment from 'moment';
 import { useState } from 'react'
 import ProjectModal from './ProjectModal';
 import DeletePopup from '@/components/common/DeletePopup';
+import CommonModal from '@/components/common/CommonModal';
+import useGetPopupUtilis from '@/customHooks/useGetPopupUtilis';
 
-const FreelanceProjectsSection = () => {
+const FreelanceProjectsSection = ({ viewProfileId }: { viewProfileId?: any }) => {
     const [showActionBtns, setShowActionBtns] = useState(false);
 
-    const { data: freelanceProjectsData } = useGetAllPortfolioQuery({});
+    // Queries
+    const { data: freelanceProjectsData } = useGetAllPortfolioQuery(viewProfileId);
 
+    // Handlers
     const handleToggleActionBtns = () => setShowActionBtns(prev => !prev);
 
     return (
@@ -22,13 +26,18 @@ const FreelanceProjectsSection = () => {
                         Freelance Projects
                     </Typography>
 
-                    <Stack direction={'row'} gap={2}>
-                        <IconButton onClick={handleToggleActionBtns}>
-                            <Edit />
-                        </IconButton>
+                    {
+                        !viewProfileId && (
+                            <Stack direction={'row'} gap={2}>
+                                <IconButton onClick={handleToggleActionBtns}>
+                                    <Edit />
+                                </IconButton>
 
-                        <ProjectModal isFreelance />
-                    </Stack>
+                                <ProjectModal isFreelance />
+                            </Stack>
+                        )
+                    }
+
                 </Stack>
 
                 <Box padding={2}>
@@ -37,7 +46,7 @@ const FreelanceProjectsSection = () => {
                         {
                             freelanceProjectsData.data.map(item => (
                                 <Grid2 size={{ xl: 4, lg: 4, md: 4, sm: 4, xs: 4 }}>
-                                    <FreelaceCard data={item} showActionBtns={showActionBtns} />
+                                    <FreelaceCard data={item} showActionBtns={showActionBtns} viewProfileId={viewProfileId} />
                                 </Grid2>
                             ))
                         }
@@ -50,44 +59,87 @@ const FreelanceProjectsSection = () => {
 
 export default FreelanceProjectsSection;
 
-const FreelaceCard = ({ data, showActionBtns }: { data: any, showActionBtns?: boolean }) => {
+const FreelaceCard = ({ data, showActionBtns, viewProfileId }: { data: any, showActionBtns?: boolean, viewProfileId?: any }) => {
 
     const [deletePortfolio] = useDeletePortfolioMutation();
+    const { anchorEl, handleAnchorElClose, handleModalOpen } = useGetPopupUtilis();
 
     return (
-        <Paper className='p-4'>
-            <Stack gap={2} minHeight={'180px'}>
-                <Stack direction={'row'} justifyContent={'space-between'}>
+        <>
+            <CommonModal isOpen={Boolean(anchorEl)} toggle={handleAnchorElClose} minWidth='50%' title='Freelance Project'>
+                <Box padding={3}>
+                    <Stack gap={2} minHeight={'180px'}>
+                        <Stack direction={'row'} justifyContent={'space-between'}>
 
-                    <Typography variant='h5'>
-                        {data?.name}
+                            <Typography variant='h5' fontWeight={600}>
+                                {data?.name}
+                            </Typography>
+
+                        </Stack>
+
+                        <Typography variant='body2' >
+                            {moment(data.startDate).format('DD MMM YYYY')} - {data.currentlyWorking ? 'Currently Working' : moment(data.endDate).format('DD MMM YYYY')}
+                        </Typography>
+
+                        {
+                            data?.projectUrl && (
+                                <Typography variant='body2' style={{ color: '#027afa' }}>
+                                    {data.projectUrl}
+                                </Typography>
+                            )
+                        }
+                        <Rating />
+
+                        {
+                            data?.description && (
+                                <>
+                                    <Typography variant='body2' fontWeight={600}>
+                                        Description
+                                    </Typography>
+
+                                    <Box dangerouslySetInnerHTML={{ __html: data?.description }} />
+                                </>
+                            )
+                        }
+
+                    </Stack>
+                </Box>
+            </CommonModal>
+
+            <Paper className='p-4'>
+                <Stack gap={2} minHeight={'180px'}>
+                    <Stack direction={'row'} justifyContent={'space-between'}>
+
+                        <Typography variant='h5' onClick={handleModalOpen}>
+                            {data?.name}
+                        </Typography>
+
+                        {
+                            !viewProfileId && showActionBtns && (
+                                <Stack direction={'row'} gap={1}>
+                                    <ProjectModal singleData={data} isFreelance />
+
+                                    <DeletePopup deleteFunc={deletePortfolio} id={data?.id} deleteItemName='Porject' />
+                                </Stack>
+                            )
+                        }
+                    </Stack>
+
+                    <Typography variant='body2' >
+                        {moment(data.startDate).format('DD MMM YYYY')} - {data.currentlyWorking ? 'Currently Working' : moment(data.endDate).format('DD MMM YYYY')}
                     </Typography>
 
                     {
-                        showActionBtns && (
-                            <Stack direction={'row'} gap={1}>
-                                <ProjectModal singleData={data} isFreelance />
-
-                                <DeletePopup deleteFunc={deletePortfolio} id={data?.id} deleteItemName='Porject' />
-                            </Stack>
+                        data?.projectUrl && (
+                            <Typography variant='body2' style={{ color: '#027afa' }}>
+                                {data.projectUrl}
+                            </Typography>
                         )
                     }
+                    <Rating />
+
                 </Stack>
-
-                <Typography variant='body2' >
-                    {moment(data.startDate).format('DD MMM YYYY')} - {data.currentlyWorking ? 'Currently Working' : moment(data.endDate).format('DD MMM YYYY')}
-                </Typography>
-
-                {
-                    data?.projectUrl && (
-                        <Typography variant='body2' style={{ color: '#027afa' }}>
-                            {data.projectUrl}
-                        </Typography>
-                    )
-                }
-                <Rating />
-
-            </Stack>
-        </Paper>
+            </Paper>
+        </>
     )
 }
