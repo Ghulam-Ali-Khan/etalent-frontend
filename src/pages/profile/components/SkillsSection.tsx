@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Box, Grid, Grid2, IconButton, Paper, Rating, Stack, Typography } from "@mui/material";
 import Chart from "react-apexcharts";
-import { useGetAllTechnicalSkillsQuery } from "@/services/public/technicalSkills";
-import { useGetAllSoftSkillsQuery } from "@/services/public/softSkills";
+import { useDeleteTechnicalSkillMutation, useGetAllTechnicalSkillsQuery } from "@/services/public/technicalSkills";
+import { useDeleteSoftSkillMutation, useGetAllSoftSkillsQuery } from "@/services/public/softSkills";
 import SoftSkillsPopup from "../form/components/SoftSkillsPopup";
 import TechnicalSkillsPopup from "../form/components/TechnicalSkillsPopup";
 import { Delete, Edit } from "@mui/icons-material";
 import { chartColors } from "@/utilis/data";
+import DeletePopup from "@/components/common/DeletePopup";
 
 
 const SkillsSection = () => {
@@ -16,8 +17,8 @@ const SkillsSection = () => {
 
     const { data: technicalSkills } = useGetAllTechnicalSkillsQuery({});
     const { data: softSkills } = useGetAllSoftSkillsQuery({});
-
-    console.log('technicalSkills ==> ', technicalSkills);
+    const [deleteSoftSkill] = useDeleteSoftSkillMutation();
+    const [deleteTechnicalSkill] = useDeleteTechnicalSkillMutation();
 
     const getChartOptions = (skills) => ({
         chart: { type: "bar" },
@@ -32,7 +33,7 @@ const SkillsSection = () => {
         },
         legend: { show: false }, // Hide default legend if needed
     });
-    
+
 
     const getSeries = skills => ([{
         data: skills?.data?.map((item) => item?.rating) || [],// Adjust based on actual skill proficiency percentages
@@ -48,6 +49,7 @@ const SkillsSection = () => {
             toggle: handleToggleTechnicalSkillsActions, showActions: showTechnicalSkillsActions,
             editPopup: (data) => <TechnicalSkillsPopup singleData={data} />,
             skillsDataArray: technicalSkills?.data || [],
+            deletePopup: (id) => <DeletePopup deleteFunc={deleteTechnicalSkill} id={id} deleteItemName="Technical skill" />
         },
         {
             title: "Soft Skills", options: getChartOptions(softSkills),
@@ -55,6 +57,7 @@ const SkillsSection = () => {
             toggle: handleToggleSoftSkillsActions, showActions: showSoftSkillsActions,
             editPopup: (data) => <SoftSkillsPopup singleData={data} />,
             skillsDataArray: softSkills?.data || [],
+            deletePopup: (id) => <DeletePopup deleteFunc={deleteSoftSkill} id={id} deleteItemName="Soft skill" />
         },
     ];
 
@@ -67,7 +70,7 @@ const SkillsSection = () => {
             </Stack>
             <Box padding={2}>
                 <Grid2 container spacing={2}>
-                    {skillsData.map(({ title, options, popup, series, showActions, toggle, editPopup, skillsDataArray }, index) => (
+                    {skillsData.map(({ title, options, popup, series, showActions, toggle, editPopup, skillsDataArray, deletePopup }, index) => (
                         <Grid2 key={title} size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                             <Paper sx={{ bgcolor: "#F9F9F9", padding: 2 }}>
                                 <Stack className="title-header" direction={'row'} justifyContent={'space-between'}>
@@ -100,10 +103,7 @@ const SkillsSection = () => {
                                                     showActions && (
                                                         <Stack direction={'row'} gap={1}>
                                                             {editPopup(item)}
-
-                                                            <IconButton>
-                                                                <Delete fontSize="small" />
-                                                            </IconButton>
+                                                            {deletePopup(item?.id)}
                                                         </Stack>
                                                     )
                                                 }

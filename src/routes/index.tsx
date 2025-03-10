@@ -7,6 +7,7 @@ import ProfilePage from '@/pages/profile';
 import PrivateRoute from './PrivateRoute';
 import ProfileForm from '@/pages/profile/form';
 import DashboardPage from '@/pages/dashboard';
+import OtherPersonProfile from '@/pages/profile/test';
 
 const AppRouter = () => {
   return (
@@ -23,6 +24,7 @@ const AppRouter = () => {
             <Route path='add' element={<ProfileForm />} />
           </Route>
           <Route path='dashboard' element={<DashboardPage/>} />
+          <Route path='user-profile/:id' element={<OtherPersonProfile/>} />
         </Route>
         <Route path="*" element={<>Not Found</>} /> {/* Fallback for unknown routes */}
       </Routes>

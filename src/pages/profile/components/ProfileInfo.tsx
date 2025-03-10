@@ -15,7 +15,7 @@ const ProfileInfo = () => {
     const userId = localStorage.getItem('userId');
 
     const [copied, setCopied] = useState(false);
-    const profileUrl = `${apiUrl}user-profile/${userId}`;
+    const profileUrl = `${apiUrl}portal/user-profile/${userId}`;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(profileUrl);
@@ -131,7 +131,7 @@ const ProfileInfo = () => {
                     </Grid2>
                     <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                         <Stack mt={3} gap={2} alignItems={'end'} justifyContent={'end'}>
-                            <QRCode value={profileUrl} size={200} />
+                            <QRCode value={profileUrl} size={150} />
                             <Tooltip title={copied ? "Copied!" : "Copy to clipboard"} arrow>
                                 <Button
                                     onClick={handleCopy}

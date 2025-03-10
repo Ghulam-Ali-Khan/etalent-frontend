@@ -16,7 +16,15 @@ export const projectAPI = publicAPI.injectEndpoints({
             query: (body) => ({
                 url: `Project`,
                 method: 'PUT',
-                body: {...body, userId},
+                body: { ...body, userId },
+            }),
+            invalidatesTags: ['project_list']
+        }),
+        deleteProject: build.mutation({
+            query: (id) => ({
+                url: `Project`,
+                method: 'Delete',
+                body: { id, userId },
             }),
             invalidatesTags: ['project_list']
         }),
@@ -36,5 +44,6 @@ export const projectAPI = publicAPI.injectEndpoints({
 export const {
     useUpdateProjectMutation,
     useCreateProjectMutation,
-    useGetAllProjectQuery
+    useGetAllProjectQuery,
+    useDeleteProjectMutation
 } = projectAPI;

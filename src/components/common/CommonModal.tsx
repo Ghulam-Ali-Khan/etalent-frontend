@@ -35,7 +35,7 @@ const CommonModal: React.FC<CommonModalProps> = ({
       onClose={toggle}
       className={`flex justify-center ${isPopup ? 'mt-4 items-start' : 'items-center'} overflow-auto`}
     >
-      <Card sx={{ padding: '5px 15px', minWidth: minWidth ||'80%',  maxWidth: maxWidth || '800px' }}>
+      <Card sx={{ padding: '5px 15px', minWidth: minWidth || '80%', maxWidth: maxWidth || '800px' }}>
         {!noCloseSection && (
           <Box
             className="flex justify-between items-center pb-2"
@@ -52,9 +52,15 @@ const CommonModal: React.FC<CommonModalProps> = ({
                   {btnName}
                 </Button>
               )}
-              <IconButton onClick={toggle}>
-                <CloseIcon />
-              </IconButton>
+
+              {
+                !isPopup && (
+                  <IconButton onClick={toggle}>
+                    <CloseIcon />
+                  </IconButton>
+                )
+              }
+
             </Box>
           </Box>
         )}

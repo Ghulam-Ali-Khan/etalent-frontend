@@ -20,6 +20,17 @@ export const technicalSkillsAPI = publicAPI.injectEndpoints({
             }),
             invalidatesTags: ['technical_skills']
         }),
+        deleteTechnicalSkill: build.mutation({
+            query: (id) => ({
+                url: 'TechnicalSkill',
+                method: 'Delete',
+                body: {
+                    id,
+                    userId
+                },
+            }),
+            invalidatesTags: ['technical_skills']
+        }),
         getAllTechnicalSkills: build.query({
             query: () => ({
                 url: `TechnicalSkill`,
@@ -36,5 +47,6 @@ export const technicalSkillsAPI = publicAPI.injectEndpoints({
 export const {
     useCreateTechnicalSkillMutation,
     useGetAllTechnicalSkillsQuery,
-    useUpdateTechnicalSkillMutation
+    useUpdateTechnicalSkillMutation,
+    useDeleteTechnicalSkillMutation
 } = technicalSkillsAPI;

@@ -20,6 +20,17 @@ export const softSkillsAPI = publicAPI.injectEndpoints({
             }),
             invalidatesTags: ['soft_skills']
         }),
+        deleteSoftSkill: build.mutation({
+            query: (id) => ({
+                url: 'SoftSkill',
+                method: 'Delete',
+                body: {
+                    id,
+                    userId,
+                },
+            }),
+            invalidatesTags: ['soft_skills']
+        }),
         getAllSoftSkills: build.query({
             query: () => ({
                 url: `SoftSkill/${userId}`,
@@ -33,5 +44,6 @@ export const softSkillsAPI = publicAPI.injectEndpoints({
 export const {
     useCreateSoftSkillMutation,
     useGetAllSoftSkillsQuery,
-    useUpdateSoftSkillMutation
+    useUpdateSoftSkillMutation,
+    useDeleteSoftSkillMutation
 } = softSkillsAPI;

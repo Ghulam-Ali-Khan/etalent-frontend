@@ -21,11 +21,11 @@ export const profileAPI = publicAPI.injectEndpoints({
       invalidatesTags: ['profile']
     }),
     getPorfile: build.query({
-      query: () => ({
+      query: (id) => ({
         url: `Profile`,
         method: 'GET',
         params: {
-          userId,
+         userId: id || userId,
         }
       }),
       providesTags: ['profile']

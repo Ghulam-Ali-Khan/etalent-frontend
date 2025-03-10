@@ -20,6 +20,14 @@ export const educationAPI = publicAPI.injectEndpoints({
       }),
       invalidatesTags: ['education_list', 'education_experience_list']
     }),
+    deleteEducation: build.mutation({
+      query: (id) => ({
+        url: 'Education',
+        method: 'Delete',
+        body: { id, userId },
+      }),
+      invalidatesTags: ['education_list', 'education_experience_list']
+    }),
     getAllEducation: build.query({
       query: () => ({
         url: `Education/${userId}`,
@@ -33,5 +41,6 @@ export const educationAPI = publicAPI.injectEndpoints({
 export const {
   useCreateEducationMutation,
   useGetAllEducationQuery,
-  useUpdateEducationMutation
+  useUpdateEducationMutation,
+  useDeleteEducationMutation
 } = educationAPI;

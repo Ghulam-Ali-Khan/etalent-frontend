@@ -20,12 +20,23 @@ export const portfolioAPI = publicAPI.injectEndpoints({
             }),
             invalidatesTags: ['portfolio_list']
         }),
+        deletePortfolio: build.mutation({
+            query: (id) => ({
+                url: `Portfolio`,
+                method: 'Delete',
+                body: {
+                    id,
+                    userId
+                },
+            }),
+            invalidatesTags: ['portfolio_list']
+        }),
         getAllPortfolio: build.query({
             query: () => ({
                 url: `Portfolio`,
                 method: 'GET',
                 params: {
-                    userId, currentId: userId 
+                    userId, currentId: userId
                 }
             }),
             providesTags: ['portfolio_list']
@@ -36,5 +47,6 @@ export const portfolioAPI = publicAPI.injectEndpoints({
 export const {
     useUpdatePortfolioMutation,
     useCreatePortfolioMutation,
-    useGetAllPortfolioQuery
+    useGetAllPortfolioQuery,
+    useDeletePortfolioMutation
 } = portfolioAPI;
