@@ -7,6 +7,9 @@ import SkillsSection from '../components/SkillsSection';
 import ExperienceSection from '../components/ExperienceSection';
 import EducationSection from '../components/EducationSection';
 import FreelanceProjectsSection from '../components/FreelanceProjectsSection';
+import CertificationSection from '../components/CertificationSection';
+import PublicationSection from '../components/PublicationSection';
+import AwardSection from '../components/AwardSection';
 
 const OtherPersonProfile = () => {
 
@@ -22,6 +25,9 @@ const OtherPersonProfile = () => {
                 <ExperienceSection viewProfileId={id} />
                 <EducationSection viewProfileId={id} />
                 <FreelanceProjectsSection viewProfileId={id} />
+                <CertificationSection viewProfileId={id} />
+                <PublicationSection viewProfileId={id} />
+                <AwardSection viewProfileId={id} />
             </Box>
 
         </>

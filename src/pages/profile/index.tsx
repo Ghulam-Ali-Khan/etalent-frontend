@@ -8,6 +8,7 @@ import FreelanceProjectsSection from './components/FreelanceProjectsSection'
 import AboutSection from './components/AboutSection'
 import CertificationSection from './components/CertificationSection'
 import PublicationSection from './components/PublicationSection'
+import AwardSection from './components/AwardSection'
 
 const ProfilePage = () => {
     return (
@@ -22,6 +23,7 @@ const ProfilePage = () => {
                 <FreelanceProjectsSection />
                 <CertificationSection />
                 <PublicationSection />
+                <AwardSection/>
             </Box>
         </>
     )

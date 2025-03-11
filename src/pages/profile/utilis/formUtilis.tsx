@@ -32,6 +32,24 @@ export const publicationInitialValues = {
     description: '',
 };
 
+export const awardInitialValues = {
+    title: '',
+    issuer: '',
+    issuingDate: null,
+    description: '',
+};
+
+export const awardValidationSchema = yup.object().shape({
+    title: yup.string()
+        .required('Award Title is required'),
+    issuer: yup.string()
+        .required('Award Issuer is required'),
+    issuingDate: yup.date()
+        .required('Issue Date is required'),
+    description: yup.string()
+        .optional(), // You can add more validation rules if needed
+});
+
 export const publicationValidationSchema = yup.object().shape({
     title: yup.string()
         .required('Title is required'),

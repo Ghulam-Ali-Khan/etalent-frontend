@@ -7,7 +7,8 @@ export const addSectionMenuItems = ({
     publicationModal,
     basicInfoModal,
     overviewModal,
-    cretificatesModal
+    cretificatesModal,
+    awardsModal
 }) => ([
     {
         title: 'Info',
@@ -41,7 +42,7 @@ export const addSectionMenuItems = ({
         data: [
             { title: 'Projects', component: projectModal },
             { title: 'Publications', component: publicationModal },
-            { title: 'Awards', handleOnClick: '' },
+            { title: 'Awards', component: awardsModal },
         ],
     },
 ]);

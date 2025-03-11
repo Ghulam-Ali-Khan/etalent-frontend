@@ -70,7 +70,7 @@ const Header = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleAnchorElClose}
             >
-                <MenuItem onClick={handleAnchorElClose}><UnStyledLink link='/portal/profile/add'> Profile</UnStyledLink></MenuItem>
+                <MenuItem onClick={handleAnchorElClose}><UnStyledLink link='/portal/profile'> Profile</UnStyledLink></MenuItem>
                 <MenuItem onClick={() => {
                     navigate('/auth/login')
                     handleAnchorElClose();

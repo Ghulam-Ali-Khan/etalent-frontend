@@ -29,11 +29,11 @@ export const awardAPI = publicAPI.injectEndpoints({
             invalidatesTags: ['award_list']
         }),
         getAllAward: build.query({
-            query: () => ({
+            query: (id) => ({
                 url: `Award`,
                 method: 'GET',
                 params: {
-                    userId,
+                    userId: id || userId,
                 }
             }),
             providesTags: ['award_list']
