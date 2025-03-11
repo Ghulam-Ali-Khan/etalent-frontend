@@ -16,7 +16,7 @@ const OverviewModal = ({ isModalTxt }: { isModalTxt?: boolean}) => {
     const [formValues, setFormValues] = useState(overviewInitialValues)
 
     // Mutations & queres
-    const { data: overviewData } = useGetOverviewQuery({});
+    const { data: overviewData } = useGetOverviewQuery(null);
     const [createOverview] = useCreateOverviewMutation();
     const [updateOverview] = useUpdateOverviewMutation();
 

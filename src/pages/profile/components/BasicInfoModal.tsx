@@ -11,13 +11,13 @@ import { useGetPorfileQuery, useUpdateProfileMutation } from '@/services/public/
 
 const BasicInfoModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: boolean, singleData?: object, isFreelance?: boolean }) => {
     const [isModalOpen, setModalStatus] = useState(false);
-    const [formValues, setFormValues] = useState(companyInfoStepInitials)
+    const [formValues, setFormValues] = useState(companyInfoStepInitials);
+
+    const userId = localStorage.getItem('userId');
 
     // Mutations & queres
-    const { data: userProfileData } = useGetPorfileQuery({});
+    const { data: userProfileData } = useGetPorfileQuery(userId);
     const [updateProfile] = useUpdateProfileMutation();
-
-    console.log('userProfileData ==> ', userProfileData);
 
     // Custom Hooks
     const { showResponse } = useShowResponse()
@@ -34,7 +34,7 @@ const BasicInfoModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: 
         if (userProfileData?.data) {
             setFormValues(({ ...companyInfoStepInitials, ...userProfileData?.data }));
         }
-    }, [singleData])
+    }, [userProfileData])
 
     return (
         <>
