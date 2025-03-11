@@ -8,7 +8,7 @@ const AboutSection = ({ viewProfileId }: { viewProfileId?: any }) => {
 
     return (
         overviewData?.data && (
-            <Paper className='my-3'>
+            <Paper className='my-3' id='about'>
                 <Stack className='title-header ' direction={'row'} justifyContent={'space-between'}>
                     <Typography variant='h6' fontWeight={600}>
                         About

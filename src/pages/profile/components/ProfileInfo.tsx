@@ -2,7 +2,6 @@ import { Avatar, Box, Button, Grid2, Paper, Rating, Stack, Tooltip, Typography }
 import AvatarImg from '@/assets/imgs/avatar-1.jpg';
 import { ContentCopy, FacebookOutlined, InsertChartOutlined, Instagram, LinkedIn, Twitter, WorkOutlineOutlined } from '@mui/icons-material';
 import AddSectionMenu from './AddSectionMenu';
-import { Link } from 'react-router-dom';
 import { sectionLinks } from '../utilis/data';
 import QRCode from 'react-qr-code';
 import { useGetPorfileQuery } from '@/services/public/profile';
@@ -124,9 +123,9 @@ const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
 
                         <Stack direction={'row'} gap={4} mt={4}>
                             {sectionLinks.map((link) => (
-                                <Link key={link.to} to={link.to}>
+                                <a key={link.to} href={link.to}>
                                     {link.label}
-                                </Link>
+                                </a>
                             ))}
                         </Stack>
 

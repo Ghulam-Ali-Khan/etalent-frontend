@@ -65,7 +65,7 @@ const SkillsSection = ({ viewProfileId }: { viewProfileId?: any }) => {
     ];
 
     return (
-        <Paper className="my-3">
+        <Paper className="my-3" id="skills">
             <Stack className="title-header">
                 <Typography variant="h6" fontWeight={600}>
                     Skills

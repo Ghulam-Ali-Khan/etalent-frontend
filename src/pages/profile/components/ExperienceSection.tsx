@@ -21,7 +21,7 @@ const ExperienceSection = ({ viewProfileId }: { viewProfileId?: any }) => {
     return (
 
         (experienceData?.data?.experiences?.length > 0) && (
-            <Paper>
+            <Paper id="experience">
                 <Stack className='title-header ' direction={'row'} justifyContent={'space-between'}>
                     <Typography variant='h6' fontWeight={600}>
                         Experience

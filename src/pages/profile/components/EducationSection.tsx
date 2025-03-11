@@ -19,7 +19,7 @@ const EducationSection = ({ viewProfileId }: { viewProfileId?: any }) => {
     const handleToggleActionBtns = () => setShowActionBtns(prev => !prev);
     return (
         educationData?.data?.education?.length > 0 && (
-            <Paper className='my-3'>
+            <Paper className='my-3' id="education">
                 <Stack className='title-header ' direction={'row'} justifyContent={'space-between'}>
                     <Typography variant='h6' fontWeight={600}>
                         Education

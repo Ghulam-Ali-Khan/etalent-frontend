@@ -3,7 +3,6 @@ import { Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/materia
 import moment from 'moment';
 import { useState } from 'react'
 import DeletePopup from '@/components/common/DeletePopup';
-import PublicationModal from './PublicationModal';
 import { useDeleteAwardMutation, useGetAllAwardQuery } from '@/services/public/award';
 import AwardModal from './AwardModal';
 

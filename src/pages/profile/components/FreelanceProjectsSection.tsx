@@ -106,7 +106,7 @@ const FreelaceCard = ({ data, showActionBtns, viewProfileId }: { data: any, show
                 </Box>
             </CommonModal>
 
-            <Paper className='p-4'>
+            <Paper className='p-4' id='portfolio'>
                 <Stack gap={2} minHeight={'180px'}>
                     <Stack direction={'row'} justifyContent={'space-between'}>
 
