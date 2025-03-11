@@ -82,9 +82,15 @@ const ExperienceFormModal = ({ isModalTxt, singleData }: { isModalTxt?: boolean,
                                             isRequired
                                         />
 
-                                        <FormikDatePicker
+                                        <FormikField
                                             name='city'
                                             label='City/State'
+                                            isRequired
+                                        />
+
+                                        <FormikDatePicker
+                                            name='startDate'
+                                            label='Start Date'
                                             isRequired
                                         />
                                     </Stack>
@@ -97,9 +103,15 @@ const ExperienceFormModal = ({ isModalTxt, singleData }: { isModalTxt?: boolean,
                                             isRequired
                                         />
 
-                                        <FormikDatePicker
+                                        <FormikField
                                             name='country'
                                             label='Country'
+                                            isRequired
+                                        />
+
+                                        <FormikDatePicker
+                                            name='endDate'
+                                            label='End Date'
                                             isRequired
                                         />
                                     </Stack>

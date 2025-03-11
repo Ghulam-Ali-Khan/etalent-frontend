@@ -40,7 +40,7 @@ const EducationStep = () => {
                                         </Typography>
 
                                         <Stack direction={'row'} spacing={2}>
-                                            <ExperienceFormModal singleData={item} />
+                                            <EducationFormModal singleData={item} />
 
                                             <DeletePopup deleteFunc={deleteEducation} id={item?.id} deleteItemName='Education' />
                                         </Stack>

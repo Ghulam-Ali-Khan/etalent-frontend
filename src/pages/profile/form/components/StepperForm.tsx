@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCreateSocialLinkMutation } from '@/services/public/socialLink';
 
 const StepperForm = () => {
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(2);
 
     const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const StepperForm = () => {
             response = await createProfileMutation({ ...values, userId, });
             await createSocialLinks({ facebook, twitter, instagram, linkedin });
 
-            showResponse(response?.data, `Profile created successfully`, 'Experience process failed', () => navigate('portal/profile/'))
+            showResponse(response?.data, `Profile created successfully`, 'Experience process failed', () => navigate('/portal/profile/'))
 
         }
     };

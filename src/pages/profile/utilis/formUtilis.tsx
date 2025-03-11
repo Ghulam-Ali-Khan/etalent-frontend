@@ -131,6 +131,8 @@ export const experienceValidationSchema = yup.object({
     industry: yup.string().required('Industry is required'),
     country: yup.string().required('Country is required'),
     currentlyWorking: yup.boolean(),
+    startDate: yup.date().required('Start Date is required'),
+    endDate: yup.date().required('End Date is required'),
     description: yup.string().nullable()
 });
 
@@ -183,6 +185,8 @@ export const experienceInitialValues = {
     city: '',
     industry: '',
     country: '',
+    endDate: '',
+    startDate: '',
     currentlyWorking: false,
     description: ''
 };
