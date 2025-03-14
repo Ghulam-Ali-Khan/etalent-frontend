@@ -76,7 +76,38 @@ const theme = createTheme({
     },
   },
   components: {
-    // Add any component-specific customizations here
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          height: '45px', // Increased height
+          fontSize: '16px', // Increased font size
+          // padding: '10px',
+        },
+        input: {
+          height: '45px',
+          // padding: '12px',
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          height: '45px',
+          fontSize: '16px',
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        inputRoot: {
+          height: '45px',
+          fontSize: '16px',
+        },
+        endAdornment: {
+          // top: 'calc(50% - 12px)',
+        },
+      },
+    },
   },
 });
 

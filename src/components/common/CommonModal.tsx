@@ -45,7 +45,7 @@ const CommonModal: React.FC<CommonModalProps> = ({
               padding: isPopup ? '0px 10px' : undefined,
             }}
           >
-            <Typography variant="h5">{title}</Typography>
+            <Typography variant="h5" fontWeight={600}>{title}</Typography>
             <Box className="flex gap-2">
               {btnName && func && (
                 <Button onClick={func} variant="contained" size="small">

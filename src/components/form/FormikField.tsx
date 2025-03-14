@@ -116,6 +116,7 @@ const FormikField: React.FC<FormikFieldProps> = ({
                         type={isPasswordField ? (password.show ? 'text' : 'password') : type}
                         value={innerValue}
                         onChange={handleChange}
+                        // size='small'
                         slotProps={{
                             input: {
                                 startAdornment: <InputAdornment position="start">{icon}</InputAdornment>,

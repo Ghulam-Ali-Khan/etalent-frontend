@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Grid2, Paper, Rating, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Button, Grid2, IconButton, Paper, Rating, Stack, Tooltip, Typography } from '@mui/material'
 import AvatarImg from '@/assets/imgs/avatar-1.jpg';
 import { ContentCopy, FacebookOutlined, InsertChartOutlined, Instagram, LinkedIn, Twitter, WorkOutlineOutlined } from '@mui/icons-material';
 import AddSectionMenu from './AddSectionMenu';
@@ -7,6 +7,8 @@ import QRCode from 'react-qr-code';
 import { useGetPorfileQuery } from '@/services/public/profile';
 import { useGetAllSocialLinksQuery } from '@/services/public/socialLink';
 import { useState } from 'react';
+import ShareSocialBtns from './ShareSocialBtns';
+
 
 const apiUrl = import.meta.env.VITE_APP_URL;
 
@@ -41,9 +43,7 @@ const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
                             <Typography variant='h5' fontWeight={600}>
                                 {firstName} {lastName}
                             </Typography>
-                            {/* <Typography color='secondary' fontSize={'12px'}>
-                                React Js Developer
-                            </Typography> */}
+
                             <Typography color='secondary' fontSize={'12px'}>
                                 {city}, {nationality}
                             </Typography>
@@ -131,16 +131,16 @@ const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
 
                     </Grid2>
                     <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
-                        <Stack mt={3} gap={2} alignItems={'end'} justifyContent={'end'}>
+                        <Stack mt={1} gap={2} alignItems={'end'} justifyContent={'end'}>
                             <QRCode value={profileUrl} size={150} />
-                            <Tooltip title={copied ? "Copied!" : "Copy to clipboard"} arrow>
-                                <Button
+                            <Tooltip title={copied ? "Copied!" : "Copy to clipboard"} className='flex gap-2'> 
+                                <IconButton
                                     onClick={handleCopy}
-                                    variant="contained"
-                                    startIcon={<ContentCopy />}
                                 >
-                                    Copy Link
-                                </Button>
+                                    <ContentCopy />
+                                </IconButton>
+
+                                <ShareSocialBtns viewProfileId={viewProfileId} />
                             </Tooltip>
                         </Stack>
                     </Grid2>

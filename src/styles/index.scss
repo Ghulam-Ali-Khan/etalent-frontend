@@ -23,6 +23,39 @@ button {
   }
 }
 
+.ck-content{
+  min-height: 200px;
+}
+
 .blue-link{
   color: #027afa;
+}
+
+
+.custom-list {
+  list-style: none; /* Remove default bullet points */
+  padding-left: 0;
+}
+
+.custom-list .list-item {
+  position: relative;
+  padding-left: 30px; /* Space for the icon */
+  margin-bottom: 10px;
+}
+
+.custom-list .list-item::before {
+  content: '✔'; /* Unicode checkmark (alternative to MUI icon) */
+  font-family: 'Material Icons';
+  font-size: 20px;
+  position: absolute;
+  left: -3rem;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #F9F9F9;
 }

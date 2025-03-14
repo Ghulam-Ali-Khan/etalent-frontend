@@ -1,6 +1,6 @@
 import { useDeleteEducationMutation, useGetAllEducationQuery } from '@/services/public/education';
-import { Delete, Edit } from '@mui/icons-material';
-import { Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
+import { Analytics, Assessment, CalendarMonth, Delete, Download, Edit, OpenInNew } from '@mui/icons-material';
+import { Box, Button, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
 import moment from 'moment';
 import React, { useState } from 'react'
 import EducationFormModal from '../form/components/EducationFormModal';
@@ -44,48 +44,53 @@ const CertificationSection = ({ viewProfileId }: { viewProfileId?: any }) => {
                     <Stack spacing={1}>
                         {
                             certificationData.data.map((item: any) => (
-                                <>
-                                    <Stack direction={'row'} justifyContent={'space-between'}>
-                                        <Typography variant='h6'>
-                                            {item?.title}
+                                <Box borderRadius={1} padding={2} className="light-grey-border">
+                                    <Stack gap={1}>
+
+                                        <Stack direction={'row'} justifyContent={'space-between'}>
+                                            <Typography variant='h5' fontWeight={600}>
+                                                {item?.title}
+                                            </Typography>
+
+                                            {!viewProfileId && showActionBtns && (
+                                                <Stack direction={'row'} spacing={2}>
+                                                    <CretificationsAndTrainings singleData={item} />
+
+                                                    <DeletePopup deleteFunc={deleteCertification} id={item?.id} deleteItemName='Certification' />
+                                                </Stack>)}
+                                        </Stack>
+                                        <Typography variant='body2' color='secondary'>
+                                            <Assessment fontSize='small' />   {item?.organizationName}
+                                        </Typography>
+                                        <Typography variant='body2' color='secondary'>
+                                            <CalendarMonth fontSize='small' />   {moment(item?.issueDate).format('MMM YYYY')} -  {item?.expireDate ? moment(item?.expireDate).format('MMM YYYY') : 'No Expire'}
+                                        </Typography>
+                                        {
+                                            item?.organizationUrl && (
+                                                <Typography variant='body2' color='secondary'>
+                                                    <a href={item?.organizationUrl} className='blue-link' target='_blank'>
+                                                        <OpenInNew fontSize='small' />    {item?.organizationUrl}
+                                                    </a>
+                                                </Typography>
+                                            )
+                                        }
+
+                                        <Typography variant='body2' color='secondary'>
+                                            <Analytics fontSize='small' />     Score :  {item?.score}
                                         </Typography>
 
-                                        {!viewProfileId && showActionBtns && (
-                                            <Stack direction={'row'} spacing={2}>
-                                                <CretificationsAndTrainings singleData={item} />
-
-                                                <DeletePopup deleteFunc={deleteCertification} id={item?.id} deleteItemName='Certification' />
-                                            </Stack>)}
-                                    </Stack>
-                                    <Typography variant='body2' color='secondary'>
-                                        {item?.organizationName}
-                                    </Typography>
-                                    <Typography variant='body2' color='secondary'>
-                                        {moment(item?.issueDate).format('MMM YYYY')} -  {item?.expireDate ? moment(item?.expireDate).format('MMM YYYY') : 'No Expire'}
-                                    </Typography>
-                                    {
-                                        item?.organizationUrl && (
-                                            <Typography variant='body2' color='secondary'>
-                                                <a href={item?.organizationUrl} className='blue-link' target='_blank'>
-                                                    {item?.organizationUrl}
+                                        {
+                                            item?.artifactUrl && (
+                                                <a href={item?.artifactUrl} className='blue-link' download={'Certificate'}>
+                                                    <Button variant='contained' size='small' startIcon={<Download fontSize='small' />}>
+                                                        Click here to download
+                                                    </Button>
                                                 </a>
-                                            </Typography>
-                                        )
-                                    }
-
-                                    <Typography variant='body2' color='secondary'>
-                                        Score :  {item?.score}
-                                    </Typography>
-
-                                    {
-                                        item?.artifactUrl && (
-                                            <a href={item?.artifactUrl} className='blue-link' download={'Certificate'}>
-                                                Click here to download
-                                            </a>
-                                        )
-                                    }
-                                    <Divider className='my-3' />
-                                </>
+                                            )
+                                        }
+                                        {/* <Divider className='my-3' /> */}
+                                    </Stack>
+                                </Box>
                             ))
                         }
                     </Stack>

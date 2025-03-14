@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCreateSocialLinkMutation } from '@/services/public/socialLink';
 
 const StepperForm = () => {
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(4);
 
     const navigate = useNavigate();
 

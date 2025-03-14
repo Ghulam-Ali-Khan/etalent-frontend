@@ -1,5 +1,5 @@
 import { useDeleteExperienceMutation } from '@/services/public/experience';
-import { Edit } from '@mui/icons-material';
+import { Edit, Work } from '@mui/icons-material';
 import { Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
 import ExperienceFormModal from '../form/components/ExperienceFormModal';
 import { useState } from 'react';
@@ -46,12 +46,11 @@ const ExperienceSection = ({ viewProfileId }: { viewProfileId?: any }) => {
                     <Stack spacing={1}>
                         {
                             experienceData.data.experiences.map((item: any) => (
-                                <>
+                                <Box borderRadius={1} padding={2} className="light-grey-border">
                                     <Stack direction={'row'} justifyContent={'space-between'}>
                                         <Typography variant='h6'>
                                             {item?.title}
                                         </Typography>
-
 
                                         {!viewProfileId && showActionBtns && (
                                             <Stack direction={'row'} spacing={2}>
@@ -64,19 +63,26 @@ const ExperienceSection = ({ viewProfileId }: { viewProfileId?: any }) => {
 
 
                                     </Stack>
-                                    <Typography variant='body2' color='secondary' fontSize={'12px'}>
-                                        {item?.company} · {item?.employmentType}
-                                    </Typography>
-                                    <Typography variant='body2' color='secondary' fontSize={'12px'}>
-                                        {item?.city},{item?.country}
+                                    <Typography variant='body2' color='secondary'>
+                                        <Work fontSize='small' />    {item?.company} · {item?.employmentType}
                                     </Typography>
 
-                                    <Box dangerouslySetInnerHTML={{ __html: item?.description }} />
+                                    {
+                                        item?.description && (
+                                            <>
+                                                <Typography variant='body1' fontWeight={600}>
+                                                    Description
+                                                </Typography>
+                                                <Box dangerouslySetInnerHTML={{ __html: item?.description }} />
+                                            </>
+                                        )
+                                    }
+
 
                                     <ProjectSection projectsArray={item?.projects} showActionBtns={showActionBtns} />
 
-                                    <Divider className='my-4' />
-                                </>
+                                    {/* <Divider className='my-4' /> */}
+                                </Box>
                             ))
                         }
                     </Stack>

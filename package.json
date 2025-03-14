@@ -41,6 +41,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",
     "react-scroll": "^1.9.3",
+    "react-share-social": "^0.1.60",
     "sass": "^1.83.1",
     "use-debounce": "^10.0.4",
     "yup": "^1.6.1"

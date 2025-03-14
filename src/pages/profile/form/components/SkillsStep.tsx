@@ -9,8 +9,8 @@ import { getDataLocalStorage, saveLocalStorage } from '@/utilis/helpers'
 import DeletePopup from '@/components/common/DeletePopup'
 
 const SkillsStep = () => {
-    const { data: technicalSkills } = useGetAllTechnicalSkillsQuery({});
-    const { data: softSkills } = useGetAllSoftSkillsQuery({});
+    const { data: technicalSkills } = useGetAllTechnicalSkillsQuery(null);
+    const { data: softSkills } = useGetAllSoftSkillsQuery(null);
 
     const [deleteSoftSkill] = useDeleteSoftSkillMutation();
     const [deleteTechnicalSkill] = useDeleteTechnicalSkillMutation();

@@ -1,12 +1,13 @@
 import { useDeleteEducationMutation, useGetAllEducationQuery } from '@/services/public/education';
-import { Delete, Edit } from '@mui/icons-material';
-import { Box, IconButton, Paper, Stack, Typography } from '@mui/material'
+import { Analytics, Delete, Edit, MyLocation, School } from '@mui/icons-material';
+import { Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
 import moment from 'moment';
 import React, { useState } from 'react'
 import EducationFormModal from '../form/components/EducationFormModal';
 import { useGetAllExperienceEducationQuery } from '@/services/public/educationExperienceProjects';
 import ProjectSection from './ProjectsSectionForList';
 import DeletePopup from '@/components/common/DeletePopup';
+import { CalendarIcon } from '@mui/x-date-pickers/icons';
 
 const EducationSection = ({ viewProfileId }: { viewProfileId?: any }) => {
     const [showActionBtns, setShowActionBtns] = useState(false);
@@ -41,7 +42,7 @@ const EducationSection = ({ viewProfileId }: { viewProfileId?: any }) => {
                     <Stack spacing={1}>
                         {
                             educationData.data.education.map((item: any) => (
-                                <>
+                                <Box borderRadius={1} padding={2} className="light-grey-border">
                                     <Stack direction={'row'} justifyContent={'space-between'}>
                                         <Typography variant='h6'>
                                             {item?.school}
@@ -55,20 +56,22 @@ const EducationSection = ({ viewProfileId }: { viewProfileId?: any }) => {
                                             </Stack>)}
                                     </Stack>
                                     <Typography variant='body2' color='secondary'>
-                                        {item?.degree}, {item?.fieldOfStudy}
+                                        <School fontSize='small' />     {item?.degree}, {item?.fieldOfStudy}
                                     </Typography>
                                     <Typography variant='body2' color='secondary'>
-                                        {moment(item?.startDate).format('MMM YYYY')} - {moment(item?.endDate).format('MMM YYYY')}
+                                        <CalendarIcon fontSize='small' />  {moment(item?.startDate).format('MMM YYYY')} - {moment(item?.endDate).format('MMM YYYY')}
                                     </Typography>
                                     <Typography variant='body2' color='secondary'>
-                                        {item?.grade}
+                                        <Analytics fontSize='small' />   {item?.grade}
                                     </Typography>
-                                    <Typography variant='body2' color='secondary' fontSize={'12px'}>
-                                        {item?.city}, {item?.country}
+                                    <Typography variant='body2' color='secondary'>
+                                        <MyLocation fontSize='small' />    {item?.city}, {item?.country}
                                     </Typography>
 
                                     <ProjectSection projectsArray={item?.projects} showActionBtns={showActionBtns} />
-                                </>
+
+                                    {/* <Divider className='my-2' /> */}
+                                </Box>
                             ))
                         }
                     </Stack>

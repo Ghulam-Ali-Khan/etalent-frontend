@@ -1,4 +1,4 @@
-import { Edit } from '@mui/icons-material';
+import { Assignment, CalendarMonth, Edit } from '@mui/icons-material';
 import { Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
 import moment from 'moment';
 import { useState } from 'react'
@@ -40,38 +40,41 @@ const AwardSection = ({ viewProfileId }: { viewProfileId?: any }) => {
                     <Stack spacing={1}>
                         {
                             awardData.data.map((item: any) => (
-                                <>
-                                    <Stack direction={'row'} justifyContent={'space-between'}>
-                                        <Typography variant='h6'>
-                                            {item?.title}
+                                <Box borderRadius={1} padding={2} className="light-grey-border">
+                                    <Stack gap={1}>
+
+                                        <Stack direction={'row'} justifyContent={'space-between'}>
+                                            <Typography variant='h5' fontWeight={600}>
+                                                {item?.title}
+                                            </Typography>
+
+                                            {!viewProfileId && showActionBtns && (
+                                                <Stack direction={'row'} spacing={2}>
+                                                    <AwardModal singleData={item} />
+
+                                                    <DeletePopup deleteFunc={deleteAward} id={item?.id} deleteItemName='Award' />
+                                                </Stack>)}
+                                        </Stack>
+                                        <Typography variant='body2' color='secondary'>
+                                            <Assignment fontSize='small' /> {item?.issuer}
                                         </Typography>
+                                        <Typography variant='body2' color='secondary'>
+                                            <CalendarMonth fontSize='small' />  {moment(item?.issuingDate).format('MMM YYYY')}
+                                        </Typography>
+                                        {
+                                            item?.description && (
+                                                <>
+                                                    <Typography variant='body2' fontWeight={600}>
+                                                        Description
+                                                    </Typography>
 
-                                        {!viewProfileId && showActionBtns && (
-                                            <Stack direction={'row'} spacing={2}>
-                                                <AwardModal singleData={item} />
-
-                                                <DeletePopup deleteFunc={deleteAward} id={item?.id} deleteItemName='Award' />
-                                            </Stack>)}
+                                                    <Box dangerouslySetInnerHTML={{ __html: item?.description }} />
+                                                </>
+                                            )
+                                        }
                                     </Stack>
-                                    <Typography variant='body2' color='secondary'>
-                                        Issuer Name : {item?.issuer}
-                                    </Typography>
-                                    <Typography variant='body2' color='secondary'>
-                                        Issue Date :  {moment(item?.issuingDate).format('MMM YYYY')}
-                                    </Typography>
-                                    {
-                                        item?.description && (
-                                            <>
-                                                <Typography variant='body2' fontWeight={600}>
-                                                    Description
-                                                </Typography>
-
-                                                <Box dangerouslySetInnerHTML={{ __html: item?.description }} />
-                                            </>
-                                        )
-                                    }
-                                    <Divider className='my-3' />
-                                </>
+                                    {/* <Divider className='my-3' /> */}
+                                </Box>
                             ))
                         }
                     </Stack>

@@ -6,6 +6,7 @@ import { SnackbarProvider } from 'notistack'; // Snackbar context
 import Router from '@/routes'; // Adjust the path to your routes
 
 import "@/styles/index.scss";
+import "@/styles/components/utilis.scss";
 import { useEffect } from 'react';
 import { useLoadUserQuery } from './services/private/auth';
 import { userLoaded } from './store/slices/authSlice';

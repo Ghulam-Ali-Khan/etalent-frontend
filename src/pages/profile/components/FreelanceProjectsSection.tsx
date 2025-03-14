@@ -1,5 +1,5 @@
 import { useDeletePortfolioMutation, useGetAllPortfolioQuery } from '@/services/public/portfolio';
-import { Edit } from '@mui/icons-material';
+import { CalendarMonth, Edit, OpenInNew } from '@mui/icons-material';
 import { Box, Grid2, IconButton, Paper, Rating, Stack, Typography } from '@mui/material';
 import moment from 'moment';
 import { useState } from 'react'
@@ -7,6 +7,7 @@ import ProjectModal from './ProjectModal';
 import DeletePopup from '@/components/common/DeletePopup';
 import CommonModal from '@/components/common/CommonModal';
 import useGetPopupUtilis from '@/customHooks/useGetPopupUtilis';
+import { greyBg } from '@/styles/utilis/utilis';
 
 const FreelanceProjectsSection = ({ viewProfileId }: { viewProfileId?: any }) => {
     const [showActionBtns, setShowActionBtns] = useState(false);
@@ -106,11 +107,11 @@ const FreelaceCard = ({ data, showActionBtns, viewProfileId }: { data: any, show
                 </Box>
             </CommonModal>
 
-            <Paper className='p-4' id='portfolio'>
+            <Paper id='portfolio' className=" p-4 light-grey-border" sx={greyBg}>
                 <Stack gap={2} minHeight={'180px'}>
                     <Stack direction={'row'} justifyContent={'space-between'}>
 
-                        <Typography variant='h5' onClick={handleModalOpen}>
+                        <Typography variant='h5' fontWeight={600} onClick={handleModalOpen} sx={{ cursor: 'pointer' }}>
                             {data?.name}
                         </Typography>
 
@@ -126,13 +127,13 @@ const FreelaceCard = ({ data, showActionBtns, viewProfileId }: { data: any, show
                     </Stack>
 
                     <Typography variant='body2' >
-                        {moment(data.startDate).format('DD MMM YYYY')} - {data.currentlyWorking ? 'Currently Working' : moment(data.endDate).format('DD MMM YYYY')}
+                        <CalendarMonth fontSize='small' />  {moment(data.startDate).format('DD MMM YYYY')} - {data.currentlyWorking ? 'Currently Working' : moment(data.endDate).format('DD MMM YYYY')}
                     </Typography>
 
                     {
                         data?.projectUrl && (
                             <Typography variant='body2' style={{ color: '#027afa' }}>
-                                {data.projectUrl}
+                                <OpenInNew fontSize='small' />         {data.projectUrl}
                             </Typography>
                         )
                     }
