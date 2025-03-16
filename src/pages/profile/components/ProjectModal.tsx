@@ -19,6 +19,11 @@ import { useCreateProjectMutation, useUpdateProjectMutation } from '@/services/p
 import { Add, Edit } from '@mui/icons-material';
 import useShowResponse from '@/customHooks/useShowResponse';
 
+const tempSkills = [
+    'React',
+    'Wordpress'
+];
+
 const ProjectModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: boolean, singleData?: object, isFreelance?: boolean }) => {
     const [isModalOpen, setModalStatus] = useState(false);
     const [formValues, setFormValues] = useState(projectModalInitialValues)
@@ -33,6 +38,7 @@ const ProjectModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: bo
     const { showResponse } = useShowResponse()
 
     const handleSubmitForm = async (values: any) => {
+
         let response = {};
         const technicalSkills = Array.isArray(values.technicalSkills)
             ? values.technicalSkills.join(',')
@@ -62,7 +68,10 @@ const ProjectModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: bo
     // UseEffects
     useEffect(() => {
         if (singleData) {
-            setFormValues(({ ...projectModalInitialValues, ...singleData }));
+            setFormValues(({
+                ...projectModalInitialValues, ...singleData,
+                ...(singleData?.name === 'TechSink' ? { technicalSkills: tempSkills } : {})
+            }));
         }
     }, [singleData])
 
@@ -145,27 +154,48 @@ const ProjectFormContent = ({ isFreelance, singleData }: { isFreelance?: boolean
                 !isFreelance && (
                     <>
                         <FormikAutoCompleteSelect
+                            name='experienceOf'
+                            label='Project related to'
+                            placeholder='Select project relation'
+                            options={[
+                                {
+                                    label: 'Experience',
+                                    value: 'experience'
+                                },
+                                {
+                                    label: 'Education',
+                                    value: 'education'
+                                },
+                                {
+                                    label: 'Freelance',
+                                    value: 'freelance'
+                                }
+                            ]}
+                            isRequired
+                        />
+
+                        {(values?.experienceOf === 'experience') && (<FormikAutoCompleteSelect
                             name="experienceId"
                             label="Associate with experience"
                             options={experienceOptions}
                             isRequired
                             isDisabled={!!values.educationId || !!values.accociatedWithFreelance}
-                        />
-                        <FormikAutoCompleteSelect
+                        />)}
+                        {(values?.experienceOf === 'education') && (<FormikAutoCompleteSelect
                             name="educationId"
                             label="Associate with education"
                             options={educationOptions}
                             isRequired
                             isDisabled={!!values.experienceId || !!values.accociatedWithFreelance}
                         />
-
-                        <Box my={3}>
+                        )}
+                        {(values?.experienceOf === 'freelance') && (<Box my={3}>
                             <FormikCheckbox
                                 name="accociatedWithFreelance"
                                 label="Associated with freelance"
                                 disabled={!!values.educationId || !!values.experienceId}
                             />
-                        </Box>
+                        </Box>)}
                     </>
                 )
             }

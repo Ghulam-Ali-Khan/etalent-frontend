@@ -50,7 +50,7 @@ const BasicInfoModal = ({ isModalTxt, singleData, isFreelance }: { isModalTxt?: 
                 )
             }
 
-            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title={'Update Project'} minWidth='50%' maxWidth='65%'>
+            <CommonModal isOpen={isModalOpen} toggle={() => setModalStatus(false)} title={'Update Project'}>
                 <Box width={'100%'}>
                     <FormikWrapper
                         formInitials={formValues}

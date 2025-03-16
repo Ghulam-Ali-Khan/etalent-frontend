@@ -27,7 +27,6 @@ const ExperienceSection = ({ viewProfileId }: { viewProfileId?: any }) => {
                         Experience
                     </Typography>
 
-
                     {
                         !viewProfileId && (
                             <Stack direction={'row'} gap={2}>

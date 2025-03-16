@@ -1,22 +1,18 @@
 import CommonModal from '@/components/common/CommonModal';
-import FormikCheckbox from '@/components/form/FormikCheckbox';
-import FormikDatePicker from '@/components/form/FormikDatepicker';
 import FormikField from '@/components/form/FormikField';
-import FormikTextEditor from '@/components/form/FormikTextEditor';
 import FormikWrapper from '@/components/form/FormikWrapper';
 import useShowResponse from '@/customHooks/useShowResponse';
 import { useCreateTechnicalSkillMutation, useUpdateTechnicalSkillMutation } from '@/services/public/technicalSkills';
 import { Add, Edit } from '@mui/icons-material';
 import { Box, Button, Grid2, IconButton, Stack } from '@mui/material';
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { technicalSkillsInitialValues, technicalSkillsSchema } from '../../utilis/formUtilis';
+import SkillsField from './SkillsField';
 
 const TechnicalSkillsPopup = ({ isModalTxt, singleData }: { isModalTxt?: boolean, singleData?: object }) => {
     // states
     const [formValues, setFormValues] = useState(technicalSkillsInitialValues)
     const [isModalOpen, setModalStatus] = useState(false);
-
-    console.log('singleData ==> ', singleData)
 
     // queries and mutations
     const [createTechnicalSkill] = useCreateTechnicalSkillMutation();
@@ -24,7 +20,6 @@ const TechnicalSkillsPopup = ({ isModalTxt, singleData }: { isModalTxt?: boolean
 
     // Custom Hook
     const { showResponse } = useShowResponse();
-
 
     // Handlers
     const handleSubmit = async (values: any) => {
@@ -66,12 +61,7 @@ const TechnicalSkillsPopup = ({ isModalTxt, singleData }: { isModalTxt?: boolean
                 <Box minWidth={'400px'}>
                     <FormikWrapper formInitials={formValues} formSchema={technicalSkillsSchema} submitFunc={handleSubmit}>
                         <Stack spacing={2}>
-                            <FormikField
-                                name='name'
-                                label='Skill'
-                                isRequired
-                            />
-
+                            <SkillsField />
                             <FormikField
                                 name='experience'
                                 label='Experience in years'

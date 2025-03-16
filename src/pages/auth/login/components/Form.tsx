@@ -7,6 +7,7 @@ import { LoginSubmitParams } from '../types/Form';
 import { initialValues, loginValidationSchema } from '../utilis/formUtilis';
 import useShowResponse from '@/customHooks/useShowResponse';
 import FormikCheckbox from '@/components/form/FormikCheckbox';
+import { getSkillsToken } from '@/services/public/axios/skillsToken';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -30,9 +31,12 @@ const LoginForm = () => {
 
         if (success) {
             navigate('/portal/dashboard');
+
+            const skillsToken = await getSkillsToken();
+
+            localStorage.setItem('skills_token', skillsToken);
         }
 
-        // console.log('response ==> ', response);
     }
 
     return (

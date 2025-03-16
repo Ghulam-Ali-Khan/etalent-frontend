@@ -49,3 +49,12 @@ export const convertFileToBase64 = (file: File): Promise<string> => {
         reader.readAsDataURL(file);
     });
 };
+
+
+export function convertDaysToYears(days = 0) {
+    const years = Math.floor(days / 365);
+    const remainingDays = days % 365;
+
+    // If there are extra months or days, add "+"
+    return remainingDays > 0 ? `${years}+ years` : `${years} years`;
+}

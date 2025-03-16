@@ -23,6 +23,7 @@ const FormikField: React.FC<FormikFieldProps> = ({
     placeholder = 'Please Enter',
     onBlur,
     onChange,
+    onInputChange,
     isRequired = false,
     minRows,
     disabled = false,

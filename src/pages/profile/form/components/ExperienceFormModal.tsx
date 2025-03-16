@@ -61,21 +61,15 @@ const ExperienceFormModal = ({ isModalTxt, singleData }: { isModalTxt?: boolean,
                     <FormikWrapper formInitials={formValues} formSchema={experienceValidationSchema} submitFunc={handleSubmit}>
                         <Stack spacing={2}>
 
-                            <FormikField
-                                name='title'
-                                label='Title'
-                                isRequired
-                            />
-
-                            <FormikField
-                                name='employmentType'
-                                label='Employeement Type'
-                                isRequired
-                            />
-
                             <Grid2 container spacing={2}>
                                 <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                                     <Stack spacing={2}>
+                                        <FormikField
+                                            name='title'
+                                            label='Title'
+                                            isRequired
+                                        />
+
                                         <FormikField
                                             name='company'
                                             label='Company'
@@ -97,6 +91,12 @@ const ExperienceFormModal = ({ isModalTxt, singleData }: { isModalTxt?: boolean,
                                 </Grid2>
                                 <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                                     <Stack spacing={2}>
+                                        <FormikField
+                                            name='employmentType'
+                                            label='Employeement Type'
+                                            isRequired
+                                        />
+
                                         <FormikField
                                             name='industry'
                                             label='Industry'

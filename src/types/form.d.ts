@@ -10,6 +10,7 @@ export interface FormikFieldProps {
     placeholder?: string;
     onBlur?: (value: string) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onInputChange?: Function;
     isRequired?: boolean;
     minRows?: number;
     disabled?: boolean;

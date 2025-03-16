@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Chip, Stack, Box, FormHelperText } from '@mui/material';
+import { TextField, Button, Chip, Stack, Box, FormHelperText, Typography } from '@mui/material';
 import { useField } from 'formik';
 
 const FormikSkillsInput = ({ name, label }) => {
@@ -23,15 +23,30 @@ const FormikSkillsInput = ({ name, label }) => {
 
     return (
         <>
-            <Box className="flex gap-2 w">
-                <TextField
-                    label={label || "Add Skill"}
-                    variant="outlined"
+
+            <Box className="flex gap-2 items-end">
+                <Stack
                     className='w-full'
-                    value={skill}
-                    onChange={(e) => setSkill(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleAddSkill()}
-                />
+                    gap={2}
+                >
+                    {label && (
+                        <Typography
+                            variant="body2"
+                        >
+                            {label}
+                        </Typography>
+                    )}
+
+                    <TextField
+                        // label={label || "Add Skill"}
+                        // multiline
+                        // variant="outlined"
+                        placeholder='Add skills'
+                        value={skill}
+                        onChange={(e) => setSkill(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleAddSkill()}
+                    />
+                </Stack>
                 <Button variant="outlined" onClick={handleAddSkill} sx={{ minWidth: '100px' }}>
                     Add Skill
                 </Button>

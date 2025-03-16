@@ -8,6 +8,8 @@ import { useGetPorfileQuery } from '@/services/public/profile';
 import { useGetAllSocialLinksQuery } from '@/services/public/socialLink';
 import { useState } from 'react';
 import ShareSocialBtns from './ShareSocialBtns';
+import { useGetTotalExperienceQuery } from '@/services/public/experience';
+import { convertDaysToYears } from '@/utilis/helpers';
 
 
 const apiUrl = import.meta.env.VITE_APP_URL;
@@ -27,9 +29,11 @@ const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
 
     const { data: profileInfoData } = useGetPorfileQuery(viewProfileId);
     const { data: socialLinkData } = useGetAllSocialLinksQuery(viewProfileId);
+    const { data: totalExperienceData } = useGetTotalExperienceQuery(viewProfileId);
 
+    console.log('totalExperienceData ==> ', totalExperienceData);
 
-    const { artifactUrl = AvatarImg, firstName, lastName, city, nationality, profileRating } = profileInfoData?.data || {}
+    const { artifactUrl = AvatarImg, firstName, lastName, city, nationality, profileRating, profileLevel } = profileInfoData?.data || {}
     const { facebook, instagram, linkedin, twitter } = socialLinkData?.data?.[0] || {};
 
     return (
@@ -98,21 +102,28 @@ const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
                         <Stack direction={'row'} justifyContent={'space-between'}
                             borderTop={'1px solid #E7E7E7'}
                             borderBottom={'1px solid #E7E7E7'} mt={2} py={2}>
-                            <IconCard
-                                icon={<WorkOutlineOutlined fontSize='14px' />}
-                                heading={'Work Experience'}
-                                value={'10+ years'}
-                            />
+                            {
+                                linkedin && (
+                                    <a href={linkedin}>
+                                        <IconCard
+                                            icon={<LinkedIn fontSize='14px' />}
+                                            heading={'Connect with'}
+                                            value={'LinkedIn'}
+                                        />
+                                    </a>
+                                )
+                            }
                             <IconCard
                                 icon={<InsertChartOutlined fontSize='14px' />}
                                 heading={'Professional Level'}
-                                value={'Professional'}
+                                value={profileLevel}
                             />
                             <IconCard
-                                icon={<LinkedIn fontSize='14px' />}
-                                heading={'Connect with'}
-                                value={'LinkedIn'}
+                                icon={<WorkOutlineOutlined fontSize='14px' />}
+                                heading={'Work Experience'}
+                                value={`${totalExperienceData?.data}+ years`}
                             />
+
                         </Stack>
 
                         {
@@ -133,7 +144,7 @@ const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
                     <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
                         <Stack mt={1} gap={2} alignItems={'end'} justifyContent={'end'}>
                             <QRCode value={profileUrl} size={150} />
-                            <Tooltip title={copied ? "Copied!" : "Copy to clipboard"} className='flex gap-2'> 
+                            <Tooltip title={copied ? "Copied!" : "Copy to clipboard"} className='flex gap-2'>
                                 <IconButton
                                     onClick={handleCopy}
                                 >

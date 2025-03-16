@@ -3,6 +3,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
+    Chip,
     Divider,
     Paper,
     Rating,
@@ -16,6 +17,11 @@ import { useDeleteProjectMutation } from "@/services/public/project";
 import DeletePopup from "@/components/common/DeletePopup";
 import { greyBg } from "@/styles/utilis/utilis";
 import { SnippetFolder } from "@mui/icons-material";
+
+const tempSkills = [
+    'React',
+    'Wordpress'
+];
 
 const ProjectSection = ({ projectsArray, showActionBtns }: { projectsArray: any, showActionBtns?: boolean }) => {
     const [deleteProject] = useDeleteProjectMutation();
@@ -59,6 +65,19 @@ const ProjectSection = ({ projectsArray, showActionBtns }: { projectsArray: any,
                                         {data.projectUrl}
                                     </Typography>
                                 )}
+
+
+                                <Stack direction="row" spacing={1} style={{ marginY: 10 }}>
+                                    {(data?.name === 'TechSink') && tempSkills?.map((skill, index) => (
+                                        <Chip
+                                            key={index}
+                                            label={skill}
+                                            // onDelete={() => handleRemoveSkill(skill)}
+                                            // sx={{ mr: 2 }}
+                                            color="primary"
+                                        />
+                                    ))}
+                                </Stack>
 
                                 <Rating className='mb-3' />
 

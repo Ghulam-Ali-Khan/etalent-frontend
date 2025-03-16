@@ -38,6 +38,16 @@ export const experienceAPI = publicAPI.injectEndpoints({
       }),
       providesTags: ['experince_list']
     }),
+    getTotalExperience: build.query({
+      query: (id) => ({
+        url: `/Experience/total-experience-years`,
+        method: 'GET',
+        params: {
+          userId: id || userId,
+        }
+      }),
+      providesTags: ['experince_list', 'education_experience_list']
+    }),
   }),
 });
 
@@ -45,5 +55,6 @@ export const {
   useCreateExperienceMutation,
   useGetAllExperienceQuery,
   useUpdateExperienceMutation,
-  useDeleteExperienceMutation
+  useDeleteExperienceMutation,
+  useGetTotalExperienceQuery
 } = experienceAPI;

@@ -101,56 +101,60 @@ const CertificationForm = () => {
     return (
         <Stack spacing={2}>
 
-
-            <FormikField
-                name='title'
-                label='Name'
-                isRequired
-            />
-
-            <FormikField
-                name='certificationId'
-                label='Certification ID'
-            />
-
-            <FormikField
-                name='organizationName'
-                label='Issuing Organization Name'
-                isRequired
-            />
-
-            <FormikField name='organizationUrl' label='Issuing Organization URL' />
-
-
             <Grid2 container spacing={2}>
                 <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
-                    <FormikDatePicker
-                        name='issueDate'
-                        label='Issue Date'
-                        isRequired
-                    />
+                    <Stack spacing={2}>
+                        <FormikField
+                            name='title'
+                            label='Name'
+                            isRequired
+                        />
+
+
+                        <FormikField
+                            name='organizationName'
+                            label='Issuing Organization Name'
+                            isRequired
+                        />
+
+                        <FormikDatePicker
+                            name='issueDate'
+                            label='Issue Date'
+                            isRequired
+                        />
+
+                        <FormikField
+                            name='score'
+                            label='Score'
+                            type='number'
+                        />
+                    </Stack>
                 </Grid2>
 
                 <Grid2 size={{ xl: 6, lg: 6, md: 6, sm: 12, xs: 12 }}>
-                    <FormikDatePicker
-                        name='expireDate'
-                        label='End Date'
-                        minDate={moment(values?.issueDate)}
-                        isDisable={values?.doesntExpire}
-                        isRequired
-                    />
+                    <Stack spacing={2}>
+                        <FormikField
+                            name='certificationId'
+                            label='Certification ID'
+                        />
+
+                        <FormikField name='organizationUrl' label='Issuing Organization URL' />
+
+                        <FormikDatePicker
+                            name='expireDate'
+                            label='End Date'
+                            minDate={moment(values?.issueDate)}
+                            isDisable={values?.doesntExpire}
+                            isRequired
+                        />
+                        <Box pt={4}>
+                            <FormikCheckbox name='doesntExpire' label='This credential does not expire' />
+                        </Box>
+                    </Stack>
                 </Grid2>
             </Grid2>
 
-            <Stack spacing={2} my={3}>
-                <FormikCheckbox name='doesntExpire' label='This credential does not expire' />
-
-                <FormikField
-                    name='score'
-                    label='Score'
-                    type='number'
-                />
-
+            <Stack my={3}>
                 <DropzoneFileUploader label="Upload your File" onFileUpload={handleFileUpload} />
             </Stack>
         </Stack>

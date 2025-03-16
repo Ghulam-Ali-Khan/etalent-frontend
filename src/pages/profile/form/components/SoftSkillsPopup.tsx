@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { softSkillsInitialValues, softSkillsSchema } from '../../utilis/formUtilis';
 import { useCreateSoftSkillMutation, useUpdateSoftSkillMutation } from '@/services/public/softSkills';
 import useShowResponse from '@/customHooks/useShowResponse';
+import SkillsField from './SkillsField';
 
 const SoftSkillsPopup = ({ isModalTxt, singleData }: { isModalTxt?: boolean, singleData?: object }) => {
     const [formValues, setFormValues] = useState(softSkillsInitialValues);
@@ -61,12 +62,7 @@ const SoftSkillsPopup = ({ isModalTxt, singleData }: { isModalTxt?: boolean, sin
                     <FormikWrapper formInitials={formValues} formSchema={softSkillsSchema} submitFunc={handleSubmit}>
                         <Stack spacing={2}>
 
-                            <FormikField
-                                name='name'
-                                label='Skill'
-                                isRequired
-                            />
-
+                            <SkillsField />
 
                             <Stack direction={'row'} justifyContent={'end'} spacing={2}>
                                 <Button variant='outlined' onClick={() => setModalStatus(false)}>

@@ -4,6 +4,7 @@ import React from 'react';
 import { useField } from 'formik';
 import { CloseOutlined } from '@mui/icons-material';
 import { Autocomplete, Chip, FormHelperText, InputLabel, Stack, TextField } from '@mui/material';
+import { useDebouncedCallback } from 'use-debounce';
 
 // Define types for the options
 interface Option {
@@ -19,6 +20,7 @@ interface FormikAutoCompleteSelectProps {
     isDisabled?: boolean;
     onChange?: (newValue: Option | null) => void; // onChange handler for the selected value
     onBlur?: (newValue: Option | null) => void; // onBlur handler
+    onInputChange?: (newValue: Option | null) => void;
     isRequired?: boolean;
     isOptional?: boolean;
     onChangeInput?: (inputValue: string) => void; // onInputChange handler for the input value
@@ -31,6 +33,7 @@ const FormikAutoCompleteSelect: React.FC<FormikAutoCompleteSelectProps> = ({
     placeholder = "Please Select",
     isDisabled = false,
     onChange,
+    onInputChange,
     onBlur,
     isRequired,
     isOptional,
@@ -40,6 +43,14 @@ const FormikAutoCompleteSelect: React.FC<FormikAutoCompleteSelectProps> = ({
     const { value, ...restField } = field;
     const { touched, error } = meta;
     const { setValue } = helpers;
+
+    const handleInputChange = useDebouncedCallback(
+        (value: any) => {
+            console.log('input change value ==> ', value)
+            if (onChangeInput) onChangeInput(value);
+        },
+        500
+    );
 
     // Enhanced filter logic to match substrings case-insensitively
     const filterOptions = (inputValue: string) => {
@@ -68,7 +79,7 @@ const FormikAutoCompleteSelect: React.FC<FormikAutoCompleteSelectProps> = ({
                     getOptionLabel={(item) => item.label}
                     value={options.find((option) => option.value === value) || null}
                     onInputChange={(event, inputValue) => {
-                        if (onChangeInput) onChangeInput(inputValue);
+                        if (onChangeInput) handleInputChange(inputValue);
                     }}
                     filterOptions={(options, { inputValue }) => filterOptions(inputValue)} // Enhanced filtering
                     onChange={(event, newValue) => {

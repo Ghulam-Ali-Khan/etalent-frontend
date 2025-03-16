@@ -18,9 +18,9 @@ const ProfilePage = () => {
                 <ProfileInfo />
                 <AboutSection />
                 <SkillsSection />
+                <FreelanceProjectsSection />
                 <ExperienceSection />
                 <EducationSection />
-                <FreelanceProjectsSection />
                 <CertificationSection />
                 <PublicationSection />
                 <AwardSection/>
