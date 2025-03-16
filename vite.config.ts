@@ -9,5 +9,6 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src'), // Alias @ to the src folder
     }
-  }
+  },
+  base: './', // Change this if your app is not served from the root
 });
