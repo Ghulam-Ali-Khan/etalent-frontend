@@ -9,7 +9,7 @@ import { Edit } from "@mui/icons-material";
 import { chartColors } from "@/utilis/data";
 import DeletePopup from "@/components/common/DeletePopup";
 import SoftSkillsImg from '@/assets/imgs/soft_skills.png';
-import TechnicalSkillsImg from '@/assets/imgs/technical_skills_img.png';
+import TechnicalSkillsImg from '@/assets/imgs/technical_skills.png';
 
 const SkillsSection = ({ viewProfileId }: { viewProfileId?: any }) => {
     // States
@@ -54,7 +54,7 @@ const SkillsSection = ({ viewProfileId }: { viewProfileId?: any }) => {
             editPopup: (data) => <TechnicalSkillsPopup singleData={data} />,
             skillsDataArray: technicalSkills?.data || [],
             deletePopup: (id) => <DeletePopup deleteFunc={deleteTechnicalSkill} id={id} deleteItemName="Technical skill" />,
-            imgSrc: SoftSkillsImg,
+            imgSrc: TechnicalSkillsImg,
         },
         {
             title: "Soft Skills",
