@@ -10,6 +10,8 @@ export const authAPI = publicAPI.injectEndpoints({
           ...payload,
         },
       }),
+     invalidatesTags: ['award_list', 'certification_list', 'education_list', 'education_experience_list',
+        'project_list', 'experince_list', 'overview', 'portfolio_list', 'profile', 'publication_list', 'soft_skills', 'technical_skills']
     }),
     register: build.mutation({
       query: payload => ({

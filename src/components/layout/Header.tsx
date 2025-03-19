@@ -75,6 +75,8 @@ const Header = () => {
                     navigate('/auth/login')
                     handleAnchorElClose();
                     localStorage.removeItem("token");
+                    localStorage.removeItem("userId");
+                    localStorage.removeItem("userData");
                 }}>Logout</MenuItem>
             </Menu>
         </Toolbar>

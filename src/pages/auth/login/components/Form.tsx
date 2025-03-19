@@ -23,6 +23,8 @@ const LoginForm = () => {
 
         const { baseModel, user, success } = response?.data || {};
 
+        console.log(' baseModel, user, success ==>',  baseModel, user, success)
+
         showResponse(response?.data, 'Login successfull', 'Login Failed');
 
         localStorage.setItem('token', baseModel?.data);

@@ -16,6 +16,9 @@ const apiUrl = import.meta.env.VITE_APP_URL;
 
 const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
     const userId = localStorage.getItem('userId');
+    const userData = localStorage.getItem('userData');
+
+    const user = JSON.parse(userData);
 
     const [copied, setCopied] = useState(false);
     const profileUrl = `${apiUrl}portal/user-profile/${viewProfileId || userId}`;
@@ -31,7 +34,6 @@ const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
     const { data: socialLinkData } = useGetAllSocialLinksQuery(viewProfileId);
     const { data: totalExperienceData } = useGetTotalExperienceQuery(viewProfileId);
 
-    console.log('totalExperienceData ==> ', totalExperienceData);
 
     const { artifactUrl = AvatarImg, firstName, lastName, city, nationality, profileRating, profileLevel } = profileInfoData?.data || {}
     const { facebook, instagram, linkedin, twitter } = socialLinkData?.data?.[0] || {};
@@ -60,7 +62,7 @@ const ProfileInfo = ({ viewProfileId }: { viewProfileId?: any }) => {
                     <Stack>
                         <Paper sx={{ bgcolor: '#D1F9E6', padding: '5px 10px' }}>
                             <Typography variant='body2' fontSize={'12px'} fontWeight={600}>
-                                eTalent ID : 1234
+                                eTalent ID : {user?.etalentid}
                             </Typography>
                         </Paper>
                         <Stack direction={'row'} gap={1} mt={2}>
