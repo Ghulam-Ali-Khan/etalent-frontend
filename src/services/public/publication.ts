@@ -1,6 +1,6 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
+// const userId = localStorage.getItem('userId');
 
 export const publictionAPI = publicAPI.injectEndpoints({
     endpoints: build => ({
@@ -24,7 +24,7 @@ export const publictionAPI = publicAPI.injectEndpoints({
             query: (id) => ({
                 url: 'Publication',
                 method: 'Delete',
-                body: { id, userId },
+                body: { id, userId:  localStorage.getItem('userId') },
             }),
             invalidatesTags: ['publication_list']
         }),
@@ -33,7 +33,7 @@ export const publictionAPI = publicAPI.injectEndpoints({
                 url: `Publication`,
                 method: 'GET',
                 params: {
-                    userId: id || userId,
+                    userId: id ||  localStorage.getItem('userId'),
                 }
             }),
             providesTags: ['publication_list']

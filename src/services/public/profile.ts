@@ -1,7 +1,5 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
-
 export const profileAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
     createProfile: build.mutation({
@@ -16,7 +14,7 @@ export const profileAPI = publicAPI.injectEndpoints({
       query: (body) => ({
         url: 'Profile',
         method: 'PUT',
-        body: {...body, userId},
+        body: { ...body, userId: localStorage.getItem('userId') }, // Fetch dynamically
       }),
       invalidatesTags: ['profile']
     }),
@@ -25,13 +23,14 @@ export const profileAPI = publicAPI.injectEndpoints({
         url: `Profile`,
         method: 'GET',
         params: {
-         userId: id || userId,
+          userId: id || localStorage.getItem('userId'), // Fetch dynamically
         }
       }),
       providesTags: ['profile']
     }),
   }),
 });
+
 
 export const {
   useCreateProfileMutation,

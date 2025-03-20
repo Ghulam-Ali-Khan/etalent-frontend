@@ -1,6 +1,6 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
+// const userId = localStorage.getItem('userId');
 
 export const educationExperienceAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
@@ -9,7 +9,7 @@ export const educationExperienceAPI = publicAPI.injectEndpoints({
         url: `Project/GetProjects`,
         method: 'GET',
         params: {
-          userId: id || userId,
+          userId: id || localStorage.getItem('userId'),
         }
       }),
       providesTags: ['education_experience_list', 'project_list']

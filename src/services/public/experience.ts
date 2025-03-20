@@ -1,6 +1,6 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
+// const userId = localStorage.getItem('userId');
 
 export const experienceAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
@@ -24,7 +24,7 @@ export const experienceAPI = publicAPI.injectEndpoints({
       query: (id) => ({
         url: 'Experience',
         method: 'Delete',
-        body: {id, userId},
+        body: { id, userId: localStorage.getItem('userId') },
       }),
       invalidatesTags: ['experince_list', 'education_experience_list']
     }),
@@ -33,7 +33,7 @@ export const experienceAPI = publicAPI.injectEndpoints({
         url: `Experience`,
         method: 'GET',
         params: {
-          userId,
+          userId: localStorage.getItem('userId'),
         }
       }),
       providesTags: ['experince_list']
@@ -43,7 +43,7 @@ export const experienceAPI = publicAPI.injectEndpoints({
         url: `/Experience/total-experience-years`,
         method: 'GET',
         params: {
-          userId: id || userId,
+          userId: id || localStorage.getItem('userId'),
         }
       }),
       providesTags: ['experince_list', 'education_experience_list']

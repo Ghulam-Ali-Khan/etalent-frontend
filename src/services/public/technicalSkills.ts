@@ -1,7 +1,5 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
-
 export const technicalSkillsAPI = publicAPI.injectEndpoints({
     endpoints: build => ({
         createTechnicalSkill: build.mutation({
@@ -26,7 +24,7 @@ export const technicalSkillsAPI = publicAPI.injectEndpoints({
                 method: 'Delete',
                 body: {
                     id,
-                    userId
+                    userId: localStorage.getItem('userId')
                 },
             }),
             invalidatesTags: ['technical_skills']
@@ -36,7 +34,7 @@ export const technicalSkillsAPI = publicAPI.injectEndpoints({
                 url: `TechnicalSkill`,
                 method: 'GET',
                 params: {
-                    userId: id || userId,
+                    userId: id || localStorage.getItem('userId'),
                 }
             }),
             providesTags: ['technical_skills']

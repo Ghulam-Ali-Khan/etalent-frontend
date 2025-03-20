@@ -1,7 +1,5 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
-
 export const softSkillsAPI = publicAPI.injectEndpoints({
     endpoints: build => ({
         createSoftSkill: build.mutation({
@@ -26,14 +24,14 @@ export const softSkillsAPI = publicAPI.injectEndpoints({
                 method: 'Delete',
                 body: {
                     id,
-                    userId,
+                    userId: localStorage.getItem('userId'),
                 },
             }),
             invalidatesTags: ['soft_skills']
         }),
         getAllSoftSkills: build.query({
             query: (id) => ({
-                url: `SoftSkill/${id || userId}`,
+                url: `SoftSkill/${id || localStorage.getItem('userId')}`,
                 method: 'GET',
             }),
             providesTags: ['soft_skills']

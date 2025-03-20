@@ -1,6 +1,6 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
+// const userId = localStorage.getItem('userId');
 
 export const portfolioAPI = publicAPI.injectEndpoints({
     endpoints: build => ({
@@ -8,7 +8,7 @@ export const portfolioAPI = publicAPI.injectEndpoints({
             query: (body) => ({
                 url: 'Portfolio',
                 method: 'POST',
-                body: { ...body, userId },
+                body: { ...body, userId: localStorage.getItem('userId') },
             }),
             invalidatesTags: ['portfolio_list']
         }),
@@ -26,7 +26,7 @@ export const portfolioAPI = publicAPI.injectEndpoints({
                 method: 'Delete',
                 body: {
                     id,
-                    userId
+                    userId: localStorage.getItem('userId')
                 },
             }),
             invalidatesTags: ['portfolio_list']
@@ -36,8 +36,8 @@ export const portfolioAPI = publicAPI.injectEndpoints({
                 url: `Portfolio`,
                 method: 'GET',
                 params: {
-                    userId: id || userId,
-                    currentId: id || userId
+                    userId: id || localStorage.getItem('userId'),
+                    currentId: id || localStorage.getItem('userId')
                 }
             }),
             providesTags: ['portfolio_list']

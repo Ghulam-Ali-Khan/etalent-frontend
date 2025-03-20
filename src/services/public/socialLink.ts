@@ -1,19 +1,17 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
-
 export const socialLinkAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
     createSocialLink: build.mutation({
       query: (body) => ({
         url: 'SocialLink',
         method: 'POST',
-        body: { ...body, userId },
+        body: { ...body, userId:localStorage.getItem('userId') },
       }),
     }),
     getAllSocialLinks: build.query({
       query: (id) => ({
-        url: `SocialLink/${id || userId}`,
+        url: `SocialLink/${id || localStorage.getItem('userId')}`,
         method: 'GET',
       }),
     }),

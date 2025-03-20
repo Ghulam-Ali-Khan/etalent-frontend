@@ -1,6 +1,6 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
+// const userId = localStorage.getItem('userId');
 
 export const educationAPI = publicAPI.injectEndpoints({
   endpoints: build => ({
@@ -24,13 +24,13 @@ export const educationAPI = publicAPI.injectEndpoints({
       query: (id) => ({
         url: 'Education',
         method: 'Delete',
-        body: { id, userId },
+        body: { id, userId: localStorage.getItem('userId') },
       }),
       invalidatesTags: ['education_list', 'education_experience_list']
     }),
     getAllEducation: build.query({
       query: () => ({
-        url: `Education/${userId}`,
+        url: `Education/${localStorage.getItem('userId')}`,
         method: 'GET',
       }),
       providesTags: ['education_list']

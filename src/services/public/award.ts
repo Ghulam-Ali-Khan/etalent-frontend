@@ -1,6 +1,6 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
+// const userId = localStorage.getItem('userId');
 
 export const awardAPI = publicAPI.injectEndpoints({
     endpoints: build => ({
@@ -24,7 +24,7 @@ export const awardAPI = publicAPI.injectEndpoints({
             query: (id) => ({
                 url: 'Award',
                 method: 'Delete',
-                body: { id, userId },
+                body: { id, userId: localStorage.getItem('userId') },
             }),
             invalidatesTags: ['award_list']
         }),
@@ -33,7 +33,7 @@ export const awardAPI = publicAPI.injectEndpoints({
                 url: `Award`,
                 method: 'GET',
                 params: {
-                    userId: id || userId,
+                    userId: id || localStorage.getItem('userId'),
                 }
             }),
             providesTags: ['award_list']

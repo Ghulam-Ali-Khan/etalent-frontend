@@ -1,6 +1,6 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
+// const userId = localStorage.getItem('userId');
 
 export const projectAPI = publicAPI.injectEndpoints({
     endpoints: build => ({
@@ -8,7 +8,7 @@ export const projectAPI = publicAPI.injectEndpoints({
             query: (body) => ({
                 url: 'Project',
                 method: 'POST',
-                body: { ...body, userId },
+                body: { ...body, userId :  localStorage.getItem('userId')},
             }),
             invalidatesTags: ['project_list']
         }),
@@ -16,7 +16,7 @@ export const projectAPI = publicAPI.injectEndpoints({
             query: (body) => ({
                 url: `Project`,
                 method: 'PUT',
-                body: { ...body, userId },
+                body: { ...body, userId: localStorage.getItem('userId') },
             }),
             invalidatesTags: ['project_list']
         }),
@@ -24,7 +24,7 @@ export const projectAPI = publicAPI.injectEndpoints({
             query: (id) => ({
                 url: `Project`,
                 method: 'Delete',
-                body: { id, userId },
+                body: { id, userId: localStorage.getItem('userId') },
             }),
             invalidatesTags: ['project_list']
         }),
@@ -33,7 +33,7 @@ export const projectAPI = publicAPI.injectEndpoints({
                 url: `Project`,
                 method: 'GET',
                 params: {
-                    userId,
+                    userId: localStorage.getItem('userId'),
                 }
             }),
             providesTags: ['project_list']

@@ -1,6 +1,6 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
+// const userId = localStorage.getItem('userId');
 
 export const certificationsAPI = publicAPI.injectEndpoints({
     endpoints: build => ({
@@ -24,7 +24,7 @@ export const certificationsAPI = publicAPI.injectEndpoints({
             query: (id) => ({
                 url: 'CertificationAndTraining',
                 method: 'Delete',
-                body: { id, userId },
+                body: { id, userId: localStorage.getItem('userId') },
             }),
             invalidatesTags: ['certification_list']
         }),
@@ -33,7 +33,7 @@ export const certificationsAPI = publicAPI.injectEndpoints({
                 url: `CertificationAndTraining`,
                 method: 'GET',
                 params: {
-                   userId: id || userId,
+                    userId: id || localStorage.getItem('userId'),
                 }
             }),
             providesTags: ['certification_list']

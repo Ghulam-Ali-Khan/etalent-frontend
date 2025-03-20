@@ -1,14 +1,12 @@
 import { publicAPI } from '../public/index';
 
-const userId = localStorage.getItem('userId');
-
 export const overviewAPI = publicAPI.injectEndpoints({
     endpoints: build => ({
         createOverview: build.mutation({
             query: (body) => ({
                 url: 'Overview',
                 method: 'POST',
-                body: { ...body, userId },
+                body: { ...body, userId: localStorage.getItem('userId') },
             }),
             invalidatesTags: ['overview']
         }),
@@ -16,7 +14,7 @@ export const overviewAPI = publicAPI.injectEndpoints({
             query: (body) => ({
                 url: 'Overview',
                 method: 'PUT',
-                body: { ...body, userId },
+                body: { ...body, userId: localStorage.getItem('userId') },
             }),
             invalidatesTags: ['overview']
         }),
@@ -24,7 +22,7 @@ export const overviewAPI = publicAPI.injectEndpoints({
             query: () => ({
                 url: 'Overview',
                 method: 'Delete',
-                body: { userId },
+                body: { userId: localStorage.getItem('userId') },
             }),
             invalidatesTags: ['overview']
         }),
@@ -33,7 +31,7 @@ export const overviewAPI = publicAPI.injectEndpoints({
                 url: `Overview`,
                 method: 'GET',
                 params: {
-                    userId: id || userId,
+                    userId: id || localStorage.getItem('userId'),
                 }
             }),
             providesTags: ['overview']
